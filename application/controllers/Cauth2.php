@@ -1,6 +1,6 @@
 <?php
 /**
- * Cadmin_role.php
+ * Cauth2.php
  * ==============================================
  * Copy right 2017 http://www.texmall.com
  * ==============================================
@@ -10,8 +10,8 @@
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Cadmin_role extends TM_Controller {
-    private $table = 'admin_role';
+class Cauth2 extends TM_Controller {
+    private $table = 'auth2';
     private $table1 = 'admin_action';
     private $table2 = 'admin_user';
     
@@ -30,7 +30,7 @@ class Cadmin_role extends TM_Controller {
         $data['res'] = $this->Base_model->getTable($this->table)->result();
         $data['one_level'] = '后台管理员';
         $data['two_level'] = '管理员角色';
-        $this->load->view('admin_role/vgrid', $data);
+        $this->load->view('auth2/vgrid', $data);
     }
     
     /**
@@ -43,7 +43,7 @@ class Cadmin_role extends TM_Controller {
         $data['action'] = $this->Base_model->getTable($this->table1, 'action ASC')->result();
         $data['one_level'] = '后台管理员';
         $data['two_level'] = '管理员角色';
-        $this->load->view('admin_role/vadd', $data);
+        $this->load->view('auth2/vadd', $data);
     }
     
     /**
@@ -60,7 +60,7 @@ class Cadmin_role extends TM_Controller {
         $data['des']         = $postData['des'];
         $res = $this->Base_model->insert($this->table, $data);
         if ($res > 0) {
-            alert_msg('操作成功', 'Cadmin_role/grid');
+            alert_msg('操作成功', 'Cauth2/grid');
         }else{
             alert_msg('操作失败');
         }
@@ -101,7 +101,7 @@ class Cadmin_role extends TM_Controller {
         $data['action'] = $this->Base_model->getTable($this->table1, 'action ASC')->result();
         $data['one_level'] = '后台管理员';
         $data['two_level'] = '管理员角色';
-        $this->load->view('admin_role/vedit', $data);
+        $this->load->view('auth2/vedit', $data);
     }
     
     /**
@@ -121,7 +121,7 @@ class Cadmin_role extends TM_Controller {
         $data['des']         = $postData['des'];
         $res = $this->Base_model->update($this->table, array('id'=>$postData['id']), $data);
         if ($res > 0) {
-            alert_msg('操作成功', 'Cadmin_role/grid');
+            alert_msg('操作成功', 'Cauth2/grid');
         }else{
             alert_msg('操作失败');
         }
@@ -145,12 +145,12 @@ class Cadmin_role extends TM_Controller {
         
         $res = $this->Base_model->delete($this->table, array('id'=>$id));
         if ($res>0) {
-            alert_msg('操作成功', 'Cadmin_role/grid');
+            alert_msg('操作成功', 'Cauth2/grid');
         }else{
             alert_msg('操作失败');
         }
     }
 
 }
-/** End of file Cadmin_role.php */
-/** Location: ./application/controllers/Cadmin_role.php */
+/** End of file Cauth2.php */
+/** Location: ./application/controllers/Cauth2.php */
