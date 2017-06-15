@@ -73,7 +73,7 @@ class Cthird_manage extends TM_Controller {
             alert_msg('名称已存在');
         }
         
-        if (is_url($this->input->post('third_url'))) {
+        if (!is_url($this->input->post('third_url'))) {
             alert_msg('请填写第三方网址');
         }
         
