@@ -174,9 +174,9 @@ class Cadmin_user extends TM_Controller {
 	    
 	    $res = $this->Base_model->insert($this->table, $data);
 		if ($res>0) {
-			alert_msg('操作成功!', 'Cadmin_user/grid');
+			alert_msg('操作成功', 'Cadmin_user/grid');
 		}else{
-			alert_msg('操作失败!');
+			alert_msg('操作失败');
 		}
 	}
 	
@@ -199,9 +199,9 @@ class Cadmin_user extends TM_Controller {
     	    foreach ($user as $u) {
     	        $this->delete_img($u->userimg);
     	    }
-	        alert_msg('操作成功!', 'Cadmin_user/grid');
+	        alert_msg('操作成功', 'Cadmin_user/grid');
 	    }else{
-	        alert_msg('操作失败!');
+	        alert_msg('操作失败');
 	    }
 	}
 	
@@ -213,13 +213,13 @@ class Cadmin_user extends TM_Controller {
 	    $this->checkAction(__METHOD__);
 	    
 	    if ($id == 1) {
-	        alert_msg('禁止重置密码!');
+	        alert_msg('禁止重置密码');
 	    }
 		$res = $this->Base_model->update($this->table,array('id'=>$id),array('password'=>ZD_md5('texmall@2017')));
 	    if ($res>0) {
-			alert_msg('操作成功!', 'Cadmin_user/grid');
+			alert_msg('操作成功', 'Cadmin_user/grid');
 		}else{
-			alert_msg('操作失败!');
+			alert_msg('操作失败');
 		}
 	}
 

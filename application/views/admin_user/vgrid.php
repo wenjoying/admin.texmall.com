@@ -59,7 +59,7 @@
                                         <?php endforeach;?>
                                         <tr>
                                             <td width="2%"><input type="checkbox" class="pull-left list-parent-check" value=""></td>
-                                            <th width="5%">ID</th>
+                                            <td width="5%">ID</td>
                                             <td width="10%">头像</td>
                                             <td width="10%">用户名</td>
                                             <td width="10%">添加时间</td>

@@ -57,11 +57,7 @@
                     
 
                     <div id="time" class="pull-right">
-                        <span id="hours"></span>
-                        :
-                        <span id="min"></span>
-                        :
-                        <span id="sec"></span>
+                        <?php echo date('Y年m月d日');?><span id="hours"></span>:<span id="min"></span>:<span id="sec"></span>
                     </div>
                     
                     <div class="media-body">
@@ -133,7 +129,7 @@
                             <span class="menu-item">产品中心</span>
                         </a>
                         <ul class="list-unstyled menu-item">
-                            <li><a class="<?php if($two_level=='') echo 'active';?>" href="<?php echo base_url();?>">第三方接口管理</a></li>
+                            <li><a class="<?php if($two_level=='标准图片') echo 'active';?>" href="<?php echo base_url('Ccorrect_img/grid');?>">标准图片</a></li>
                             
                         </ul>
                     </li>
@@ -158,6 +154,7 @@
                         </a>
                         <ul class="list-unstyled menu-item">
                             <li><a class="<?php if($two_level=='轮播图&广告图') echo 'active';?>" href="<?php echo base_url('Cad_img/grid');?>">轮播图&广告图</a></li>
+                            <li><a class="<?php if($two_level=='应用授权') echo 'active';?>" href="<?php echo base_url('Cauth2/grid');?>">应用授权</a></li>
                             <li><a class="<?php if($two_level=='第三方接口') echo 'active';?>" href="<?php echo base_url('Cthird_manage/grid');?>">第三方接口</a></li>
                             <li><a class="<?php if($two_level=='字体图标') echo 'active';?>" href="<?php echo base_url('Csetting/fonts');?>">字体</a></li>
                             <li><a href="<?php echo base_url('Clogin/show_404');?>">404</a></li>

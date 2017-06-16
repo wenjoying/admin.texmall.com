@@ -268,7 +268,7 @@ class TM_Controller extends CI_Controller{
 	 * @param string $size:验证码字体大小
 	 * @return 图片
 	 */
-	public function create_captcha($len=4, $width='120', $height='30')
+	public function create_captcha($len=4, $width='80', $height='30')
 	{
 	    $this->load->helper('captcha');
 	    $word = randomStr($len, 3);
@@ -276,7 +276,7 @@ class TM_Controller extends CI_Controller{
 	        'word' => $word,
 	        'img_path' => $this->config->upload_image_path('captcha', true),
 	        'img_url' => $this->config->image_url.'captcha/',
-	        'font_path' => 'assets/fonts/opan-sans/glyphicons-halflings-regular.ttf',
+	        'font_path' => 'assets/fonts/YHBold.ttf',
 	        'img_width' => $width,
 	        'img_height' => $height,
 	        'expiration' => '1200',

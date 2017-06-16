@@ -58,7 +58,7 @@
                                         <?php endforeach;?>
                                         <tr>
                                             <td width="2%"><input type="checkbox" class="pull-left list-parent-check" value=""></td>
-                                            <th width="5%">ID</th>
+                                            <td width="5%">ID</td>
                                             <td width="10%">角色名</td>
                                             <td width="30%">权限</td>
                                             <td width="5%">菜单</td>

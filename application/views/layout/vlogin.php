@@ -35,10 +35,10 @@
                 <h2 class="m-t-0 m-b-15">Login 登陆后台</h2>
                 <input type="text" class="login-control m-b-10" name="username" maxlength="20" required="required" placeholder="用户名或手机号">
                 <input type="password" class="login-control m-b-10" name="password" maxlength="20" required="required" placeholder="密码">
+                <input type="text" class="login-control" style="width:50%;float:left;" name="captcha" maxlength="4" required="required" placeholder="图形验证码">
+                <span class="captcha"></span>
                 <input type="hidden" name="code" required="required" value="<?php echo $code?>">
-                
-                <div class="checkbox m-b-20">
-                </div>
+                <div class="checkbox m-b-20" style="clear:both;"> </div>
                 <button class="btn btn-sm m-r-5" type="submit">登陆</button>
                 
                 <small>
@@ -89,5 +89,18 @@
         
         <!-- All JS functions -->
         <?php inc_js('functions');?>
+        <script>
+		$(function(){
+			var get_captcha = function(){
+				$.post(base_url+'Clogin/get_captcha', {}, function(json){
+					$('span.captcha').html(json.image);
+				}, 'json');
+			}
+			get_captcha();
+			$('form.box').on('click', '.captcha', function(){
+				get_captcha();
+			});
+		});
+        </script>
     </body>
 </html>

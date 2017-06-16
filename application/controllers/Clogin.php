@@ -32,12 +32,37 @@ class Clogin extends CI_Controller {
 	}
 	
 	/**
+	 * @验证码
+	 * */
+	public function get_captcha()
+	{
+	    $this->load->helper('captcha');
+	    $word = randomStr(4, 3);
+	    $config = array(
+	        'word'       => $word,
+	        'img_path'   => $this->config->upload_image_path('captcha', true),
+	        'img_url'    => $this->config->image_url.'captcha/',
+	        'font_path'  => 'assets/fonts/YHBold.ttf',
+	        'img_width'  => 80,
+	        'img_height' => 30,
+	        'expiration' => '1200',
+	    );
+	    $captcha = create_captcha($config);
+	    $this->input->set_cookie('captcha', $captcha['word'], 600);
+	    echo json_encode($captcha);
+	}
+	
+	/**
 	 * @登陆验证
 	 * */
 	public function check_login()
 	{  
 	    if ($this->input->post('code') != ZD_md5(date('Ymd'))) {
 	        header("Location:https://baidu.com", TRUE, 302);
+	    }
+	    
+	    if (strtoupper($this->input->post('captcha')) != strtoupper($this->input->cookie('captcha'))) {
+	        alert_msg('验证码错误');
 	    }
 	    
 		$where['username'] = trim($this->input->post('username'));
@@ -49,7 +74,7 @@ class Clogin extends CI_Controller {
 			
 			header("Location:".base_url('Cadmin_user/index'), TRUE, 302);
 		}else{
-			alert_msg('登录失败!');
+			alert_msg('登录失败');
 		}
 	}
 	

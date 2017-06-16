@@ -1621,7 +1621,7 @@ a.list-group-item.active > .badge,
 }
 
 .s-widget .fc-today {
-    background: rgba(0, 0, 0, 0.26) !important;
+    background: rgba(0, 0, 0, 0.9) !important;
 }
 
 .s-widget .fc-button-today {
@@ -1713,8 +1713,9 @@ a.list-group-item.active > .badge,
 
 #login .box {
     padding: 20px 20px 25px;
-    margin-top: 30px;
-    position: absolute;
+    /*margin-top: 30px;
+    position: absolute;*/
+	margin: 30px auto;
     display: none;
 }
 
@@ -2012,7 +2013,9 @@ a.list-group-item.active > .badge,
 
     /* Login */
     #login {
-        padding: 30px;
+    	margin-top: 80px;
+    	text-align: center;
+        /*padding: 30px;*/
     }
 
     #login > header > h1, #error-page h1 {
