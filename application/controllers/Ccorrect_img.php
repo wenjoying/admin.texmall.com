@@ -24,7 +24,7 @@ class Ccorrect_img extends TM_Controller {
 	 * @标准图片列表
 	 * */
 	public function grid($pg = 1)
-	{
+	{ 
 	    $this->checkAction(__METHOD__);
 	     
 	    $this->load->library('pagination');

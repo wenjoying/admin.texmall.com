@@ -35,7 +35,7 @@
                                     </span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control input-sm" id="exampleInputPassword2" name="item" value="<?php echo $this->input->get('item');?>" placeholder="日志用户名/电话/方法">
+                                    <input type="text" class="form-control input-sm" id="exampleInputPassword2" name="item" value="<?php echo $this->input->get('item');?>" placeholder="日志用户名/电话/IP/方法">
                                 </div>
                                 <button type="submit" class="btn btn-sm">查找</button>
                                 <a href="javascript:;" onClick="window.location.reload();"><button type="reset" class="btn btn-sm">重置</button></a>
@@ -49,6 +49,7 @@
                                         <tr>
                                             <th width="2%"><input type="checkbox" class="pull-left list-parent-check" value=""></th>
                                             <th width="5%">ID</th>
+                                            <th width="5%">管理员ID</th>
                                             <th width="40%">日志</th>
                                             <th width="10%">时间</th>
                                             <th width="5%">操作</th>
@@ -59,12 +60,13 @@
                                         <tr>
                                             <td><input type="checkbox" class="pull-left list-check" name="checkid[]" value="<?php echo $r->id?>"></td>
                                             <td><?php echo $r->id?></td>
+                                            <td><?php echo $r->admin_uid?></td>
                                             <td>
                                                 <?php 
                                                 $log = json_decode($r->log);
-                                                echo '管理员id：'.$log->admin_id;
                                                 echo '</br>用户名：'.$log->username;
                                                 echo '</br>电话：'.$log->mobile;
+                                                echo '</br>IP：'.$log->ip;
                                                 echo '</br>方法：'.$log->func;
                                                 ?>
                                             </td>
@@ -85,7 +87,8 @@
                                         <?php endforeach;?>
                                         <tr>
                                             <td width="2%"><input type="checkbox" class="pull-left list-parent-check" value=""></td>
-                                            <th width="5%">ID</th>
+                                            <td width="5%">ID</td>
+                                            <td width="5%">管理员ID</td>
                                             <td width="40%">日志</td>
                                             <td width="10%">时间</td>
                                             <td width="5%">操作</td>

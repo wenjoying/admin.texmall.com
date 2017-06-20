@@ -42,6 +42,7 @@
                                         <tr>
                                             <th width="2%"><input type="checkbox" class="pull-left list-parent-check" value=""></th>
                                             <th width="5%">ID</th>
+                                            <th width="5%">父级ID</th>
                                             <th width="10%">权限</th>
                                             <th width="30%">简介</th>
                                             <th width="5%">操作</th>
@@ -52,6 +53,7 @@
                                         <tr>
                                             <td><input type="checkbox" class="pull-left list-check" value="<?php echo $r->id?>"></td>
                                             <td><?php echo $r->id?></td>
+                                            <td><?php echo $r->pid?></td>
                                             <td><?php echo $r->action?></td>
                                             <td><?php echo $r->des?></td>
                                             <td>
@@ -71,6 +73,7 @@
                                         <tr>
                                             <td width="2%"><input type="checkbox" class="pull-left list-parent-check" value=""></td>
                                             <td width="5%">ID</td>
+                                            <td width="5%">父级ID</td>
                                             <td width="10%">权限</td>
                                             <td width="30%">简介</td>
                                             <td width="5%">操作</td>

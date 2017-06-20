@@ -60,12 +60,14 @@ class TM_Controller extends CI_Controller{
 	 * */
 	public function admin_log($func)
 	{
-	    $log['admin_id'] = $this->admin->id;
 	    $log['username'] = $this->admin->username;
 	    $log['mobile']   = $this->admin->mobile;
+	    $log['ip']       = getIp();
 	    $log['func']     = $func;
-	    $data['log']  = json_encode($log);
-	    $data['time'] = time();
+	    
+	    $data['admin_uid'] = $this->admin->id;
+	    $data['log']       = json_encode($log);
+	    $data['time']      = time();
 	    $this->Base_model->insert('admin_log', $data);
 	}
 	

@@ -50,6 +50,7 @@ class Cadmin_action extends TM_Controller {
     {
         $this->checkAction(__METHOD__);
         
+        $data['p_action']  = $this->Base_model->getWhere($this->table, array('pid'=>0))->result();
         $data['one_level'] = '后台管理员';
         $data['two_level'] = '权限列表';
         $this->load->view('admin_action/vadd', $data);
@@ -63,6 +64,7 @@ class Cadmin_action extends TM_Controller {
         $this->validate();
         
         $postData = $this->input->post();
+        $data['pid']    = $postData['pid'];
         $data['action'] = trim($postData['action']);
         $data['des']    = $postData['des'];
         $res = $this->Base_model->insert($this->table, $data);
@@ -93,6 +95,11 @@ class Cadmin_action extends TM_Controller {
          
         $checkid = $this->input->post('checkid');
         $ids = $checkid ? $checkid : array($id);
+        $child = $this->Base_model->getWherein($this->table, 'pid', $ids);
+        if (count($child) > 0) {
+            alert_msg('请先删除子权限');
+        }
+        
         $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
         if ($res>0) {
             alert_msg('操作成功', 'Cadmin_action/grid');

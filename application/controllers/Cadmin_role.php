@@ -40,7 +40,7 @@ class Cadmin_role extends TM_Controller {
     {
         $this->checkAction(__METHOD__);
         
-        $data['action'] = $this->Base_model->getTable($this->table1, 'action ASC')->result();
+        $data['action']    = $this->Base_model->getTable($this->table1, 'action ASC')->result();
         $data['one_level'] = '后台管理员';
         $data['two_level'] = '管理员角色';
         $this->load->view('admin_role/vadd', $data);

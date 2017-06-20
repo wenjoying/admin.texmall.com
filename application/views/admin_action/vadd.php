@@ -5,6 +5,20 @@
                 <div class="block-area" id="horizontal">
                     <h3 class="block-title">新增权限方法</h3>
                     <form class="form-horizontal" action="<?php echo base_url('Cadmin_action/addPost');?>" method="post" enctype="multipart/form-data" role="form">
+                        
+                        <div class="form-group">
+                            <label for="inputName1" class="col-md-2 control-label">父级方法</label>
+                            <div class="col-md-4">
+                                <select class="select" name="pid">
+                                    <option value="0">请选择</option>
+                                    <?php foreach ($p_action as $p) :?>
+                                    <option value="<?php echo $p->id?>"><?php echo $p->action.'('.$p->des.')'?></option>
+                                    <?php endforeach;?>
+                                </select>
+                                <p>不选择即为顶级，格式：Cuser::index</p>
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="inputName1" class="col-md-2 control-label">权限方法*</label>
                             <div class="col-md-4">

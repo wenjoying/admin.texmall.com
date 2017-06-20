@@ -25,6 +25,8 @@ class Cuser extends TM_Controller {
 	 * */
 	public function grid($pg = 1)  
 	{  
+	    $this->checkAction(__METHOD__);
+	    
 		$this->load->library('pagination');
 		$config['per_page']   = 2;
 		$config['uri_segment'] = 3;
