@@ -23,7 +23,7 @@ class Cadmin_user extends TM_Controller {
 	 * @后台首页
 	 * */
 	public function index()
-	{ 
+	{  
 	    $data['one_level'] = 'Texmall后台首页';
 	    $data['two_level'] = '';
 	    $this->load->view('layout/vindex', $data);
