@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Madmin_log.php
+ * ==============================================
+ * Copy right 2017 http://www.texmall.com
+ * ==============================================
+ * @author: zoudong
+ * @date: 2017年6月13日
+ */
 class Madmin_log extends CI_Model{
 	private $table = 'admin_log';        
 	

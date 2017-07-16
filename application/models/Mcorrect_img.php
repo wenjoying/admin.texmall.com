@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Mcorrect_img.php
+ * ==============================================
+ * Copy right 2017 http://www.texmall.com
+ * ==============================================
+ * @author: zoudong
+ * @date: 2017年6月13日
+ */
 class Mcorrect_img extends CI_Model{
 	private $table = 'correct_img';        
 	
@@ -20,7 +27,10 @@ class Mcorrect_img extends CI_Model{
 	        $this->db->where(array('time <'=>strtotime($search['end_time'])));
 	    }
 	    if (!empty($search['item'])) {
-	        $this->db->like('des', $search['item']);
+	        $this->db->group_start();
+	        $this->db->like('img_name', $search['item']);
+	        $this->db->or_like('des', $search['item']);
+	        $this->db->group_end();
 	    }
 	    return $this->db->count_all_results();
 	}
@@ -46,11 +56,40 @@ class Mcorrect_img extends CI_Model{
 	        $this->db->where(array('time <'=>strtotime($search['end_time'])));
 	    }
 	    if (!empty($search['item'])) {
-	        $this->db->like('des', $search['item']);
+	        $this->db->group_start();
+	        $this->db->like('img_name', $search['item']);
+	        $this->db->or_like('des', $search['item']);
+	        $this->db->group_end();
 	    }
 	    $this->db->order_by($order);
 	    if ($perpage) $this->db->limit($perpage, $perpage*$page);
 	    return $this->db->get();
+	}
+	
+	
+	/**
+	 * @生成标准图名字
+	 * */
+	public function create_name($type = 'tex')
+	{
+	    if ($type == 'tex') {
+	        $this->db->select_max('img_name');
+	        $this->db->where(array('type'=>$type));
+	        $res = $this->db->get($this->table);
+	        if ($res->num_rows() == 0) {
+	            return 'A0001';
+	        } else {
+	            $name = $res->row()->img_name;
+	            $k = $name{0};
+	            $n = (int)mb_substr($name, 1, 4) +1;
+	            if ($n > 9999) {
+	                return chr(ord($k)+1).'0001';
+	            } else {
+	                return $k.(string)sprintf('%04d', $n);
+	            }
+	        }
+	    }
+	    return rand(1, 999);
 	}
 	
 	

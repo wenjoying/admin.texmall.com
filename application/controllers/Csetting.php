@@ -12,7 +12,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Csetting extends TM_Controller {
     
-    function __init()
+    function _init()
 	{
 		header("Content-type: text/html; Charset=utf-8");
 	}

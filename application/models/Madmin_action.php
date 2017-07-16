@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Madmin_action.php
+ * ==============================================
+ * Copy right 2017 http://www.texmall.com
+ * ==============================================
+ * @author: zoudong
+ * @date: 2017年6月13日
+ */
 class Madmin_action extends CI_Model{
 	private $table = 'admin_action';        
 	

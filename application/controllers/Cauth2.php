@@ -161,7 +161,7 @@ class Cauth2 extends TM_Controller {
             'code'          => $_GET['code']
         );
         $result = $http->httppost(base_url('Cauth2/token'), $array);
-        $assoc = json_decode($result, true);
+        $assoc = json_decode($result, TRUE);
         return $assoc['access_token'];
     }
     

@@ -83,7 +83,7 @@ class PDOoauth2 extends OAuth2 {
   		$result = $stmt->fetch(PDO::FETCH_ASSOC);
   		if ($result === FALSE) return FALSE;
   	
-  		return true;
+  		return TRUE;
   	} catch (PDOException $e) {
   		$this->handleException($e);
   	}
@@ -269,7 +269,7 @@ class PDOoauth2 extends OAuth2 {
 	
 	        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 	        if ($result === FALSE) {
-	            return false;
+	            return FALSE;
 	        }
 	        return $result;
 	    } catch (PDOException $e) {

@@ -53,7 +53,7 @@ class Cad_img extends TM_Controller {
 	    $this->validata();
 	    
 	    $postData = $this->input->post(); 
-	    $img = $this->deal_img('ad_img', false);
+	    $img = $this->deal_img('ad_img', FALSE);
 	    if (isset($img['upload']['ad_img'])) {
 	        $data['ad_img'] = $img['upload']['ad_img'];
 	    }else{
@@ -77,10 +77,6 @@ class Cad_img extends TM_Controller {
 	 * */
 	public function validata()
 	{
-	    if (is_empty($this->input->post('ad_img'))) {
-	        alert_msg('请上传图片');
-	    }
-	    
 	    if (is_empty($this->input->post('ad_name'))) {
 	        alert_msg('请填写名称');
 	    }
@@ -119,6 +115,10 @@ class Cad_img extends TM_Controller {
 	    $this->validata();
 	    
 	    $postData = $this->input->post();
+	    $img = $this->deal_img('ad_img', FALSE);
+	    if (isset($img['upload']['ad_img'])) {
+	        $data['ad_img'] = $img['upload']['ad_img'];
+	    }
 	    $data['ad_name']   = $postData['ad_name'];
 	    $data['ad_info']   = $postData['ad_info'];
 	    $data['ad_url']    = $postData['ad_url'] ? $postData['ad_url'] : 'javascript:;';

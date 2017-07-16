@@ -68,14 +68,14 @@ function send_sms($code, $limit, $mobile, $tempId=22680)   //发送短信
     $CI->rest->setAppId($appId);
     $result = objectToArray($CI->rest->sendTemplateSMS($mobile, $data, $tempId));
     if($result == NULL) {
-        $sms['status'] = false;
+        $sms['status'] = FALSE;
         $sms['res'] = NULL;
     }
     if($result['statusCode'] != '000000') {
-        $sms['status'] = false;
+        $sms['status'] = FALSE;
         $sms['res'] = $result;
     } else {
-        $sms['status'] = true;
+        $sms['status'] = TRUE;
         $sms['res'] = strtotime($result['TemplateSMS']['dateCreated']);
     }
     return $sms;
@@ -105,14 +105,14 @@ function send_push($msg, $title, $alia=array(), $tag=array(), $extra=array(), $p
     
     $res = $result->setNotificationAlert($msg)
     ->addAndroidNotification($msg, $title, 1, $extra)
-    ->addIosNotification($msg, 'iOS sound', '+1', true, 'iOS category', $extra)
+    ->addIosNotification($msg, 'iOS sound', '+1', TRUE, 'iOS category', $extra)
     //->setMessage("msg content", 'msg title', 'type', array("key1"=>"value1", "key2"=>"value2"))
-    ->setOptions(null, 86400, null, true)->send();
+    ->setOptions(null, 86400, null, TRUE)->send();
     
     if(isset($res->data)) {
-        $push = true;
+        $push = TRUE;
     } else {
-        $push = false;
+        $push = FALSE;
     }
     return $push;
 }

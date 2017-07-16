@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Muser.php
+ * ==============================================
+ * Copy right 2017 http://www.texmall.com
+ * ==============================================
+ * @author: zoudong
+ * @date: 2017年6月13日
+ */
 class Muser extends CI_Model{
 	private $table = 'user';        
 	

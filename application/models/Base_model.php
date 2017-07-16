@@ -265,7 +265,7 @@ class Base_model extends CI_Model{
 	 * */
     public function clickAdd($table, $where=array(), $field='click', $act='click +1')  //投票/浏览量/点击量加1/减1
 	{
-		$this->db->set($field, $act, false);
+		$this->db->set($field, $act, FALSE);
 		if (!empty($where)) $this->db->where($where);
 		$this->db->update($table);
 		return $this->db->affected_rows();

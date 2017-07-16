@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Mad_img.php
+ * ==============================================
+ * Copy right 2017 http://www.texmall.com
+ * ==============================================
+ * @author: zoudong
+ * @date: 2017年6月13日
+ */
 class Mad_img extends CI_Model{
 	private $table = 'ad_img';        
 	

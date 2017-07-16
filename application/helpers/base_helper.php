@@ -43,6 +43,11 @@ function inc_css($file_name)
 	echo '<link rel="stylesheet" type="text/css" href="'.base_url('assets/css/'.$file_name.'.css').'"  media="screen" />';
 }
 
+/**
+ * @引入文件
+ * @param string $file_name:文件名
+ * @param string $dir:文件夹
+ * */
 function inc_file($file_name, $dir='img')
 {
     echo base_url('assets/'.$dir.'/'.$file_name);
@@ -65,7 +70,7 @@ function alert_msg($str='', $url='', $i=0)
     }else{
         $i = 2;
     }
-    inc_js('jquery-1.9.1');
+    inc_js('jquery-2.2.4.min');
     inc_js('layer/layer');
     echo '<script style="Text/Javascript">;$(function(){';
     echo 'var alertMsg = function(str,url,i){layer.msg(str,{icon:i,time:1000,area:["300px","100px"],offset:"200px"}, function(){if (url){location.href=url;}else{window.history.back();}});};';
@@ -140,7 +145,7 @@ function objectToArray($obj)
 }
 
 /**
- * @判断是否有空值,至少有一个空值返回true
+ * @判断是否有空值,至少有一个空值返回TRUE
  * @param array $data:数组或字符串
  * @return boolean 
  * */
@@ -149,32 +154,32 @@ function one_empty($data)
 	if (is_array($data)) {
 		foreach($data as $v) {
 			$val = trim($v);
-			if (empty($val)) return true;
+			if (empty($val)) return TRUE;
 		}
 	}else{
 		$val = trim($data);
-		if (empty($val)) return true;
+		if (empty($val)) return TRUE;
 	}
-	return false;
+	return FALSE;
 }
 
 /**
- * @判断是否为空,全为空返回true
+ * @判断是否为空,全为空返回TRUE
  * @param array $data:传值,数组或字符串
  * @return boolean 
  * */
 function is_empty($data)   
 {
-	$is_empty = false;
+	$is_empty = FALSE;
 	if (is_array($data)) { 
 		$arrStr = '';
 		foreach ($data as $val) {
 			$arrStr .= trim($val);
 		}
-		if (empty($arrStr)) $is_empty = true;
+		if (empty($arrStr)) $is_empty = TRUE;
 	}else{
 		$val = trim($data);
-		if (empty($val)) $is_empty = true;
+		if (empty($val)) $is_empty = TRUE;
 	}
 	return $is_empty;
 }
@@ -218,19 +223,19 @@ function is_id_card($id_card)
     $aCity = array(11=>"北京",12=>"天津",13=>"河北",14=>"山西",15=>"内蒙古",21=>"辽宁",22=>"吉林",23=>"黑龙江",31=>"上海",32=>"江苏",33=>"浙江",34=>"安徽",35=>"福建",36=>"江西",37=>"山东",41=>"河南",42=>"湖北",43=>"湖南",44=>"广东",45=>"广西",46=>"海南",50=>"重庆",51=>"四川",52=>"贵州",53=>"云南",54=>"西藏",61=>"陕西",62=>"甘肃",63=>"青海",64=>"宁夏",65=>"新疆",71=>"台湾",81=>"香港",82=>"澳门",91=>"国外");
 
     if (!preg_match('/^\d{17}(\d|x)$/i', $id_card)) {
-        return false;
+        return FALSE;
     }
 
     if (!isset($aCity[(int)substr($id_card, 0, 2)])) {
-        return false;
+        return FALSE;
     }
 
     $bir = substr($id_card, 6, 4).'-'.substr($id_card, 10, 2).'-'.substr($id_card, 12, 2);
-    if (strtotime($bir) === false) {
-        return false;
+    if (strtotime($bir) === FALSE) {
+        return FALSE;
     }
     
-    return true;
+    return TRUE;
 }
 
 /**
@@ -285,7 +290,7 @@ function randomStr($len=4, $type=1)
     }
 	$word = '';
 	for($i=0;$i<$len;$i++){
-		$word.=$str[mt_rand(0,strlen($str)-1)];
+		$word .= $str[mt_rand(0,strlen($str)-1)];
 	}
 	return $word;
 }
@@ -297,7 +302,7 @@ function randomStr($len=4, $type=1)
  * */
 function showDir( $filedir = '.' ) {
     $dir = @ dir($filedir);
-    while (($file = $dir->read())!==false) //可替换为 while(($file = readdir($dir)) !== false)
+    while (($file = $dir->read())!==FALSE) //可替换为 while(($file = readdir($dir)) !== FALSE)
     {
         if (is_dir($filedir."/".$file) AND ($file!=".") AND ($file!="..")) {
             showDir($filedir."/".$file);
@@ -317,16 +322,16 @@ function showDir( $filedir = '.' ) {
 function createFile($file, $filename)
 {
     $write = @fopen($filename,"w");
-    if ($write==false) {
-        return false;
+    if ($write==FALSE) {
+        return FALSE;
     }
-    if (fwrite($write, $file)==false) {
-        return false;
+    if (fwrite($write, $file)==FALSE) {
+        return FALSE;
     }
-    if (fclose($write)==false) {
-        return false;
+    if (fclose($write)==FALSE) {
+        return FALSE;
     }
-    return true;
+    return TRUE;
 }
 
 /**
@@ -337,7 +342,7 @@ function createFile($file, $filename)
  * @param string $int_unit 币种单位,默认"元"
  * @return string
  */
-function rmb_format($money = 0, $is_round = true, $int_unit = '元') {
+function rmb_format($money = 0, $is_round = TRUE, $int_unit = '元') {
     $chs     = array (0, '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖');
     $uni     = array ('', '拾', '佰', '仟' );
     $dec_uni = array ('角', '分' );
@@ -425,7 +430,7 @@ function get_lnglat_by_ip()
 {
     $getIp = getIp();
     if (in_array($getIp, array('127.0.0.1', '0.0.0.0'))) {
-        return false;
+        return FALSE;
     }
     $content = file_get_contents("http://api.map.baidu.com/location/ip?ak=1dc771f8e1d5ab15e12a9503773c18f3&ip={$getIp}&coor=bd09ll");
     $json = json_decode($content);
@@ -455,7 +460,7 @@ function get_lnglat_by_address($address, $city)
  * @字符串格式化为英文逗号的字符串，并排序
  * @param string $str
  * */
-function toEnComma($str)
+function toEnComma($str, $sep = ',')
 {
     $str = str_replace('，', ',', $str);
     $str_arr = @explode(',', $str);
@@ -472,5 +477,14 @@ function toEnComma($str)
         }
     }
     asort($new_arr);
-    return @implode(',', $new_arr);
+    return @implode($sep, $new_arr);
+}
+
+/**
+ * @根据空行切割数组
+ * */
+function txt2arr()
+{
+    $data = file_get_contents('wosign.txt');
+    $res = preg_split('/([\r\n]+)\\1/', $data);
 }

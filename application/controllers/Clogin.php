@@ -26,6 +26,16 @@ class Clogin extends CI_Controller {
 		if ($admin) {  
 			header("Location:".base_url('Cadmin_user/index'), TRUE, 302);
 		}else{
+		    if (isset($_SERVER['HTTP_REFERER'])) {
+		        $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
+		        if (isset($parseUrl['query']) && strpos($parseUrl['query'], 'backurl') !== false) {
+		            $data['backurl'] = urldecode(strstr($parseUrl['query'], 'http'));
+		        } else {
+		            $data['backurl'] = $_SERVER['HTTP_REFERER'];
+		        }
+		    } else {
+		        $data['backurl'] = base_url('Cadmin_user/index');
+		    }
 		    $data['code'] = ZD_md5(date('Ymd'));
 			$this->load->view('layout/vlogin', $data); 
 		}
@@ -40,9 +50,9 @@ class Clogin extends CI_Controller {
 	    $word = randomStr(4, 3);
 	    $config = array(
 	        'word'       => $word,
-	        'img_path'   => $this->config->upload_image_path('captcha', true),
+	        'img_path'   => $this->config->upload_image_path('captcha', TRUE),
 	        'img_url'    => $this->config->image_url.'captcha/',
-	        'font_path'  => 'assets/fonts/YHBold.ttf',
+	        'font_path'  => 'assets/plugins/YHBold.ttf',
 	        'img_width'  => 80,
 	        'img_height' => 30,
 	        'expiration' => '1200',
@@ -70,9 +80,9 @@ class Clogin extends CI_Controller {
 		$res = $this->Base_model->getWhere('admin_user', $where); 
 		if ($res->num_rows()>0) {
 			$admin_str = base64_encode(json_encode($res->row()));
-			$this->input->set_cookie('admin', $admin_str, 60*60*2);
+			$this->input->set_cookie('admin', $admin_str, 60*60*3);
 			
-			header("Location:".base_url('Cadmin_user/index'), TRUE, 302);
+			header("Location:".$this->input->post('backurl'), TRUE, 302);
 		}else{
 			alert_msg('登录失败');
 		}
@@ -83,7 +93,9 @@ class Clogin extends CI_Controller {
 	 * */
 	public function show_404()
 	{
-	    $this->load->view('layout/vshow_404');
+	    $data['one_level'] = '';
+	    $data['two_level'] = '';
+	    $this->load->view('layout/vshow_404', $data);
 	}
 	
 	/**

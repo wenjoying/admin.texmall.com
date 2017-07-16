@@ -132,10 +132,10 @@ if ( ! function_exists('create_captcha'))
 		// Create image
 		// -----------------------------------
 
-		// PHP.net recommends imagecreatetruecolor(), but it isn't always available
-		if (function_exists('imagecreatetruecolor'))
+		// PHP.net recommends imagecreateTRUEcolor(), but it isn't always available
+		if (function_exists('imagecreateTRUEcolor'))
 		{
-			$im = imagecreatetruecolor($img_width, $img_height);
+			$im = imagecreateTRUEcolor($img_width, $img_height);
 		}
 		else
 		{

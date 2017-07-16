@@ -28,7 +28,7 @@ class Cuser extends TM_Controller {
 	    $this->checkAction(__METHOD__);
 	    
 		$this->load->library('pagination');
-		$config['per_page']   = 2;
+		$config['per_page']   = 20;
 		$config['uri_segment'] = 3;
 		$config['suffix']     = $this->get_page_param($this->input->get());
 		$config['total_rows'] = $this->Muser->total($this->input->get());
@@ -44,99 +44,121 @@ class Cuser extends TM_Controller {
 		$this->load->view('user/vgrid', $data);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * @新增用户
 	 * */
 	public function add()
 	{
+	    $this->checkAction(__METHOD__);
+	    
+	    $data['role'] = $this->_get_role();
 	    $data['one_level'] = '用户管理';
 	    $data['two_level'] = '用户列表';
 	    $this->load->view('user/vadd', $data);
 	}
 	
-	public function insert()
+	/**
+	 * @新增用户
+	 * */
+	public function addPost()
 	{
-	    $post = $this->input->post();
-        $num = $this->Base_model->getTableNum($this->table);
-        if ($num > 0){
-            $rec = $this->Base_model->getTableNum($this->table, array('username'=>$post['recommend_username']));
-            if ($rec <= 0) {
-                alert_msg('必须添加推荐人');
-            }
-        }
-        $money = $this->Base_model->getWhere('web_set', array('id'=>1))->row();
-        if ($money->a_in<1 || $money->b_in<1) {
-            alert_msg('A区或B区设置进入的人数必须大于1');
-        }
-	    $data['username']  = $post['username'];
-	    $data['realname']  = $post['realname'];
-	    $data['id_card']   = $post['id_card'];
-	    $data['card_no']   = $post['card_no'];
-	    $data['mobile']    = $post['mobile'];
-	    $data['recommend_uid'] = $post['recommend_uid'];
-	    $data['recommend_username'] = $post['recommend_username'];
-	    $data['time']  = time();
-	    $this->db->trans_start();
-	    $id = $this->Base_model->insert($this->table, $data);
-	    $this->a_area_add($id, $post['username'], $money->a_in, $money->a_money);  //执行A区处理
-	    if (!empty($post['recommend_username'])) {  //如果有推荐人执行B区处理
-	        $this->b_area_add($post['recommend_uid'], $post['recommend_username'], $money->b_in, $money->b_money);
+	    $this->validata();
+	    
+	    $postData = $this->input->post();
+	    $data['userimg'] = $this->config->default_img['userimg'];
+	    $img = $this->deal_img('userimg', FALSE);
+	    if (isset($img['upload']['userimg'])) {
+	        $data['userimg'] = $img['upload']['userimg'];
 	    }
-	    $this->db->trans_complete();
-	    if ($this->db->trans_status()===TRUE && $id) {
-	        alert_msg('操作成功', 'Cuser/add');
+	    $data['username']  = $postData['username'];
+	    $data['mobile']    = $postData['mobile'];
+	    $data['password']  = ZD_md5($postData['password']);
+	    $data['id_card']   = $postData['id_card'];
+	    $data['companyid'] = $postData['companyid'];
+	    $data['company']   = $postData['company'];
+	    $data['positions'] = $postData['positions'];
+	    $data['sex']       = $postData['sex'];
+	    $data['role_id']   = $postData['role_id'];
+	    $data['pid']       = 0;
+	    $data['qr_img']    = '';
+	    $data['reg_come']  = 5;
+	    $data['reg_ip']    = getIp();
+	    $data['reg_time']  = time(); 
+	    $res = $this->Base_model->insert($this->table, $data);
+	    if ($res > 0) {
+	        alert_msg('操作成功', 'Cuser/grid');
 	    }else{
 	        alert_msg('操作失败');
 	    }
 	}
-	
-	
 	
 	/**
 	 * @修改用户
 	 * */
 	public function edit($id = 0)
 	{
-	    $data['res'] = $this->Base_model->getWhere($this->table, array('id'=>$id))->row();
+	    $this->checkAction(__METHOD__);
+	    
+	    $res = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($res->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    $data['res']  = $res->row();
+	    $data['role'] = $this->_get_role();
 	    $data['one_level'] = '用户管理';
 	    $data['two_level'] = '用户列表';
-	    $this->load->view('user/vupdate', $data);
+	    $this->load->view('user/vedit', $data);
 	}
 	
-	public function update()
+	/**
+	 * @修改用户
+	 * */
+	public function editPost()
 	{
-	    $post = $this->input->post();
-	    $data['realname']  = $post['realname'];
-	    $data['id_card']   = $post['id_card'];
-	    $data['card_no']   = $post['card_no'];
-	    $data['mobile']    = $post['mobile'];
-	    $data['time']  = time();
-	    $id = $this->Base_model->update($this->table, array('id'=>$post['id']), $data);
-	    if ($id) {
-	        alert_msg('操作成功', 'Cuser/show');
+	    $this->validata();
+	    
+	    $postData = $this->input->post();
+	    $img = $this->deal_img('userimg', FALSE);
+	    if (isset($img['upload']['userimg'])) {
+	        $data['userimg'] = $img['upload']['userimg'];
+	    }
+	    $data['username']  = $postData['username'];
+	    $data['password']  = ZD_md5($postData['password']);
+	    $data['id_card']   = $postData['id_card'];
+	    $data['companyid'] = $postData['companyid'];
+	    $data['company']   = $postData['company'];
+	    $data['positions'] = $postData['positions'];
+	    $data['sex']       = $postData['sex'];
+	    $res = $this->Base_model->update($this->table, array('id'=>$postData['id']), $data);
+	    if ($res > 0) {
+	        alert_msg('操作成功', 'Cuser/grid');
 	    }else{
 	        alert_msg('操作失败');
 	    }
+	}
+	
+	/**
+	 * @查看
+	 * */
+	public function page($id = 0)
+	{
+	    $this->checkAction(__METHOD__);
+	     
+	    $res = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($res->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    $data['res']       = $res->row();
+	    $data['sex_arr']   = array('1'=>'男', '2'=>'女', '3'=>'保密');
+	    $data['mail_list'] = $this->_get_user_mail_list($id);
+	    $data['models']    = $this->_get_user_model($id);
+	    $data['enshrine']  = $this->_get_user_enshrine($id);
+	    $data['user_log']  = $this->_get_user_log($id);
+	    $data['search']    = $this->_get_search_log($id); 
+	    $data['workers']   = $this->_get_workers($data['res']->companyid);
+	    $data['one_level'] = '用户管理';
+	    $data['two_level'] = '用户列表';
+	    $this->load->view('user/vprofile', $data);
 	}
 	
 	/**
@@ -144,36 +166,154 @@ class Cuser extends TM_Controller {
 	 * */
 	public function delete($id = 0)
 	{
-	    $ids = $this->input->post('checkid');
-	    $checkid = $ids ? $ids : array($id); 
-	    $res = $this->Base_model->deleteWhereIn($this->table, 'id', $checkid);
-	    if ($res > 0) {
-	        alert_msg('操作成功', 'Cuser/show');
+	    $this->checkAction(__METHOD__);
+	    
+	    $checkid = $this->input->post('checkid');
+	    $ids = $checkid ? $checkid : array($id);
+	    $user = $this->Base_model->getWherein($this->table, 'id', $ids);
+	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
+	    if ($res>0) {
+	        foreach ($user as $u) {
+	            $this->delete_img($u->userimg);
+	            $this->delete_img($u->qr_img);
+	        }
+	        alert_msg('操作成功', 'Cad_img/grid');
 	    }else{
 	        alert_msg('操作失败');
+	    }  
+	}
+	
+	/**
+	 * @验证
+	 * */
+	public function validata()
+	{
+	    if (is_empty($this->input->post('username'))) {
+	        alert_msg('请填写名称');
+	    }
+	    
+	    if (!is_mobile($this->input->post('mobile'))) {
+	        alert_msg('手机号码错误');
+	    }
+	    
+	    if (@file_get_contents($this->check_exists($this->input->post('mobile'))) == 1) {
+	        alert_msg('手机号码已存在');
+	    }
+	    
+	    if (strlen($this->input->post('password'))<6 || strlen($this->input->post('password'))>15) {
+	        alert_msg('密码为6-15位');
+	    }
+	    
+	    if (is_empty($this->input->post('role_id'))) {
+	        alert_msg('请选择角色');
 	    }
 	}
 	
 	/**
-	 * @验证用户
+	 * @生成用户二维码
 	 * */
-	public function check_user()   
+	public function create_qr($id = 0)
 	{
-		$username = $this->input->post('username');
-		$res = $this->Base_model->getTableNum($this->table, array('username'=>$username));
-		echo json_encode($res);
-	}
-	
-	public function get_recommend() 
-	{
-	    $res = $this->Base_model->getWhere($this->table, array('username'=>$this->input->post('recommend')));
-	    if($res->num_rows() > 0){
-	        echo json_encode(array('status'=>true, 'uid'=>$res->row()->id));
-	    }else{
-	        echo json_encode(array('status'=>false));
+	    $this->checkAction(__METHOD__);
+	    
+	    $user = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($user->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    
+	    $this->load->library('Qrcode');
+	    $path = 'qr_code';
+	    $day  = date('Ymd');
+	    $png  = daymicro().'.png';
+	    $upload_path = $this->config->upload_image_path($path.'/'.$day, TRUE);
+	    if (!is_dir($upload_path)) {
+	        mkdir($upload_path, DIR_WRITE_MODE, TRUE);
+	    }
+	    $url = $this->config->html5_url.'Cqr_scan/scan?mobile='.ZD_md5($user->row()->mobile).'&uid='.$id;
+	    $this->qrcode->png($url, $upload_path.$png, 4, 10);
+	    $png = './'.$path.'/'.$day.'/'.$png;
+	    if (file_exists($this->config->upload_image_path($png))) {
+	        $res = $this->Base_model->update($this->table, array('id'=>$id), array('qr_img'=>$png));
+	        if ($res > 0) {
+	            alert_msg('操作成功', 'Cuser/grid');
+	        }else{
+	            alert_msg('操作失败');
+	        }
 	    }
 	}
 	
+	/**
+	 * @验证用户手机号
+	 * */
+	public function check_exists($mobile = '')
+	{
+	    $mobile = empty($mobile) ? $this->input->post_get('mobile') : $mobile;
+	    $res = $this->Base_model->getTableNum($this->table, array('mobile'=>$mobile));
+	    echo json_encode($res);
+	}
+	
+	/**
+	 * @获取角色
+	 * */
+	private function _get_role()
+	{
+	    return $this->Base_model->getTable('user_role')->result();
+	}
+	
+	/**
+	 * @获取用户选择的模特
+	 * */
+	private function _get_user_model($uid)
+	{
+	    $models = $this->Base_model->getWhere('user_model', array('uid'=>$uid));
+	    if ($models->num_rows() > 0) {
+	        $models_arr = explode(',', $models->row()->model_list);
+	        return $this->Base_model->getWherein('correct_img', 'id', $models_arr)->result();
+	    }
+	    return array();
+	}
+	
+	/**
+	 * @获取用户收藏的列表
+	 * */
+	private function _get_user_enshrine($uid)
+	{
+	    return $this->Base_model->getWhere('user_enshrine', array('uid'=>$uid))->result();
+	}
+	
+	/**
+	 * @获取用户通讯录
+	 * */
+	private function _get_user_mail_list($uid)
+	{
+	    return $this->Base_model->getWhere('user_mail_list', array('uid'=>$uid), 'id', 20)->result();
+	}
+	
+	/**
+	 * @获取用户浏览记录
+	 * */
+	private function _get_user_log($uid)
+	{
+	    return $this->Base_model->getWhere('user_log', array('uid'=>$uid), 'id', 20)->result();
+	}
+	
+	/**
+	 * @获取用户搜索记录
+	 * */
+	private function _get_search_log($uid)
+	{
+	    return $this->Base_model->getWhere('search_log', array('uid'=>$uid), 'id', 20)->result();
+	}
+	
+	/**
+	 * @获取用我的同事
+	 * */
+	private function _get_workers($companyid)
+	{
+	    if (empty($companyid)) return array();
+	    return $this->Base_model->getWhere('user', array('companyid'=>$companyid))->result();
+	}
+ 
 	
 }
 /** End of file Cuser.php */

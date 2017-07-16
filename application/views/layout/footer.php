@@ -1,43 +1,46 @@
-            </section>
-        </section>
-        
-        <!-- Javascript Libraries -->
-        <!-- jQuery -->
-        <?php inc_js('jquery-ui.min');?> <!-- jQuery UI -->
-        <?php inc_js('jquery.easing.1.3');?><!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
+            </div>
+            <!--===================================================-->
+            <!--END CONTENT CONTAINER-->
+            
+            
 
-        <!-- Bootstrap -->
-        <?php inc_js('bootstrap.min');?>
+        </div>
 
-        <!-- Charts -->
-        <?php inc_js('charts/jquery.flot');?><!-- Flot Main -->
-        <?php inc_js('charts/jquery.flot.time');?> <!-- Flot sub -->
-        <?php inc_js('charts/jquery.flot.animator.min');?> <!-- Flot sub -->
-        <?php inc_js('charts/jquery.flot.resize.min');?> <!-- Flot sub - for repaint when resizing the screen -->
+        <!-- FOOTER -->
+        <!--===================================================-->
+        <footer id="footer">
 
-        <?php inc_js('sparkline.min');?><!-- Sparkline - Tiny charts -->
-        <?php inc_js('easypiechart');?><!-- EasyPieChart - Animated Pie Charts -->
-        <?php inc_js('charts');?> <!-- All the above chart related functions -->
+            <!-- Visible when footer positions are fixed -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <div class="show-fixed pull-right">
+                You have <a href="#" class="text-bold text-main"><span class="label label-danger">3</span> pending action.</a>
+            </div>
+            <!-- Visible when footer positions are static -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <div class="hide-fixed pull-right pad-rgt">
+                14GB of <strong>512GB</strong> Free.
+            </div>
 
-        <!-- Map -->
-        <!-- inc_js('maps/jvectormap.min') jVectorMap main library -->
-        <!-- inc_js('maps/usa') USA Map for jVectorMap -->
-        
-        <?php inc_js('datetimepicker.min');?>
-        <?php inc_js('select.min');?>
-        
-        <!--  Form Related -->
-        <?php inc_js('icheck');?> <!-- Custom Checkbox + Radio -->
-        <?php inc_js('fileupload.min');?>
-        
-        <!-- UX -->
-        <?php inc_js('scroll.min');?> <!-- Custom Scrollbar -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- Remove the class "show-fixed" and "hide-fixed" to make the content always appears. -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-        <!-- Other -->
-        <?php inc_js('calendar.min');?> <!-- Calendar -->
-        <!-- inc_js('feeds.min') News Feeds -->
+            <p class="pad-lft">&#0169; 2017 Texmall.com</p>
 
-        <!-- All JS functions -->
-        <?php inc_js('functions');?>
-    </body>
+        </footer>
+        <!--===================================================-->
+        <!-- END FOOTER -->
+
+        <!-- SCROLL PAGE BUTTON -->
+        <!--===================================================-->
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+        <!--===================================================-->
+
+    </div>
+    <!--===================================================-->
+    <!-- END OF CONTAINER -->
+
+</body>
 </html>

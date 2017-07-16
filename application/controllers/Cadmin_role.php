@@ -12,7 +12,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Cadmin_role extends TM_Controller {
     private $table = 'admin_role';
-    private $table1 = 'admin_action';
     private $table2 = 'admin_user';
     
     public function _init()
@@ -40,7 +39,7 @@ class Cadmin_role extends TM_Controller {
     {
         $this->checkAction(__METHOD__);
         
-        $data['action']    = $this->Base_model->getTable($this->table1, 'action ASC')->result();
+        $data['action']    = $this->_get_action();
         $data['one_level'] = '后台管理员';
         $data['two_level'] = '管理员角色';
         $this->load->view('admin_role/vadd', $data);
@@ -98,7 +97,7 @@ class Cadmin_role extends TM_Controller {
 	        $this->redirect('Clogin/show_404');
 	    }
 	    $data['res'] = $res->row();
-        $data['action'] = $this->Base_model->getTable($this->table1, 'action ASC')->result();
+        $data['action'] = $this->_get_action();
         $data['one_level'] = '后台管理员';
         $data['two_level'] = '管理员角色';
         $this->load->view('admin_role/vedit', $data);
@@ -138,8 +137,7 @@ class Cadmin_role extends TM_Controller {
             alert_msg('禁止删除');
         }
         
-        $num = $this->Base_model->getTableNum($this->table2, array('role_id'=>$id));
-        if ($num > 0) {
+        if ($this->_get_user_num($id) > 0) {
             alert_msg('请将此角色的管理员删除后再操作');
         }
         
@@ -150,6 +148,24 @@ class Cadmin_role extends TM_Controller {
             alert_msg('操作失败');
         }
     }
+    
+    /**
+     * @获取权限方法
+     * */
+    private function _get_action()
+    {
+        return $this->Base_model->getTable('admin_action', 'action ASC')->result();
+    }
+    
+    /**
+     * @获取权限方法
+     * */
+    private function _get_user_num($role_id = 0)
+    {
+        return $this->Base_model->getTableNum('admin_user', array('role_id'=>$role_id));
+    }
+    
+    
 
 }
 /** End of file Cadmin_role.php */

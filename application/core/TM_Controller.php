@@ -21,7 +21,7 @@ class TM_Controller extends CI_Controller{
 		
 		/**@开发模式下开启性能分析*/ 
 		if (ENVIRONMENT === 'development') {
-			$this->output->enable_profiler(TRUE);
+// 			$this->output->enable_profiler(TRUE);
 		}
 		
 		$this->admin = json_decode(base64_decode($this->input->cookie('admin')));
@@ -45,11 +45,11 @@ class TM_Controller extends CI_Controller{
 // 	    $action_list = $this->admin->action_list;
 	    $action_list = 'all_action';
 	    if ($action_list == 'all_action') {
-	        return true;
+	        return TRUE;
 	    }
 	    $action_arr = explode('|', $action_list);
 	    if (in_array($func, $action_arr)) {
-	        return true;
+	        return TRUE;
 	    }
 	    alert_msg('权限不足');
 	}
@@ -79,21 +79,21 @@ class TM_Controller extends CI_Controller{
 	 * @param string $type:允许上传文件类型,并修改扩展名  //文件不能为空,为空报错
 	 * @return boolean|array 图片路径
 	 */
-	public function deal_img($path='images', $thumb_water=true, $conf=array('maxsize'=>5120, 'width'=>0, 'height'=>0, 'type'=>'jpg|png|jpeg'))
+	public function deal_img($path='images', $thumb_water=TRUE, $conf=array('maxsize'=>5120, 'width'=>0, 'height'=>0, 'type'=>'jpg|png|jpeg'))
 	{
 	    $day = date('Ymd');
 	    $this->load->library('upload');
-	    $config['upload_path'] = $this->config->upload_image_path($path.'/'.$day, true);
+	    $config['upload_path'] = $this->config->upload_image_path($path.'/'.$day, TRUE);
 	    if (!is_dir($config['upload_path'])) { 
-	        mkdir($config['upload_path'], DIR_WRITE_MODE, true);
+	        mkdir($config['upload_path'], DIR_WRITE_MODE, TRUE);
 	    }
 	    $config['allowed_types']   = $conf['type'];
 	    $config['max_size']        = $conf['maxsize'];
 	    $config['max_width']       = $conf['width'];
 	    $config['max_height']      = $conf['height'];
-	    $config['overwrite']       = true;
+	    $config['overwrite']       = TRUE;
 	    if (empty($_FILES)) {
-	        return false;
+	        return FALSE;
 	    }else{
 	        foreach ($_FILES as $key=>$val) {
 	            $config['file_name'] = daymicro();
@@ -122,21 +122,21 @@ class TM_Controller extends CI_Controller{
 	 * @param string $type:允许上传文件类型,并保持扩展名
 	 * @return boolean|array 文件路径
 	 */
-	public function deal_file($path='images', $thumb_water=true, $conf=array('maxsize'=>5120, 'width'=>0, 'height'=>0, 'type'=>'jpg|png|jpeg|pdf'))
+	public function deal_file($path='images', $thumb_water=TRUE, $conf=array('maxsize'=>5120, 'width'=>0, 'height'=>0, 'type'=>'jpg|png|jpeg|pdf'))
 	{
 	    $day = date('Ymd');
 	    $this->load->library('upload');
-	    $config['upload_path'] = $this->config->upload_image_path($path.'/'.$day, true);
+	    $config['upload_path'] = $this->config->upload_image_path($path.'/'.$day, TRUE);
 	    if (!is_dir($config['upload_path'])) {
-	        mkdir($config['upload_path'], DIR_WRITE_MODE, true);
+	        mkdir($config['upload_path'], DIR_WRITE_MODE, TRUE);
 	    }
 	    $config['allowed_types']   = $conf['type'];
 	    $config['max_size']        = $conf['maxsize'];
 	    $config['max_width']       = $conf['width'];
 	    $config['max_height']      = $conf['height'];
-	    $config['overwrite']       = true;
+	    $config['overwrite']       = TRUE;
 	    if (empty($_FILES)) {
-	        return false;
+	        return FALSE;
 	    }else{
 	        foreach ($_FILES as $key=>$val) {
 	            $time = daymicro();
@@ -193,11 +193,11 @@ class TM_Controller extends CI_Controller{
 	public function delete_img($img, $size='')
 	{
 	    if (empty($img) || in_array($img, $this->config->default_img)) {
-	        return true;
+	        return TRUE;
 	    }
 	    
 	    if (!file_exists($this->config->upload_image_path($img))) {
-	        return true;
+	        return TRUE;
 	    }
 	    
 	    @unlink($this->config->upload_image_path($img));
@@ -206,7 +206,7 @@ class TM_Controller extends CI_Controller{
 	        foreach (explode(',', $size) as $s) {
 	            @unlink($this->config->upload_image_path('.'.$img_arr[1].'_'.$s.'.'.$img_arr[2]));
 	        }
-	        return true;
+	        return TRUE;
 	    }
 	}
 	
@@ -264,6 +264,22 @@ class TM_Controller extends CI_Controller{
 	}
 	
 	/**
+	 * @下载图片（未完成）
+	 * */
+	public function download($dir = '')     
+	{
+	    if (empty($dir)) {
+	        return FALSE;
+	    }
+	    if (!is_dir($this->config->upload_image_path($dir))) {
+	        return FALSE;
+	    }
+	    $this->load->library('zip');
+	    $this->zip->read_dir($this->config->upload_image_path($dir));
+	    $this->zip->download('download.zip');
+	}
+	
+	/**
 	 * @param number $len:验证码长度
 	 * @param string $width:验证码宽
 	 * @param string $height:验证码高
@@ -276,9 +292,9 @@ class TM_Controller extends CI_Controller{
 	    $word = randomStr($len, 3);
 	    $config = array(
 	        'word' => $word,
-	        'img_path' => $this->config->upload_image_path('captcha', true),
+	        'img_path' => $this->config->upload_image_path('captcha', TRUE),
 	        'img_url' => $this->config->image_url.'captcha/',
-	        'font_path' => 'assets/fonts/YHBold.ttf',
+	        'font_path' => 'assets/plugins/YHBold.ttf',
 	        'img_width' => $width,
 	        'img_height' => $height,
 	        'expiration' => '1200',
@@ -322,6 +338,62 @@ class TM_Controller extends CI_Controller{
 	    exit;
 	}
 	
+	/**
+	 * @复制文件
+	 * @param string $file:文件名
+	 * @param string $dir:文件夹
+	 * */
+	function file2dir($file, $dir)
+	{
+	    $f_path = $this->config->upload_image_path($file);
+	    if (is_dir($f_path)) {
+	        return FALSE;
+	    }
+	    if (!file_exists($f_path)) { 
+	        return FALSE;
+	    }
+	    $day = date('Ymd');
+	    $d_path = $this->config->upload_image_path($dir.'/'.$day, TRUE);
+	    if (!is_dir($d_path)) {
+	        mkdir($d_path, DIR_WRITE_MODE, TRUE);
+	    }
+	    $new = daymicro().'.'.pathinfo($file, PATHINFO_EXTENSION); //获取扩展名end(explode('.', $file));
+	    if (copy($f_path, $d_path.'/'.$new)) {
+	        return './'.$dir.'/'.$day.'/'.$new;
+	    } else {
+	        return FALSE;
+	    }
+	    
+	}
+	
+	/**
+	* CURL 获取参数
+	* @param unknown $url:地址
+	* @param unknown $keysArr:参数
+	* @param string $mothod:获取方式
+	* @return unknown
+	*/
+	public function fn_get_contents($url, $keysArr=array(), $mothod='get')
+	{
+	    $ch = curl_init() ;
+	    $ssl = substr($url, 0, 8) == "https://" ? TRUE : FALSE;
+	    if (!$ssl) {
+	        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE ) ;
+	        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST,2);
+	        curl_setopt( $ch, CURLOPT_SSLVERSION, 4);
+	    }
+	    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE ) ;
+	    if (strtolower($mothod) == 'post'){
+	        curl_setopt( $ch, CURLOPT_POST, TRUE ) ;
+	        curl_setopt( $ch, CURLOPT_POSTFIELDS, $keysArr ) ;
+	    } else {
+	        $url = $url . "?" . http_build_query( $keysArr ) ;
+	    }
+	    curl_setopt( $ch, CURLOPT_URL, $url ) ;
+	    $ret = curl_exec( $ch ) ;
+	    curl_close( $ch ) ;
+        return $ret;
+	}
 
 	
 	

@@ -11,20 +11,20 @@ class PPHTTP {
 	public function httpget($reurl='', $rearray=array('')) {
 		
 		if (empty($reurl)) {
-			return (false);
+			return (FALSE);
 		}
 		
 		$restring = $this->array2string($rearray);
 		
 		$ch = curl_init() ;
 		curl_setopt($ch, CURLOPT_URL, $reurl.$restring);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true) ; 
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) ; 
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'LightPass/X1 (With CURL)');
 		$output = curl_exec($ch);
 		curl_close($ch);
 		if (!$output){
-			return (false);
+			return (FALSE);
 		}else {			
 			return $output;
 		} 	
@@ -32,20 +32,20 @@ class PPHTTP {
 	
 	public function httppost($reurl='', $rearray=array('')){
 		if (empty($reurl) || empty($rearray)) {
-			return (false);
+			return (FALSE);
 		}
 		$post_data = $rearray;
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $reurl);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_POST, TRUE);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'LightPass/X1 (With CURL)'); 
 		$output = curl_exec($ch);  
 		curl_close($ch);
 		if (!$output){
-			return (false);
+			return (FALSE);
 		}else {
 			return $output;
 		}

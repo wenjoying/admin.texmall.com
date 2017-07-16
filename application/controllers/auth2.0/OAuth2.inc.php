@@ -906,7 +906,7 @@ abstract class OAuth2 {
    *
    * @return
    *   TRUE if everything in required scope is contained in available scope,
-   *   and False if it isn't.
+   *   and FALSE if it isn't.
    *
    * @see http://tools.ietf.org/html/draft-ietf-oauth-v2-10#section-5
    *
