@@ -319,9 +319,9 @@ function showDir( $filedir = '.' ) {
  * @param string $file:需要写入的文件或者二进制流
  * @return $filename:需要生成的文件名的绝对路径
  **/
-function createFile($file, $filename)
+function create_file($file, $filename)
 {
-    $write = @fopen($filename,"w");
+    $write = @fopen($filename, "w");
     if ($write==FALSE) {
         return FALSE;
     }
@@ -442,7 +442,7 @@ function get_lnglat_by_ip()
 }
 
 /**
- * @根据地址获取经纬度及地址
+ * @根据地址获取经纬度 
  * */
 function get_lnglat_by_address($address, $city)
 {

@@ -11,6 +11,8 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Cgoods_cart extends TM_Controller {
+    private $table = 'goods_cart';
+    private $table1 = 'user';
     
     function _init()
 	{
@@ -43,21 +45,90 @@ class Cgoods_cart extends TM_Controller {
 	}
 	
 	/**
+	 * @后台admin模拟
+	 * @新增购物车
+	 * */
+	public function add()
+	{
+	    $this->checkAction(__METHOD__);
+	     
+	    $goods = $this->_get_goods();
+	    if ($goods == FALSE) {
+	        alert_msg('产品不存在');
+	    }
+	    $data['res'] = $goods;
+	    $data['one_level'] = '订单管理';
+	    $data['two_level'] = '购物车';
+	    $this->load->view('goods_cart/vadd', $data);
+	}
+	
+	/**
+	 * @后台admin模拟
+	 * @添加购物车
+	 * */
+	public function addPost()
+	{
+	    $postData = $this->input->post();
+	    $user = $this->_get_user();
+	    if ($user->num_rows() == 0) {
+	        alert_msg('采购商不存在');
+	    }
+        if ($this->Base_model->getTableNum($this->table, array('uid'=>$user->row()->id, 'goods_id'=>$this->input->get('goods_id')))) {
+            alert_msg('产品已经加入购物车了。。。');
+        }
+	    $data['goods_id']      = $postData['goods_id'];
+	    $data['cover_img']     = $postData['cover_img'];
+	    $data['supplier_id']   = $postData['supplier_id'];
+	    $data['supplier_name'] = $postData['supplier_name'];
+	    $data['supplier_code'] = $postData['supplier_code'];
+	    $data['price']         = $postData['price'];
+	    $data['number']        = $postData['number'];
+	    $data['uid'] = $user->row()->id;
+	    $data['username'] = $user->row()->username;
+	    $data['time'] = time();
+	    
+	    $res = $this->Base_model->insert($this->table, $data);
+	    if ($res>0) {
+	        alert_msg('操作成功', 'Cgoods_cart/grid');
+	    }else{
+	        alert_msg('操作失败');
+	    }
+	}
+	
+	/**
+	 * @获取产品
+	 * */
+	private function _get_goods()
+	{
+	    $where['id'] = $this->input->get('goods_id');
+	    $where['is_sale'] = 1;
+	    $where['is_check'] = 2;
+	    $goods = $this->Base_model->getWhere('goods', $where);
+	    if ($goods->num_rows() > 0) {
+	        return $goods->row();
+	    }
+	    return FALSE;
+	}
+	
+	/**
+	 * @获取用户
+	 * */
+	private function _get_user()
+	{
+	    return $this->Base_model->getWhere('user', array('id'=>$this->input->post('uid'), 'role_id'=>1));
+	}
+	
+	/**
 	 * @删除购物车
 	 * */
 	public function delete($id = 0)
 	{
 	    $this->checkAction(__METHOD__);
 	     
-	    if ($id == 1) {
-	        alert_msg('禁止删除!');
-	    }
-	    $checkid = $this->input->post('checkid');
-	    $ids = $checkid ? $checkid : array($id);
-	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	     
 	    if ($res > 0) {
-	        alert_msg('操作成功', 'Cgoods/grid');
+	        alert_msg('操作成功', 'Cgoods_cart/grid');
 	    }else{
 	        alert_msg('操作失败');
 	    }

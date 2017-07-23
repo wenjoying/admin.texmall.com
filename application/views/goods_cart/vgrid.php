@@ -40,39 +40,30 @@
     					                <table class="demo-add-niftycheck table table-hover">
     					                    <thead>
         					                    <tr>
-            					                    <th width="2%"><div class="th-inner"><input class="select-all" type="checkbox"></div></th>
-            					                    <th width="5%"><div class="th-inner">ID</div></th>
-                                                    <th width="10%"><div class="th-inner">用户</div></th>
-                                                    <th width="10%"><div class="th-inner">产品</div></th>
-                                                    <th width="15%"><div class="th-inner">供应商</div></th>
-                                                    <th width="10%"><div class="th-inner">编码</div></th>
-                                                    <th width="10%"><div class="th-inner">价格</div></th>
-                                                    <th width="10%"><div class="th-inner">数量</div></th>
-                                                    <th width="10%"><div class="th-inner">时间</div></th>
-                                                    <th width="5%"><div class="th-inner">操作</div></th>
+            					                    <th><div class="th-inner">ID</div></th>
+                                                    <th><div class="th-inner">用户</div></th>
+                                                    <th><div class="th-inner">产品</div></th>
+                                                    <th><div class="th-inner">供应商</div></th>
+                                                    <th><div class="th-inner">编码</div></th>
+                                                    <th><div class="th-inner">价格</div></th>
+                                                    <th><div class="th-inner">数量</div></th>
+                                                    <th><div class="th-inner">时间</div></th>
+                                                    <th width="120px"><div class="th-inner">操作</div></th>
         					                    </tr>
     					                    </thead>
         					                <tbody>
         					                    <?php foreach($res as $r):?>
         					                    <tr>
-            					                    <td><div class="th-inner"><input class="list-check" type="checkbox" name="checkid[]" value="<?php echo $r->id?>"></div></td>
             					                    <td><?php echo $r->id?></td>
-            					                    <td><a style="text-decoration:underline;" href="<?php echo base_url('Cuser/edit/'.$r->uid)?>"><?php echo $r->username?></a></td>
-                                                    <td><a style="text-decoration:underline;" href="<?php echo base_url('Cgoods/edit/'.$r->goods_id)?>"><?php echo $r->cover_img?></a></td>
-                                                    <td><a style="text-decoration:underline;" href="<?php echo base_url('Csupplier_buyer/edit/'.$r->supplier_id)?>"><?php echo $r->supplier_name?></a></td>
+            					                    <td><a class="btn-link" href="<?php echo base_url('Cuser/page/'.$r->uid)?>"><?php echo $r->username?></a></td>
+                                                    <td><a class="btn-link" href="<?php echo base_url('Cgoods/page/'.$r->goods_id)?>"><?php echo $r->supplier_code?></a></td>
+                                                    <td><a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$r->supplier_id)?>"><?php echo $r->supplier_name?></a></td>
                                                     <td><?php echo $r->supplier_code?></td>
                                                     <td><?php echo $r->price?></td>
                                                     <td><?php echo $r->number?></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time)?></td>
             					                    <td>
-                                                        <div class="btn-group m-b-5">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                                <span class="caret"></span>
-                                                            </button>
-                                                            <ul class="dropdown-menu animated fadeIn">
-                                                                <li><a href="javascript:layer_conf('<?php echo base_url('Cgoods_cart/delete/'.$r->id);?>');"><i class="ion-trash-a"></i>删除</a></li>
-                                                            </ul>
-                                                        </div>
+            					                        <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Cgoods_cart/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>
@@ -87,16 +78,6 @@
 					                        todayHighlight: true
     					                });
     					                
-          					            // 全选、全不选、反选
-          					            $('.demo-add-niftycheck').on('click','.select-all',function(){     
-    										$('input[name="checkid[]"]').each(function(){
-    											if(this.checked){
-    												this.checked = false;
-    											}else{
-    												this.checked = true;
-    											}
-    										});
-    									});
     					                </script>
     					            </div>
     					        </div>

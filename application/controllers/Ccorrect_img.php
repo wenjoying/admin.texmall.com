@@ -15,7 +15,7 @@ class Ccorrect_img extends TM_Controller {
     private $table = 'correct_img';
     
     function _init()
-	{
+	{   
 		header("Content-type: text/html; Charset=utf-8");
 		$this->load->model('Mcorrect_img');
 	}
@@ -24,7 +24,7 @@ class Ccorrect_img extends TM_Controller {
 	 * @标准图片列表
 	 * */
 	public function grid($pg = 1)
-	{ 
+	{   
 	    $this->checkAction(__METHOD__);
 	     
 	    $this->load->library('pagination');

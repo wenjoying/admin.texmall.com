@@ -21,3 +21,15 @@ function get_reg_come($index = 0)
     }
     return isset($arr[$index]) ? $arr[$index] : FALSE;
 }
+
+function get_enterprise_nature()
+{
+    return array(
+        '个体工商户',
+        '企业',
+        '企业单位',
+        '民办非企业单位',
+        '社会团体',
+        '其他'
+    );
+}

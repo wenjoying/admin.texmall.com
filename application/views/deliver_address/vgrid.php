@@ -33,20 +33,18 @@
     					                <table class="demo-add-niftycheck table table-hover">
     					                    <thead>
         					                    <tr>
-            					                    <th width="2%"><div class="th-inner"><input class="select-all" type="checkbox"></div></th>
-            					                    <th width="5%"><div class="th-inner">ID</div></th>
-                                                    <th width="10%"><div class="th-inner">地址</div></th>
-                                                    <th width="10%"><div class="th-inner">详细地址</div></th>
-                                                    <th width="10%"><div class="th-inner">收件人</div></th>
-                                                    <th width="10%"><div class="th-inner">电话</div></th>
-                                                    <th width="10%"><div class="th-inner">是否默认</div></th>
-                                                    <th width="5%"><div class="th-inner">操作</div></th>
+            					                    <th><div class="th-inner">ID</div></th>
+                                                    <th><div class="th-inner">地址</div></th>
+                                                    <th><div class="th-inner">详细地址</div></th>
+                                                    <th><div class="th-inner">收件人</div></th>
+                                                    <th><div class="th-inner">电话</div></th>
+                                                    <th><div class="th-inner">是否默认</div></th>
+                                                    <th width="120px"><div class="th-inner">操作</div></th>
         					                    </tr>
     					                    </thead>
         					                <tbody>
         					                    <?php foreach($res as $r):?>
         					                    <tr>
-            					                    <td><div class="th-inner"><input class="list-check" type="checkbox" name="checkid[]" value="<?php echo $r->id?>"></div></td>
             					                    <td><?php echo $r->id?></td>
             					                    <td><?php echo $r->province_name.$r->city_name.$r->district_name?></td>
                                                     <td><?php echo $r->ads_des?></td>
@@ -54,32 +52,12 @@
                                                     <td><?php echo $r->tel?></td>
                                                     <td><?php if($r->if_default==1) echo '是'?></td>
             					                    <td>
-                                                        <div class="btn-group m-b-5">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                                <span class="caret"></span>
-                                                            </button>
-                                                            <ul class="dropdown-menu animated fadeIn">
-                                                                <li><a href="javascript:layer_conf('<?php echo base_url('Cdeliver_address/delete/'.$r->id);?>');"><i class="ion-trash-a"></i>删除</a></li>
-                                                            </ul>
-                                                        </div>
+            					                        <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Cdeliver_address/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
-    					                <script>
-    					                
-          					            // 全选、全不选、反选
-          					            $('.demo-add-niftycheck').on('click','.select-all',function(){     
-    										$('input[name="checkid[]"]').each(function(){
-    											if(this.checked){
-    												this.checked = false;
-    											}else{
-    												this.checked = true;
-    											}
-    										});
-    									});
-    					                </script>
     					            </div>
     					        </div>
     					        <div class="pull-right pagination">

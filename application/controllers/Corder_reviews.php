@@ -11,19 +11,78 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Corder_reviews extends TM_Controller {
+    private $table = 'order_reviews';
     
     function _init()
 	{
 		header("Content-type: text/html; Charset=utf-8");
+		$this->load->model('Morder_reviews');
 	}
 	
-	public function grid() 
+	/**
+	 * @p评价列表
+	 * */
+	public function grid($pg = 1) 
 	{
 	    $this->checkAction(__METHOD__);
-	    
-	    $data['one_level'] = '网站设置';
-	    $data['two_level'] = '字体图标';
-	    $this->load->view('order_reviews/vgrid', $data);
+        
+        $this->load->library('pagination');
+        $config['per_page']   = 20;
+        $config['uri_segment'] = 3;
+        $config['suffix']     = $this->get_page_param($this->input->get());
+        $config['total_rows'] = $this->Morder_reviews->total($this->input->get());
+        $config['first_url']  = base_url('Corder_reviews/grid').$this->get_page_param($this->input->get());
+        $config['base_url']   = base_url('Corder_reviews/grid');
+        $this->pagination->initialize($config);
+        $data['link']       = $this->pagination->create_links();
+        $data['res']        = $this->Morder_reviews->grid($pg-1, $config['per_page'], $this->input->get())->result();
+        $data['sum']        = $config['total_rows'];
+        $data['per_page']   = $config['per_page'];
+        $data['status_arr'] = array(
+            '1'=>'<span class="label label-table label-info">审核中</span>',
+            '2'=>'<span class="label label-table label-success">通过</span>',
+            '3'=>'<span class="label label-table label-danger">不通过</span>'
+        );
+        $data['one_level'] = '订单管理';
+        $data['two_level'] = '订单评价';
+        $this->load->view('order_reviews/vgrid', $data);
+	}
+	
+	/**
+	 * @查看
+	 * */
+	public function page($id = 0)
+	{
+	    $this->checkAction(__METHOD__);
+	     
+	    $res = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($res->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    $data['res'] = $res->row();
+	    $data['status_arr'] = array('1'=>'审核中', '2'=>'通过', '3'=>'不通过');
+	    $data['one_level'] = '订单管理';
+        $data['two_level'] = '订单评价';
+	    $this->load->view('order_reviews/vpage', $data);
+	}
+	
+	/**
+	 * @删除
+	 * */
+	public function delete($id = 0) 
+	{
+	    $this->checkAction(__METHOD__);
+	     
+	    $reviews = $this->Base_model->getWhere($this->table, array('id'=>$id))->row();
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
+	    if ($res > 0) {
+	        foreach (explode('|', $reviews->imgs) as $i) {
+	            $this->delete_img($i);
+	        }
+	        alert_msg('操作成功', 'Corder_reviews/grid');
+	    }else{
+	        alert_msg('操作失败');
+	    }
 	}
 	
 }

@@ -44,13 +44,14 @@
     <script src="<?php inc_file('bootstrap-table/bootstrap-table.min.js', 'plugins')?>"></script>
     <script src="<?php inc_file('bootstrap-select/bootstrap-select.min.js', 'plugins')?>"></script>
     <script src="<?php inc_file('bootstrap-datepicker/bootstrap-datepicker.min.js', 'plugins')?>"></script>
+    <script src="<?php inc_file('bootstrap-datepicker/bootstrap-datepicker.zh.js', 'plugins')?>"></script>
     
 	<script>
     //根地址
     var base_url = '<?php echo base_url();?>';
     /**@确认提示*/
     var layer_conf = function(url){
-    	layer.confirm('删除后不能回复，是否确认删除？', function(index){
+    	layer.confirm('删除后不能恢复，是否确认删除？', function(index){
         	window.location.href = url;
         });
     }
@@ -232,107 +233,123 @@
 						
 						            <li class="<?php if($one_level=='用户管理') echo 'active-sub'?>">
 						                <a href="#">
-						                    <i class="demo-psi-split-vertical-2"></i>
+						                    <i class="ion-person-stalker"></i>
 						                    <span class="menu-title"><strong>用户管理</strong></span>
 											<i class="arrow"></i>
 						                </a>
 						                <ul class="collapse <?php if($one_level=='用户管理') echo 'in'?>">
-						                    <li class="<?php if($two_level=='用户列表') echo 'active-link';?>"><a href="<?php echo base_url('Cuser/grid');?>">用户列表</a></li>
-						                    <li class="<?php if($two_level=='通讯录') echo 'active-link';?>"><a href="<?php echo base_url('Cuser_mail_list/grid');?>">通讯录</a></li>
-						                    <li class="<?php if($two_level=='收藏') echo 'active-link';?>"><a href="<?php echo base_url('Cuser_enshrine/grid');?>">收藏</a></li>
-						                    <li class="<?php if($two_level=='搜索记录') echo 'active-link';?>"><a href="<?php echo base_url('Csearch_log/grid');?>">搜索记录</a></li>
-						                    <li class="<?php if($two_level=='浏览记录') echo 'active-link';?>"><a href="<?php echo base_url('Cuser_log/grid');?>">浏览记录</a></li>
+						                    <li class="<?php if($two_level=='用户列表') echo 'active-link';?>"><a href="<?php echo base_url('Cuser/grid');?>"><i class="ion-navicon"></i>用户列表</a></li>
+						                    <li class="<?php if($two_level=='通讯录') echo 'active-link';?>"><a href="<?php echo base_url('Cuser_mail_list/grid');?>"><i class="ion-navicon"></i>通讯录</a></li>
+						                    <li class="<?php if($two_level=='收藏') echo 'active-link';?>"><a href="<?php echo base_url('Cuser_enshrine/grid');?>"><i class="ion-star"></i>收藏</a></li>
+						                    <li class="<?php if($two_level=='搜索记录') echo 'active-link';?>"><a href="<?php echo base_url('Csearch_log/grid');?>"><i class="ion-navicon"></i>搜索记录</a></li>
+						                    <li class="<?php if($two_level=='浏览记录') echo 'active-link';?>"><a href="<?php echo base_url('Cuser_log/grid');?>"><i class="ion-navicon"></i>浏览记录</a></li>
 						                </ul>
 						            </li>
 						            
 						            <li class="<?php if($one_level=='公司管理') echo 'active-sub'?>">
 						                <a href="#">
-						                    <i class="demo-psi-split-vertical-2"></i>
+						                    <i class="ion-grid"></i>
 						                    <span class="menu-title"><strong>公司管理</strong></span>
 											<i class="arrow"></i>
 						                </a>
 						                <ul class="collapse <?php if($one_level=='公司管理') echo 'in'?>">
-						                    <li class="<?php if($two_level=='公司列表') echo 'active-link';?>"><a href="<?php echo base_url('Csupplier_buyer/grid');?>">公司列表</a></li>
+						                    <li class="<?php if($two_level=='公司列表') echo 'active-link';?>"><a href="<?php echo base_url('Csupplier_buyer/grid');?>"><i class="ion-navicon"></i>公司列表</a></li>
                                         </ul>
 						            </li>
 						            
 						            <li class="<?php if($one_level=='产品中心') echo 'active-sub'?>">
 						                <a href="#">
-						                    <i class="demo-psi-split-vertical-2"></i>
+						                    <i class="ion-navicon-round"></i>
 						                    <span class="menu-title"><strong>产品中心</strong></span>
 											<i class="arrow"></i>
 						                </a>
 						                <ul class="collapse <?php if($one_level=='产品中心') echo 'in'?>">
-						                    <li class="<?php if($two_level=='产品列表') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods/grid');?>">产品列表</a></li>
-                                            <li class="<?php if($two_level=='标准图片') echo 'active-link';?>"><a href="<?php echo base_url('Ccorrect_img/grid');?>">标准图片</a></li>
-                                            <li class="<?php if($two_level=='产品属性') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_attr_set/grid');?>">产品属性</a></li>
+						                    <li class="<?php if($two_level=='产品列表') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods/grid');?>"><i class="ion-navicon"></i>产品列表</a></li>
+                                            <li class="<?php if($two_level=='标准图片') echo 'active-link';?>"><a href="<?php echo base_url('Ccorrect_img/grid');?>"><i class="ion-image"></i>标准图片</a></li>
+                                            <li class="<?php if($two_level=='产品属性') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_attr_set/grid');?>"><i class="ion-pull-request"></i>产品属性</a></li>
+                                            <li class="<?php if($two_level=='特价&推荐') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_attr_set/grid');?>"><i class="ion-pull-request"></i>特价&推荐</a></li>
                                         </ul>
 						            </li>
 						            
 						            <li class="<?php if($one_level=='订单管理') echo 'active-sub'?>">
 						                <a href="#">
-						                    <i class="demo-psi-split-vertical-2"></i>
+						                    <i class="ion-compose"></i>
 						                    <span class="menu-title"><strong>订单管理</strong></span>
 											<i class="arrow"></i>
 						                </a>
 						                <ul class="collapse <?php if($one_level=='订单管理') echo 'in'?>">
-						                    <li class="<?php if($two_level=='订单列表') echo 'active-link';?>"><a href="<?php echo base_url('Corder/grid');?>">订单列表</a></li>
-						                    <li class="<?php if($two_level=='购物车') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_cart/grid');?>">购物车</a></li>
-						                    <li class="<?php if($two_level=='收货地址') echo 'active-link';?>"><a href="<?php echo base_url('Cdeliver_address/grid');?>">收货地址</a></li>
+						                    <li class="<?php if($two_level=='订单列表') echo 'active-link';?>"><a href="<?php echo base_url('Corder/grid');?>"><i class="ion-navicon"></i>订单列表</a></li>
+						                    <li class="<?php if($two_level=='订单产品') echo 'active-link';?>"><a href="<?php echo base_url('Corder_goods/grid');?>"><i class="ion-navicon"></i>订单产品</a></li>
+						                    <li class="<?php if($two_level=='订单评价') echo 'active-link';?>"><a href="<?php echo base_url('Corder_reviews/grid');?>"><i class="ion-chatbubble-working"></i>订单评价</a></li>
+						                    <li class="<?php if($two_level=='购物车') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_cart/grid');?>"><i class="ion-navicon"></i>购物车</a></li>
 						                </ul>
 						            </li>
 						            
 						            <li class="<?php if($one_level=='询价管理') echo 'active-sub'?>">
 						                <a href="#">
-						                    <i class="demo-psi-split-vertical-2"></i>
+						                    <i class="ion-radio-waves"></i>
 						                    <span class="menu-title"><strong>询价管理</strong></span>
 											<i class="arrow"></i>
 						                </a>
 						                <ul class="collapse <?php if($one_level=='询价管理') echo 'in'?>">
-						                    <li class="<?php if($two_level=='询价列表') echo 'active-link';?>"><a href="<?php echo base_url('Cenquiry/grid');?>">询价列表</a></li>
-						                    <li class="<?php if($two_level=='报价列表') echo 'active-link';?>"><a href="<?php echo base_url('Cenquiry_respond/grid');?>">报价列表</a></li>
+						                    <li class="<?php if($two_level=='询价列表') echo 'active-link';?>"><a href="<?php echo base_url('Cenquiry/grid');?>"><i class="ion-navicon"></i>询价列表</a></li>
+						                    <li class="<?php if($two_level=='报价列表') echo 'active-link';?>"><a href="<?php echo base_url('Cenquiry_respond/grid');?>"><i class="ion-navicon"></i>报价列表</a></li>
 						                </ul>
+						            </li>
+						            
+						            <li class="<?php if($one_level=='认证审核') echo 'active-sub'?>">
+						                <a href="#">
+						                    <i class="ion-ribbon-b"></i>
+						                    <span class="menu-title"><strong>认证审核</strong></span>
+											<i class="arrow"></i>
+						                </a>
+						                <ul class="collapse <?php if($one_level=='认证审核') echo 'in'?>">
+						                    <li class="<?php if($two_level=='个人认证') echo 'active-link';?>"><a href="<?php echo base_url('Cauthenticate_personal/grid');?>"><i class="ion-eye"></i>个人认证</a></li>
+                                            <li class="<?php if($two_level=='公司认证') echo 'active-link';?>"><a href="<?php echo base_url('Cauthenticate_enterprise/grid');?>"><i class="ion-eye"></i>公司认证</a></li>
+                                            <li class="<?php if($two_level=='平台服务商') echo 'active-link';?>"><a href="<?php echo base_url('Cplatform_service/grid');?>"><i class="ion-person-add"></i>平台服务商</a></li>
+                                        </ul>
 						            </li>
 						            
 						            <li class="<?php if($one_level=='后台管理员') echo 'active-sub'?>">
 						                <a href="#">
-						                    <i class="demo-psi-split-vertical-2"></i>
+						                    <i class="ion-laptop"></i>
 						                    <span class="menu-title"><strong>后台管理员</strong></span>
 											<i class="arrow"></i>
 						                </a>
 						                <ul class="collapse <?php if($one_level=='后台管理员') echo 'in'?>">
-						                    <li class="<?php if($two_level=='个人信息') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_user/profile');?>">个人信息</a></li>
-                                            <li class="<?php if($two_level=='管理员列表') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_user/grid');?>">管理员列表</a></li>
-                                            <li class="<?php if($two_level=='管理员角色') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_role/grid');?>">管理员角色</a></li>
-                                            <li class="<?php if($two_level=='权限列表') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_action/grid');?>">权限列表</a></li>
-                                            <li class="<?php if($two_level=='访问日志') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_log/grid');?>">访问日志</a></li>
+						                    <li class="<?php if($two_level=='个人信息') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_user/profile');?>"><i class="demo-pli-male ic-user"></i>个人信息</a></li>
+                                            <li class="<?php if($two_level=='管理员列表') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_user/grid');?>"><i class="ion-navicon"></i>管理员列表</a></li>
+                                            <li class="<?php if($two_level=='管理员角色') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_role/grid');?>"><i class="ion-contrast"></i>管理员角色</a></li>
+                                            <li class="<?php if($two_level=='权限列表') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_action/grid');?>"><i class="ion-navicon"></i>权限列表</a></li>
+                                            <li class="<?php if($two_level=='访问日志') echo 'active-link';?>"><a href="<?php echo base_url('Cadmin_log/grid');?>"><i class="ion-navicon"></i>访问日志</a></li>
                                         </ul>
 						            </li>
 						            
 						            <li class="<?php if($one_level=='资讯&帮助中心') echo 'active-sub'?>">
 						                <a href="#">
-						                    <i class="demo-psi-split-vertical-2"></i>
+						                    <i class="ion-clipboard"></i>
 						                    <span class="menu-title"><strong>资讯&帮助中心</strong></span>
 											<i class="arrow"></i>
 						                </a>
 						                <ul class="collapse <?php if($one_level=='资讯&帮助中心') echo 'in'?>">
-						                    <li class="<?php if($two_level=='分类') echo 'active-link';?>"><a href="<?php echo base_url('Chelp_category/grid');?>">分类</a></li>
-						                    <li class="<?php if($two_level=='信息列表') echo 'active-link';?>"><a href="<?php echo base_url('Chelp_center/grid');?>">信息列表</a></li>
+						                    <li class="<?php if($two_level=='分类') echo 'active-link';?>"><a href="<?php echo base_url('Chelp_category/grid');?>"><i class="ion-quote"></i>分类</a></li>
+						                    <li class="<?php if($two_level=='信息列表') echo 'active-link';?>"><a href="<?php echo base_url('Chelp_center/grid');?>"><i class="ion-navicon"></i>信息列表</a></li>
 						                </ul>
 						            </li>
 						            
 						            <li class="<?php if($one_level=='网站设置') echo 'active-sub'?>">
 						                <a href="#">
-						                    <i class="demo-psi-split-vertical-2"></i>
+						                    <i class="ion-gear-b"></i>
 						                    <span class="menu-title"><strong>网站设置</strong></span>
 											<i class="arrow"></i>
 						                </a>
 						                <ul class="collapse <?php if($one_level=='网站设置') echo 'in'?>">
-						                    <li class="<?php if($two_level=='轮播图&广告图') echo 'active-link';?>"><a href="<?php echo base_url('Cad_img/grid');?>">轮播图&广告图</a></li>
-                                            <li class="<?php if($two_level=='应用授权') echo 'active-link';?>"><a href="<?php echo base_url('Cauth2/grid');?>">应用授权</a></li>
-                                            <li class="<?php if($two_level=='第三方接口') echo 'active-link';?>"><a href="<?php echo base_url('Cthird_manage/grid');?>">第三方接口</a></li>
-                                            <li class="<?php if($two_level=='意见反馈') echo 'active-link';?>"><a href="<?php echo base_url('Cfeedback/grid');?>">意见反馈</a></li>
-                                            <li><a href="<?php echo base_url('Clogin/show_404');?>">404</a></li>
+						                    <li class="<?php if($two_level=='轮播图&广告图') echo 'active-link';?>"><a href="<?php echo base_url('Cad_img/grid');?>"><i class="ion-images"></i>轮播图&广告图</a></li>
+                                            <li class="<?php if($two_level=='应用授权') echo 'active-link';?>"><a href="<?php echo base_url('Cauth2/grid');?>"><i class="ion-link"></i>应用授权</a></li>
+                                            <li class="<?php if($two_level=='第三方接口') echo 'active-link';?>"><a href="<?php echo base_url('Cthird_manage/grid');?>"><i class="ion-arrow-swap"></i>第三方接口</a></li>
+                                            <li class="<?php if($two_level=='意见反馈') echo 'active-link';?>"><a href="<?php echo base_url('Cfeedback/grid');?>"><i class="ion-arrow-return-left"></i>意见反馈</a></li>
+                                            <li class="<?php if($two_level=='字体') echo 'active-link';?>"><a href="<?php echo base_url('Cfonts/grid');?>"><i class="ion-arrow-return-left"></i>字体</a></li>
+                                            <li><a href="<?php echo base_url('Clogin/show_404');?>"><i class="ion-alert"></i>404</a></li>
                                         </ul>
 						            </li>
 						            
@@ -383,7 +400,7 @@
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <ol class="breadcrumb">
 					<li><a href="<?php echo base_url()?>">Home</a></li>
-					<li><a href="#"><?php echo $one_level?></a></li>
+					<li><a class="btn-link" href="###"><?php echo $one_level?></a></li>
 					<li class="active"><?php echo $two_level?></li>
                 </ol>
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

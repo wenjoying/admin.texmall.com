@@ -38,8 +38,8 @@
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">密码*</label>
     					                    <div class="col-md-6">
-    					                        <input type="password" class="form-control" name="password" required="required" maxlength="15" value="" placeholder="...">
-    					                        <small class="help-block">6-15位</small> 
+    					                        <input type="password" class="form-control" name="password" required="required" maxlength="20" value="" placeholder="...">
+    					                        <small class="help-block">6-20位</small> 
     					                    </div>
     					                </div>
     					                
@@ -50,13 +50,28 @@
     					                    </div>
     					                </div>
     					                
+    					                <?php if(empty($this->input->get('role_id')) || empty($this->input->get('companyid'))) :?>
+    					                <div class="form-group pad-ver">
+    					                    <label class="col-md-3 control-label">角色*</label>
+    					                    <div class="col-md-6">
+					                            <select class="selectpicker" name="role_id" required="required" >
+                	                                <option value="">请选择类型</option>
+                	                                <?php foreach($role as $r):?>
+                                                    <option value="<?php echo $r->role_id?>"><?php echo $r->role_name?></option>
+                                                    <?php endforeach;?>
+                                                </select>
+    					                    </div>
+    					                </div>
+    					                <?php else :?>
     					                <div class="form-group">
-    					                    <label class="col-md-3 control-label" for="demo-text-input">公司名称</label>
+    					                    <label class="col-md-3 control-label" for="demo-text-input">公司名称*</label>
     					                    <div class="col-md-6">
     					                        <input type="hidden" name="companyid" value="<?php echo $this->input->get('companyid')?>">
+    					                        <input type="hidden" name="role_id" value="<?php echo $this->input->get('role_id')?>">
     					                        <input type="text" class="form-control" readonly name="company" maxlength="100" value="<?php echo $this->input->get('company')?>" placeholder="...">
     					                    </div>
     					                </div>
+    					                <?php endif;?>
     					                
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">职位</label>
@@ -68,27 +83,29 @@
     					                <div class="form-group pad-ver">
     					                    <label class="col-md-3 control-label">性别</label>
     					                    <div class="col-md-6">
-    					                        <div class="radio">
-    					                            <select class="selectpicker" name="sex">
-                    	                                <option value="3">保密</option>
-                                                        <option value="1">男</option>
-                                                        <option value="2">女</option>
-                                                    </select>
-    					                        </div>
+					                            <select class="selectpicker" name="sex">
+                	                                <option value="3">保密</option>
+                                                    <option value="1">男</option>
+                                                    <option value="2">女</option>
+                                                </select>
+    					                    </div>
+    					                </div>
+    					                
+    					                <div class="form-group">
+    					                    <label class="col-md-3 control-label" for="demo-text-input">生日</label>
+    					                    <div class="col-md-6">
+    					                        <input type="text" class="form-control date-select" name="birthday" maxlength="20" value="" placeholder="...">
     					                    </div>
     					                </div>
     					                
     					                <div class="form-group pad-ver">
-    					                    <label class="col-md-3 control-label">角色*</label>
+    					                    <label class="col-md-3 control-label">管理员</label>
     					                    <div class="col-md-6">
-    					                        <div class="radio">
-    					                            <select class="selectpicker" name="role_id" required="required">
-                    	                                <option value="">请选择类型</option>
-                    	                                <?php foreach($role as $r):?>
-                                                        <option value="<?php echo $r->role_id?>"><?php echo $r->role_name?></option>
-                                                        <?php endforeach;?>
-                                                    </select>
-    					                        </div>
+					                            <select class="selectpicker" name="set_manager">
+                                                    <option value="0">否</option>
+                                                    <option value="1">是</option>
+                                                </select>
+                                                <small class="help-block">一个公司仅有一个管理员</small> 
     					                    </div>
     					                </div>
     					                
@@ -107,6 +124,14 @@
 					</div>
 					<script>
 					$(function(){
+						//时间
+		                $('input.date-select').datepicker({
+	                		format: "yyyy-mm-dd",
+	                        todayBtn: "linked",
+	                        autoclose: true,
+	                        todayHighlight: true
+		                });
+		                
     					//图片预览
     					$('.form-group').find('input[type="file"]').change(function(){
     						var img = '<img height=100 width=100 src="'+window.URL.createObjectURL(this.files[0])+'">';

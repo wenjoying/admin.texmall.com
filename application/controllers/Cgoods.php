@@ -25,7 +25,7 @@ class Cgoods extends TM_Controller {
 	 * @产品列表
 	 * */
 	public function grid($pg = 1)
-	{  
+	{   
 	    $this->checkAction(__METHOD__);
         
         $this->load->library('pagination');
@@ -73,12 +73,17 @@ class Cgoods extends TM_Controller {
 	    $postData = $this->input->post();
 	    $img = $this->deal_img('goods', FALSE);
 	    if (isset($img['upload']['original_img'])) {
-	        $data['original_img'] = $img['upload']['original_img'];
-	        $contrast = $this->_get_contrast($data['original_img']);
+	        
+	        $contrast = $this->_get_contrast(array($img['upload']['original_img']));
+	        if ($contrast == FALSE) {
+	            alert_msg('以图找图失败');
+	        }
 	        $data['cover_img']     = $contrast['cover_img'];
+	        $data['original_img']  = $contrast['original'];
 	        $data['platform_name'] = $contrast['platform_name'];
 	        $data['lattice']       = $contrast['lattice'];
 	        $data['color']         = $contrast['color'];
+	        $data['pantone_color'] = $contrast['pantone_color'];
 	        $data['tex_grid']      = $contrast['tex_grid'];
 	        $data['yarn_density']  = $contrast['yarn_density'];
 	        $data['back_size']     = $contrast['back_size'];
@@ -90,6 +95,7 @@ class Cgoods extends TM_Controller {
 	    $data['supplier_name'] = $postData['supplier_name'];
 	    $data['supplier_code'] = $postData['supplier_code'];
 	    $data['uid']           = $this->admin->id;
+	    $data['username']           = $this->admin->username;
 	    $data['price']         = $postData['price'];
 	    $data['in_stock']      = $postData['in_stock'];
 	    $data['width']         = $postData['width'];
@@ -105,7 +111,7 @@ class Cgoods extends TM_Controller {
 	    $data['des']           = $postData['des'];
 	    $data['is_sale']       = $postData['is_sale'];
 	    $data['is_check']      = 1;
-	    $data['platform_grade'] = 1;
+	    $data['platform_grade'] = $postData['platform_grade'];
 	    $data['sum_sale']      = 0;
 	    $data['sum_review']    = 0;
 	    $data['pv']            = 0;
@@ -192,26 +198,6 @@ class Cgoods extends TM_Controller {
 	}
 	
 	/**
-	 * @修改等级
-	 * */
-	public function up_grade($id = 0)
-	{
-	    $this->checkAction(__METHOD__);
-	    
-	    $goods = $this->Base_model->getWhere($this->table, array('id'=>$id));
-	    if ($goods->num_rows() == 0) {
-	        $this->redirect('Clogin/show_404');
-	    }
-	    $grade = in_array($this->input->get('grade'), array(1, 2, 3)) ? $this->input->get('grade') : 1;
-	    $res = $this->Base_model->update($this->table, array('id'=>$id), array('platform_grade'=>$grade));
-	    if ($res>0) {
-	        alert_msg('操作成功', 'Cgoods/grid');
-	    }else{
-	        alert_msg('操作失败');
-	    }
-	}
-	
-	/**
 	 * @获取属性信息
 	 * */
 	private function _get_attr()
@@ -222,24 +208,39 @@ class Cgoods extends TM_Controller {
 	
 	/**
 	 * @获取以图找图结果
-	 * @$original:需要和标准图片对比的图
+	 * @$original:需要和标准图片对比的图片数组
 	 * */
 	private function _get_contrast($original)
 	{
 	    $res = $this->Base_model->getWhere('correct_img', array('type'=>'tex'), 'img_name desc')->result();
-	    $param = array('or'=>$original, 'img_arr'=>array_column($res, 'correct_img', 'img_name'));
-// 	    $url = '';
-// 	    $res = json_decode($this->fn_get_contents($url, $param, 'post'));
-
-	    $d = json_encode(array(  //模拟
+	    $param = array('or_arr'=>$original, 'img_arr'=>array_column($res, 'correct_img', 'img_name'));
+	    $param = array(
+	        'token'  => 'texmall2017-token', //请求令牌，令牌一致则可以请求接口
+	        'or_arr' => array( //上传图片的保存路径
+	            './goods/20170721/110218_4001.jpg', 
+	            './goods/20170721/110218_5002.jpg', 
+	            './goods/20170721/110218_3956.jpg'
+	        ),
+	        'img_arr' => array(    //标准图库的路径
+	            'A0001'=>'./correct_img/20170721/092208_6075.jpg',
+	            'A0002'=>'./correct_img/20170721/092424_8172.jpg',
+	            'A0003'=>'./correct_img/20170721/092650_4129.jpg',
+	        )
+	    );
+	    $url = 'http://zhanggong.com/yituzhaotu';  //张工以图找图(图片修正，图片提取)url，返回json数据
+	    $res = json_decode($this->fn_get_contents($url, $param, 'post'));  //数据post提交
+	    $d = json_encode(array(  //模拟返回数据
 	        'status' => TRUE,
 	        'data' => array(
-	            'img_name' => '',
-	            'lattice' => '0.5',
-	            'color' => '黑,红,黄',
-	            'tex_grid' => '1',
-	            'yarn_density' => '234',
-	            'back_size' => '2332',
+	            'img_name' => 'A0001', //如果标准图库有，标准图库名称
+	            'cover_img_url' => 'http://zhanggong.com/images/qwdadret2131.jpg', //如果标准图库没有，张工修正好的硬币图片
+	            'original' => './goods/20170721/110218_3956.jpg|./goods/20170721/110218_4001.jpg|./goods/20170721/110218_5002.jpg', //硬币图排在第一
+	            'lattice' => '0.5',    //格型
+	            'color' => '黑,红,黄',    //颜色
+	            'pantone_color' => 'c341', //潘通色号
+	            'tex_grid' => '1', //格子：1其他2千鸟格3朝阳格
+	            'yarn_density' => '234',   //纱支密度
+	            'back_size' => '2332', //花回尺寸
 	        )
 	    ));
 	    $res = json_decode($d); 
@@ -248,8 +249,8 @@ class Cgoods extends TM_Controller {
 	        return FALSE;
 	    }
 	    if (empty($res->data->img_name)) {//标准库没有找到结果
-	        $new = $this->file2dir($original, 'correct_img');
-	        if (empty($new)) {//复制失败
+	        $new = $this->download_img($res->data->cover_img_url, 'correct_img');
+	        if (empty($new)) {//下载到服务器失败
 	            return FALSE;
 	        }
 	        $img['correct_img'] = $new;
@@ -266,11 +267,12 @@ class Cgoods extends TM_Controller {
 	        $ret['platform_name'] = $res->data->img_name;
 	        $ret['cover_img'] = $param['img_arr'][$ret['platform_name']];
 	    }
-	    $ret['lattice'] = $res->data->lattice;
-	    $ret['color'] = $res->data->color;
-	    $ret['tex_grid'] = $res->data->tex_grid;
+	    $ret['original']   = $res->data->original;
+	    $ret['lattice']    = $res->data->lattice;
+	    $ret['color']      = $res->data->color;
+	    $ret['tex_grid']   = $res->data->tex_grid;
 	    $ret['yarn_density'] = $res->data->yarn_density;
-	    $ret['back_size'] = $res->data->back_size;
+	    $ret['back_size']  = $res->data->back_size;
 	    return $ret;
 	}
 	
@@ -281,7 +283,7 @@ class Cgoods extends TM_Controller {
 	public function validate($type = 'insert')
 	{
 	    if ($type == 'insert') {
-	        if (is_empty($_FILES)) {
+	        if (empty($_FILES)) {
 	            alert_msg('请上传图片');
 	        }
 	         
@@ -324,12 +326,35 @@ class Cgoods extends TM_Controller {
 	    
 	}
 	
+	/**
+	 * @详情页
+	 * */
 	public function page($id = 0)
 	{
 	    $this->checkAction(__METHOD__);
 	    
+	    $res = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($res->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    $data['res'] = $res->row();
+	    $data['attr'] = array_column($this->_get_attr(), null, 'attr_en_name');
+	    $data['one_level'] = '产品中心';
+        $data['two_level'] = '产品列表';
+	    $this->load->view('goods/vpage', $data);
 	}
 	
+	/**
+	 * @下一个
+	 * */
+	public function next($id = 0)
+	{
+	    $res = $this->Base_model->getWhere($this->table, array('id <'=>$id), 'id desc', 1);
+	    if ($res->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    $this->redirect('Cgoods/page/'.$res->row()->id);
+	}
 	
 	/**
 	 * @删除产品
@@ -338,9 +363,6 @@ class Cgoods extends TM_Controller {
 	{    
 	    $this->checkAction(__METHOD__);
 	    
-	    if ($id == 1) {
-	        alert_msg('禁止删除!');
-	    }
 	    $checkid = $this->input->post('checkid');
 	    $ids = $checkid ? $checkid : array($id);
 	    $goods = $this->Base_model->getWherein($this->table, 'id', $ids);
@@ -356,7 +378,14 @@ class Cgoods extends TM_Controller {
 	    }
 	}
 	
-
+    /**
+     * @获取供应商产品
+     * */
+	public function supplier_goods($supplier_id = 0)
+	{
+	    $data[] = '';
+	    $this->load->view('goods/vsupplier_goods', $data);
+	}
 	
 
 }

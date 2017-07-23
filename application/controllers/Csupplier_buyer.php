@@ -18,10 +18,11 @@ class Csupplier_buyer extends TM_Controller {
 	{
 		header("Content-type: text/html; Charset=utf-8");
 		$this->load->model('Msupplier_buyer');
+		$this->load->model('Mdistrict');
 	}
 	
 	/**
-	 * @用户列表
+	 * @公司列表
 	 * */
 	public function grid($pg = 1)  
 	{  
@@ -39,53 +40,60 @@ class Csupplier_buyer extends TM_Controller {
 		$data['res']        = $this->Msupplier_buyer->grid($pg-1, $config['per_page'], $this->input->get())->result();
 		$data['sum']        = $config['total_rows'];
 		$data['per_page']   = $config['per_page'];
-		$data['one_level'] = '用户管理';
-		$data['two_level'] = '用户列表';
-		$this->load->view('Csupplier_buyer/vgrid', $data);
+		$data['status_arr'] = array(
+		    '1'=>'<span class="label label-table label-info">审核中</span>',
+		    '2'=>'<span class="label label-table label-success">通过</span>',
+		    '3'=>'<span class="label label-table label-danger">不通过</span>'
+		);
+		$data['grade_arr'] = array('1'=>'正常', '2'=>'推荐', '3'=>'严选');
+		$data['one_level'] = '公司管理';
+		$data['two_level'] = '公司列表';
+		$this->load->view('supplier_buyer/vgrid', $data);
 	}
 	
 	/**
-	 * @新增用户
+	 * @新增公司
 	 * */
 	public function add()
 	{
 	    $this->checkAction(__METHOD__);
 	    
-	    $data['role'] = $this->_get_role();
-	    $data['one_level'] = '用户管理';
-	    $data['two_level'] = '用户列表';
-	    $this->load->view('Csupplier_buyer/vadd', $data);
+	    $data['one_level'] = '公司管理';
+		$data['two_level'] = '公司列表';
+	    $this->load->view('supplier_buyer/vadd', $data);
 	}
 	
 	/**
-	 * @新增用户
+	 * @新增公司
 	 * */
 	public function addPost()
 	{
 	    $this->validata();
-	    
+	 
 	    $postData = $this->input->post();
-	    $data['Csupplier_buyerimg'] = $this->config->default_img['Csupplier_buyerimg'];
-	    $img = $this->deal_img('Csupplier_buyerimg', FALSE);
-	    if (isset($img['upload']['Csupplier_buyerimg'])) {
-	        $data['Csupplier_buyerimg'] = $img['upload']['Csupplier_buyerimg'];
-	    }
-	    $data['Csupplier_buyername']  = $postData['Csupplier_buyername'];
-	    $data['mobile']    = $postData['mobile'];
-	    $data['password']  = ZD_md5($postData['password']);
-	    $data['id_card']   = $postData['id_card'];
-	    $data['companyid'] = $postData['companyid'];
-	    $data['company']   = $postData['company'];
-	    $data['positions'] = $postData['positions'];
-	    $data['sex']       = $postData['sex'];
-	    $data['role_id']   = $postData['role_id'];
-	    $data['pid']       = 0;
+	    $dis = $this->Mdistrict->get_address($postData['province_id'], $postData['city_id'], $postData['district_id']);
+	    $data['uid']           = 0;
+	    $data['username']      = '';
+	    $data['type']          = $postData['type'];
+	    $data['company_name']  = $postData['company_name'];
+	    $data['province_id']   = $postData['province_id'];
+	    $data['city_id']       = $postData['city_id'];
+	    $data['district_id']   = $postData['district_id'];
+	    $data['province_name'] = $dis[$postData['province_id']];
+	    $data['city_name']     = $dis[$postData['city_id']];
+	    $data['district_name'] = $dis[$postData['district_id']];
+	    $data['ads_des']       = $postData['ads_des'];
+	    $data['lnglat']        = get_lnglat_by_address($data['ads_des'], $data['city_name'].$data['district_name']);
+	    $data['office_tel']    = $postData['office_tel'];
+	    $data['main_business'] = $postData['main_business'];
+	    $data['des']           = $postData['des'];
+	    $data['status']        = $postData['status'];
+	    $data['platform_grade'] = $postData['platform_grade'];
 	    $data['qr_img']    = '';
-	    $data['reg_come']  = 5;
-	    $data['reg_ip']    = getIp();
-	    $data['reg_time']  = time(); 
+	    $data['time']  = time(); 
 	    $res = $this->Base_model->insert($this->table, $data);
 	    if ($res > 0) {
+	        $this->_create_qr($res);
 	        alert_msg('操作成功', 'Csupplier_buyer/grid');
 	    }else{
 	        alert_msg('操作失败');
@@ -93,7 +101,7 @@ class Csupplier_buyer extends TM_Controller {
 	}
 	
 	/**
-	 * @修改用户
+	 * @修改公司
 	 * */
 	public function edit($id = 0)
 	{
@@ -104,37 +112,64 @@ class Csupplier_buyer extends TM_Controller {
 	        $this->redirect('Clogin/show_404');
 	    }
 	    $data['res']  = $res->row();
-	    $data['role'] = $this->_get_role();
-	    $data['one_level'] = '用户管理';
-	    $data['two_level'] = '用户列表';
-	    $this->load->view('Csupplier_buyer/vedit', $data);
+	    $data['one_level'] = '公司管理';
+		$data['two_level'] = '公司列表';
+	    $this->load->view('supplier_buyer/vedit', $data);
 	}
 	
 	/**
-	 * @修改用户
+	 * @修改公司
 	 * */
 	public function editPost()
 	{
-	    $this->validata();
+	    $this->validata('edit');
 	    
 	    $postData = $this->input->post();
-	    $img = $this->deal_img('Csupplier_buyerimg', FALSE);
-	    if (isset($img['upload']['Csupplier_buyerimg'])) {
-	        $data['Csupplier_buyerimg'] = $img['upload']['Csupplier_buyerimg'];
-	    }
-	    $data['Csupplier_buyername']  = $postData['Csupplier_buyername'];
-	    $data['password']  = ZD_md5($postData['password']);
-	    $data['id_card']   = $postData['id_card'];
-	    $data['companyid'] = $postData['companyid'];
-	    $data['company']   = $postData['company'];
-	    $data['positions'] = $postData['positions'];
-	    $data['sex']       = $postData['sex'];
+	    $dis = $this->Mdistrict->get_address($postData['province_id'], $postData['city_id'], $postData['district_id']);
+	    $data['uid']           = 0;
+	    $data['username']      = '';
+	    $data['type']          = $postData['type'];
+	    $data['company_name']  = $postData['company_name'];
+	    $data['province_id']   = $postData['province_id'];
+	    $data['city_id']       = $postData['city_id'];
+	    $data['district_id']   = $postData['district_id'];
+	    $data['province_name'] = $dis[$postData['province_id']];
+	    $data['city_name']     = $dis[$postData['city_id']];
+	    $data['district_name'] = $dis[$postData['district_id']];
+	    $data['ads_des']       = $postData['ads_des'];
+	    $data['lnglat']        = get_lnglat_by_address($data['ads_des'], $data['city_name'].$data['district_name']);
+	    $data['office_tel']    = $postData['office_tel'];
+	    $data['main_business'] = $postData['main_business'];
+	    $data['des']           = $postData['des'];
+	    $data['status']        = $postData['status'];
+	    $data['platform_grade'] = $postData['platform_grade'];
 	    $res = $this->Base_model->update($this->table, array('id'=>$postData['id']), $data);
 	    if ($res > 0) {
 	        alert_msg('操作成功', 'Csupplier_buyer/grid');
 	    }else{
 	        alert_msg('操作失败');
 	    }
+	}
+	
+	/**
+	 * @查看详情
+	 * */
+	public function page($id = 0)
+	{
+	    $this->checkAction(__METHOD__);
+	     
+	    $res = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($res->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    $data['res']  = $res->row();
+	    $data['status_arr'] = array('1'=>'审核中', '2'=>'通过', '3'=>'不通过');
+	    $data['grade_arr'] = array('1'=>'正常', '2'=>'推荐', '3'=> '严选');
+	    $data['goods_or_order'] = $this->_get_goods_or_order($id, $res->row()->type);
+	    $data['workers'] = $this->_get_workers($id);
+	    $data['one_level'] = '公司管理';
+	    $data['two_level'] = '公司列表';
+	    $this->load->view('supplier_buyer/vpage', $data);
 	}
 	
 	/**
@@ -146,14 +181,13 @@ class Csupplier_buyer extends TM_Controller {
 	    
 	    $checkid = $this->input->post('checkid');
 	    $ids = $checkid ? $checkid : array($id);
-	    $Csupplier_buyer = $this->Base_model->getWherein($this->table, 'id', $ids);
+	    $supplier_buyer = $this->Base_model->getWherein($this->table, 'id', $ids);
 	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
 	    if ($res>0) {
-	        foreach ($Csupplier_buyer as $u) {
-	            $this->delete_img($u->Csupplier_buyerimg);
+	        foreach ($supplier_buyer as $u) {
 	            $this->delete_img($u->qr_img);
 	        }
-	        alert_msg('操作成功', 'Cad_img/grid');
+	        alert_msg('操作成功', 'Csupplier_buyer/grid');
 	    }else{
 	        alert_msg('操作失败');
 	    }  
@@ -162,38 +196,57 @@ class Csupplier_buyer extends TM_Controller {
 	/**
 	 * @验证
 	 * */
-	public function validata()
+	public function validata($type = 'insert')
 	{
-	    if (is_empty($this->input->post('Csupplier_buyername'))) {
-	        alert_msg('请填写名称');
+	    if (is_empty($this->input->post('type'))) {
+	        alert_msg('请选择公司类型');
 	    }
 	    
-	    if (!is_mobile($this->input->post('mobile'))) {
-	        alert_msg('手机号码错误');
+	    $ex = $this->check_exists(FALSE);
+	    if ($type == 'insert') {
+	        if ($ex['status']) {
+	            alert_msg('公司名称已存在');
+	        }
+	    } else {
+	        if ($ex['status'] && $ex['companyid'] != $this->input->post('id')) {
+	            alert_msg('公司名称已存在');
+	        }
 	    }
 	    
-	    if (@file_get_contents($this->check_exists($this->input->post('mobile'))) == 1) {
-	        alert_msg('手机号码已存在');
+	    if (is_empty($this->input->post('province_id')) || is_empty($this->input->post('city_id')) || is_empty($this->input->post('district_id'))) {
+	        alert_msg('请选择地址');
 	    }
 	    
-	    if (strlen($this->input->post('password'))<6 || strlen($this->input->post('password'))>15) {
-	        alert_msg('密码为6-15位');
+	    if (is_empty($this->input->post('ads_des'))) {
+	        alert_msg('请填写详细地址');
 	    }
 	    
-	    if (is_empty($this->input->post('role_id'))) {
-	        alert_msg('请选择角色');
+	    if (is_empty($this->input->post('office_tel'))) {
+	        alert_msg('请填写公司电话');
+	    }
+	    
+	    if (is_empty($this->input->post('main_business'))) {
+	        alert_msg('请填写主营业务');
+	    }
+	    
+	    if (is_empty($this->input->post('status'))) {
+	        alert_msg('请选择审核状态');
+	    }
+	    
+	    if (is_empty($this->input->post('platform_grade'))) {
+	        alert_msg('请选择平台等级');
 	    }
 	}
 	
 	/**
-	 * @生成用户二维码
+	 * @生成公司二维码
 	 * */
-	public function create_qr($id = 0)
+	private function _create_qr($id = 0)
 	{
 	    $this->checkAction(__METHOD__);
 	    
-	    $Csupplier_buyer = $this->Base_model->getWhere($this->table, array('id'=>$id));
-	    if ($Csupplier_buyer->num_rows() == 0) {
+	    $supplier_buyer = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($supplier_buyer->num_rows() == 0) {
 	        $this->redirect('Clogin/show_404');
 	    }
 	    
@@ -205,34 +258,113 @@ class Csupplier_buyer extends TM_Controller {
 	    if (!is_dir($upload_path)) {
 	        mkdir($upload_path, DIR_WRITE_MODE, TRUE);
 	    }
-	    $url = $this->config->html5_url.'Cqr_scan/scan?mobile='.ZD_md5($Csupplier_buyer->row()->mobile).'&uid='.$id;
+	    $url = $this->config->html5_url.'Cqr_scan/scan?time='.ZD_md5($supplier_buyer->row()->time).'&companyid='.$id;
 	    $this->qrcode->png($url, $upload_path.$png, 4, 10);
 	    $png = './'.$path.'/'.$day.'/'.$png;
 	    if (file_exists($this->config->upload_image_path($png))) {
 	        $res = $this->Base_model->update($this->table, array('id'=>$id), array('qr_img'=>$png));
 	        if ($res > 0) {
-	            alert_msg('操作成功', 'Csupplier_buyer/grid');
+	            return TRUE;
 	        }else{
-	            alert_msg('操作失败');
+	            return FALSE;
 	        }
 	    }
 	}
 	
 	/**
-	 * @验证公司名称
+	 * @获取地址
 	 * */
-	public function check_exists($company_name = '')
+	public function get_dis()
 	{
-	    $company_name = empty($company_name) ? $this->input->post_get('company_name') : $company_name;
-	    $res = $this->Base_model->getWhere($this->table, array('company_name'=>$company_name));
+	    echo json_encode($this->Mdistrict->grid($this->input->post('pid')));
+	}
+	
+	/**
+	 * @审核
+	 * */
+	public function check_out($id = 0)
+	{
+	    $this->checkAction(__METHOD__);
+	
+	    $goods = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($goods->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    $is_check = $this->input->get('is_check')==2 ? 2 : 3;
+	    $res = $this->Base_model->update($this->table, array('id'=>$id), array('is_check'=>$is_check));
+	    if ($res>0) {
+	        alert_msg('操作成功', 'Csupplier_buyer/grid');
+	    }else{
+	        alert_msg('操作失败');
+	    }
+	}
+	
+	/**
+	 * @修改等级
+	 * */
+	public function up_grade($id = 0)
+	{
+	    $this->checkAction(__METHOD__);
+	     
+	    $goods = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    if ($goods->num_rows() == 0) {
+	        $this->redirect('Clogin/show_404');
+	    }
+	    $grade = in_array($this->input->get('grade'), array(1, 2, 3)) ? $this->input->get('grade') : 1;
+	    $res = $this->Base_model->update($this->table, array('id'=>$id), array('platform_grade'=>$grade));
+	    if ($res>0) {
+	        alert_msg('操作成功', 'Csupplier_buyer/grid');
+	    }else{
+	        alert_msg('操作失败');
+	    }
+	}
+	
+	/**
+	 * @验证公司名称
+	 * @param boolean $json:是否返回接送数据
+	 * */
+	public function check_exists($json = TRUE)
+	{
+	    $postData = $this->input->post();
+	    $data['company_name'] = $postData['company_name'];
+	    if(isset($postData['type'])) $data['type'] = $postData['type'];
+	    if(isset($postData['status'])) $data['status'] = $postData['status'];
+	    $res = $this->Base_model->getWhere($this->table, $data);
 	    if($res->num_rows() > 0) {
 	        $ret['status'] = TRUE;
 	        $ret['companyid'] = $res->row()->id;
 	        $ret['company_name'] = $res->row()->company_name;
+	        $ret['platform_grade'] = $res->row()->platform_grade;
 	    } else {
 	        $ret['status'] = FALSE;
 	    }
-	    echo json_encode($ret);
+	    if ($json == TRUE) {
+	        echo json_encode($ret);
+	    } else {
+	        return $ret;
+	    }
+	    
+	}
+	
+	/**
+	 * @获取用公司员工
+	 * */
+	private function _get_workers($companyid)
+	{
+	    if (empty($companyid)) return array();
+	    return $this->Base_model->getWhere('user', array('companyid'=>$companyid))->result();
+	}
+	
+	/**
+	 * @获取产品或订单
+	 * */
+	private function _get_goods_or_order($companyid, $type)
+	{
+	    if ($type == 1) {
+	        return $this->Base_model->getTableNum('order', array('buyer_id'=>$companyid));
+	    } else {
+	        return $this->Base_model->getTableNum('goods', array('supplier_id'=>$companyid));
+	    }
 	}
 	
 	

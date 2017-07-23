@@ -72,24 +72,17 @@ class Mcorrect_img extends CI_Model{
 	 * */
 	public function create_name($type = 'tex')
 	{
-	    if ($type == 'tex') {
-	        $this->db->select_max('img_name');
-	        $this->db->where(array('type'=>$type));
-	        $res = $this->db->get($this->table);
-	        if ($res->num_rows() == 0) {
-	            return 'A0001';
-	        } else {
-	            $name = $res->row()->img_name;
-	            $k = $name{0};
-	            $n = (int)mb_substr($name, 1, 4) +1;
-	            if ($n > 9999) {
-	                return chr(ord($k)+1).'0001';
-	            } else {
-	                return $k.(string)sprintf('%04d', $n);
-	            }
-	        }
+	    $this->db->select_max('img_name');
+	    $this->db->where(array('type'=>$type));
+	    $name = $this->db->get($this->table)->row()->img_name;
+	    if ($name == NULL) {
+	        return $type=='tex' ? 'A0001' : 'M0001';
+	    } else {
+	        $k = $name{0};
+	        $n = (int)mb_substr($name, 1, 4) +1;
+	        return $k.(string)sprintf('%04d', $n);
 	    }
-	    return rand(1, 999);
+// 	    return chr(ord($k)+1).'0001';
 	}
 	
 	

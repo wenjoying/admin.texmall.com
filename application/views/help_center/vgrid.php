@@ -50,42 +50,33 @@
     					                <table class="demo-add-niftycheck table table-hover">
     					                    <thead>
         					                    <tr>
-            					                    <th width="2%"><div class="th-inner"><input class="select-all" type="checkbox"></div></th>
-            					                    <th width="5%"><div class="th-inner">ID</div></th>
-                                                    <th width="10%"><div class="th-inner">分类</div></th>
-                                                    <th width="10%"><div class="th-inner">标题</div></th>
-                                                    <th width="10%"><div class="th-inner">作者</div></th>
-                                                    <th width="10%"><div class="th-inner">排序</div></th>
-                                                    <th width="10%"><div class="th-inner">状态</div></th>
-                                                    <th width="10%"><div class="th-inner">时间</div></th>
-                                                    <th width="5%"><div class="th-inner">操作</div></th>
+            					                    <th><div class="th-inner">ID</div></th>
+                                                    <th><div class="th-inner">分类</div></th>
+                                                    <th><div class="th-inner">标题</div></th>
+                                                    <th><div class="th-inner">作者</div></th>
+                                                    <th><div class="th-inner">排序</div></th>
+                                                    <th><div class="th-inner">状态</div></th>
+                                                    <th><div class="th-inner">时间</div></th>
+                                                    <th width="120px"><div class="th-inner">操作</div></th>
         					                    </tr>
     					                    </thead>
         					                <tbody>
         					                    <?php foreach($res as $r):?>
         					                    <tr>
-            					                    <td><div class="th-inner"><input class="list-check" type="checkbox" name="checkid[]" value="<?php echo $r->id?>"></div></td>
             					                    <td><?php echo $r->id?></td>
                                                     <td><?php echo $cat_arr[$r->category_id]?></td>
                                                     <td><?php echo $r->title?></td>
                                                     <td><?php echo $r->author?></td>
                                                     <td><?php echo $r->reorder?></td>
                                                     <td>
-                                                        <a href="javascript:up_status('<?php echo base_url('Chelp_center/up_status/'.$r->id.'?status='.$r->status);?>');">
+                                                        <a class="btn-link" href="javascript:up_status('<?php echo base_url('Chelp_center/up_status/'.$r->id.'?status='.$r->status);?>');">
                                                         <?php echo $r->status==1 ? '<i class="ion-checkmark"></i>' : '<i class="ion-close"></i>'?>
                                                         </a>
                                                     </td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
-                                                        <div class="btn-group m-b-5">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                                <span class="caret"></span>
-                                                            </button>
-                                                            <ul class="dropdown-menu animated fadeIn">
-                                                                <li><a href="<?php echo base_url('Chelp_center/edit/'.$r->id);?>"><i class="ion-eye"></i>查看</a></li>
-                                                                <li><a href="javascript:layer_conf('<?php echo base_url('Chelp_center/delete/'.$r->id);?>');"><i class="ion-trash-a"></i>删除</a></li>
-                                                            </ul>
-                                                        </div>
+                					                    <a class="btn-link" href="<?php echo base_url('Chelp_center/edit/'.$r->id);?>">编辑</a>|
+                					                    <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Chelp_center/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>
@@ -106,16 +97,6 @@
 					                        todayHighlight: true
     					                });
     					                
-          					            // 全选、全不选、反选
-          					            $('.demo-add-niftycheck').on('click','.select-all',function(){     
-    										$('input[name="checkid[]"]').each(function(){
-    											if(this.checked){
-    												this.checked = false;
-    											}else{
-    												this.checked = true;
-    											}
-    										});
-    									});
     					                </script>
     					            </div>
     					        </div>

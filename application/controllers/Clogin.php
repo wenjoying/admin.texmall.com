@@ -26,7 +26,7 @@ class Clogin extends CI_Controller {
 		if ($admin) {  
 			header("Location:".base_url('Cadmin_user/index'), TRUE, 302);
 		}else{
-		    if (isset($_SERVER['HTTP_REFERER'])) {
+		    if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']!=base_url('Clogin/login_out')) {
 		        $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
 		        if (isset($parseUrl['query']) && strpos($parseUrl['query'], 'backurl') !== false) {
 		            $data['backurl'] = urldecode(strstr($parseUrl['query'], 'http'));

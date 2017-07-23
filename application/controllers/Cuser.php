@@ -70,15 +70,21 @@ class Cuser extends TM_Controller {
 	    if (isset($img['upload']['userimg'])) {
 	        $data['userimg'] = $img['upload']['userimg'];
 	    }
+	    if (!is_empty($postData['companyid']) && !is_empty($postData['company'])) {
+	        $data['companyid'] = $postData['companyid'];
+	        $data['company']   = $postData['company'];
+	    } else {
+	        $data['companyid'] = '';
+	        $data['company']   = '';
+	    }
+	    $data['role_id']   = $postData['role_id'];
 	    $data['username']  = $postData['username'];
 	    $data['mobile']    = $postData['mobile'];
 	    $data['password']  = ZD_md5($postData['password']);
 	    $data['id_card']   = $postData['id_card'];
-	    $data['companyid'] = $postData['companyid'];
-	    $data['company']   = $postData['company'];
 	    $data['positions'] = $postData['positions'];
 	    $data['sex']       = $postData['sex'];
-	    $data['role_id']   = $postData['role_id'];
+	    $data['birthday']  = $postData['birthday'];
 	    $data['pid']       = 0;
 	    $data['qr_img']    = '';
 	    $data['reg_come']  = 5;
@@ -86,6 +92,10 @@ class Cuser extends TM_Controller {
 	    $data['reg_time']  = time(); 
 	    $res = $this->Base_model->insert($this->table, $data);
 	    if ($res > 0) {
+	        if ($postData['set_manager']==1) {
+	            $this->_create_manager($data['companyid'], $res, $data['username']);
+	        }
+	        $this->_create_qr($res);
 	        alert_msg('操作成功', 'Cuser/grid');
 	    }else{
 	        alert_msg('操作失败');
@@ -115,22 +125,27 @@ class Cuser extends TM_Controller {
 	 * */
 	public function editPost()
 	{
-	    $this->validata();
+	    $this->validata('edit');
 	    
 	    $postData = $this->input->post();
 	    $img = $this->deal_img('userimg', FALSE);
 	    if (isset($img['upload']['userimg'])) {
 	        $data['userimg'] = $img['upload']['userimg'];
 	    }
+	    if (isset($postData['companyid']) && isset($postData['company'])) {
+	        $data['companyid'] = $postData['companyid'];
+	        $data['company']   = $postData['company'];
+	    }
 	    $data['username']  = $postData['username'];
 	    $data['password']  = ZD_md5($postData['password']);
 	    $data['id_card']   = $postData['id_card'];
-	    $data['companyid'] = $postData['companyid'];
-	    $data['company']   = $postData['company'];
 	    $data['positions'] = $postData['positions'];
 	    $data['sex']       = $postData['sex'];
 	    $res = $this->Base_model->update($this->table, array('id'=>$postData['id']), $data);
 	    if ($res > 0) {
+	        if ($postData['set_manager']==1) {
+	            $this->_create_manager($data['companyid'], $postData['id'], $data['username']);
+	        }
 	        alert_msg('操作成功', 'Cuser/grid');
 	    }else{
 	        alert_msg('操作失败');
@@ -152,13 +167,11 @@ class Cuser extends TM_Controller {
 	    $data['sex_arr']   = array('1'=>'男', '2'=>'女', '3'=>'保密');
 	    $data['mail_list'] = $this->_get_user_mail_list($id);
 	    $data['models']    = $this->_get_user_model($id);
-	    $data['enshrine']  = $this->_get_user_enshrine($id);
-	    $data['user_log']  = $this->_get_user_log($id);
-	    $data['search']    = $this->_get_search_log($id); 
 	    $data['workers']   = $this->_get_workers($data['res']->companyid);
+	    $data['deliver_address'] = $this->_get_deliver_address($id);
 	    $data['one_level'] = '用户管理';
 	    $data['two_level'] = '用户列表';
-	    $this->load->view('user/vprofile', $data);
+	    $this->load->view('user/vpage', $data);
 	}
 	
 	/**
@@ -168,10 +181,8 @@ class Cuser extends TM_Controller {
 	{
 	    $this->checkAction(__METHOD__);
 	    
-	    $checkid = $this->input->post('checkid');
-	    $ids = $checkid ? $checkid : array($id);
-	    $user = $this->Base_model->getWherein($this->table, 'id', $ids);
-	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
+	    $user = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    if ($res>0) {
 	        foreach ($user as $u) {
 	            $this->delete_img($u->userimg);
@@ -186,7 +197,7 @@ class Cuser extends TM_Controller {
 	/**
 	 * @验证
 	 * */
-	public function validata()
+	public function validata($type='insert')
 	{
 	    if (is_empty($this->input->post('username'))) {
 	        alert_msg('请填写名称');
@@ -196,12 +207,18 @@ class Cuser extends TM_Controller {
 	        alert_msg('手机号码错误');
 	    }
 	    
-	    if (@file_get_contents($this->check_exists($this->input->post('mobile'))) == 1) {
-	        alert_msg('手机号码已存在');
+	    if ($type=='insert') {
+	        if ($this->check_exists(FALSE)) {
+	            alert_msg('手机号码已存在');
+	        }
 	    }
 	    
-	    if (strlen($this->input->post('password'))<6 || strlen($this->input->post('password'))>15) {
-	        alert_msg('密码为6-15位');
+	    if (is_empty($this->input->post('password'))) {
+	        if ($type=='insert') alert_msg('密码为6-20位');
+	    } else {
+	        if (strlen($this->input->post('password'))<6 || strlen($this->input->post('password'))>20) {
+	            alert_msg('密码为6-20位');
+	        }
 	    }
 	    
 	    if (is_empty($this->input->post('role_id'))) {
@@ -210,9 +227,24 @@ class Cuser extends TM_Controller {
 	}
 	
 	/**
+	 * @验证用户手机号
+	 * @param boolean $json：是否返回json数据
+	 * */
+	public function check_exists($json = TRUE)
+	{
+	    $mobile = $this->input->post('mobile');
+	    $res = $this->Base_model->getTableNum($this->table, array('mobile'=>$mobile));
+	    if ($json == TRUE) {
+	        echo json_encode($res);
+	    } else {
+	         return $res;
+	    }
+	}
+	
+	/**
 	 * @生成用户二维码
 	 * */
-	public function create_qr($id = 0)
+	private function _create_qr($id = 0)
 	{
 	    $this->checkAction(__METHOD__);
 	    
@@ -229,27 +261,28 @@ class Cuser extends TM_Controller {
 	    if (!is_dir($upload_path)) {
 	        mkdir($upload_path, DIR_WRITE_MODE, TRUE);
 	    }
-	    $url = $this->config->html5_url.'Cqr_scan/scan?mobile='.ZD_md5($user->row()->mobile).'&uid='.$id;
+	    $url = $this->config->html5_url.'Cqr_scan/scan?time='.ZD_md5($user->row()->reg_time).'&uid='.$id;
 	    $this->qrcode->png($url, $upload_path.$png, 4, 10);
 	    $png = './'.$path.'/'.$day.'/'.$png;
 	    if (file_exists($this->config->upload_image_path($png))) {
 	        $res = $this->Base_model->update($this->table, array('id'=>$id), array('qr_img'=>$png));
 	        if ($res > 0) {
-	            alert_msg('操作成功', 'Cuser/grid');
+	            return TRUE;
 	        }else{
-	            alert_msg('操作失败');
+	            return FALSE;
 	        }
 	    }
 	}
 	
 	/**
-	 * @验证用户手机号
+	 * @创建管理员
 	 * */
-	public function check_exists($mobile = '')
+	private function _create_manager($companyid, $uid, $username)
 	{
-	    $mobile = empty($mobile) ? $this->input->post_get('mobile') : $mobile;
-	    $res = $this->Base_model->getTableNum($this->table, array('mobile'=>$mobile));
-	    echo json_encode($res);
+	    if (empty($companyid)) {
+	        return FALSE;
+	    }
+        return $this->Base_model->update('supplier_buyer', array('id'=>$companyid), array('uid'=>$uid, 'username'=>$username));
 	}
 	
 	/**
@@ -274,35 +307,11 @@ class Cuser extends TM_Controller {
 	}
 	
 	/**
-	 * @获取用户收藏的列表
-	 * */
-	private function _get_user_enshrine($uid)
-	{
-	    return $this->Base_model->getWhere('user_enshrine', array('uid'=>$uid))->result();
-	}
-	
-	/**
 	 * @获取用户通讯录
 	 * */
 	private function _get_user_mail_list($uid)
 	{
-	    return $this->Base_model->getWhere('user_mail_list', array('uid'=>$uid), 'id', 20)->result();
-	}
-	
-	/**
-	 * @获取用户浏览记录
-	 * */
-	private function _get_user_log($uid)
-	{
-	    return $this->Base_model->getWhere('user_log', array('uid'=>$uid), 'id', 20)->result();
-	}
-	
-	/**
-	 * @获取用户搜索记录
-	 * */
-	private function _get_search_log($uid)
-	{
-	    return $this->Base_model->getWhere('search_log', array('uid'=>$uid), 'id', 20)->result();
+	    return $this->Base_model->getWhere('user_mail_list', array('uid'=>$uid))->result();
 	}
 	
 	/**
@@ -313,6 +322,15 @@ class Cuser extends TM_Controller {
 	    if (empty($companyid)) return array();
 	    return $this->Base_model->getWhere('user', array('companyid'=>$companyid))->result();
 	}
+	
+	/**
+	 * @获取用户收货地址
+	 * */
+	private function _get_deliver_address($uid)
+	{
+	    return $this->Base_model->getWhere('deliver_address', array('uid'=>$uid))->result();
+	}
+	
  
 	
 }

@@ -39,7 +39,7 @@
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">密码</label>
     					                    <div class="col-md-6">
-    					                        <input type="password" class="form-control" name="password" required="required" maxlength="15" value="" placeholder="...">
+    					                        <input type="password" class="form-control" name="password"  maxlength="20" value="" placeholder="...">
     					                        <small class="help-block">留空则不修改</small>
     					                    </div>
     					                </div>
@@ -51,14 +51,21 @@
     					                    </div>
     					                </div>
     					                
+    					                <div class="form-group pad-ver">
+    					                    <label class="col-md-3 control-label">角色*</label>
+					                        <div class="col-md-6">
+    					                        <input type="text" class="form-control" name="role_id" readonly value="<?php foreach($role as $r){if($res->role_id==$r->role_id)echo $r->role_name.' ';}?>" placeholder="...">
+    					                    </div>
+    					                </div>
+    					                <?php if(empty($res->companyid)):?>
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">公司名称*</label>
     					                    <div class="col-md-6">
-    					                        <input type="hidden" name="companyid" value="<?php echo $res->companyid?>">
-    					                        <input type="text" class="form-control" name="company" maxlength="100" required="required" value="<?php echo $res->company?>" placeholder="...">
+    					                        <input type="hidden" name="companyid" value="">
+    					                        <input type="text" class="form-control" name="company" maxlength="100" required="required" value="" placeholder="...">
     					                    </div>
     					                </div>
-    					                
+    					                <?php endif;?>
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">职位</label>
     					                    <div class="col-md-6">
@@ -77,10 +84,21 @@
     					                    </div>
     					                </div>
     					                
+    					                <div class="form-group">
+    					                    <label class="col-md-3 control-label" for="demo-text-input">生日</label>
+    					                    <div class="col-md-6">
+    					                        <input type="text" class="form-control date-select" name="birthday" maxlength="20" value="<?php echo $res->birthday?>" placeholder="...">
+    					                    </div>
+    					                </div>
+    					                
     					                <div class="form-group pad-ver">
-    					                    <label class="col-md-3 control-label">角色*</label>
-					                        <div class="col-md-6">
-    					                        <input type="text" class="form-control" name="" readonly value="<?php foreach($role as $r){if($res->role_id&$r->role_id)echo $r->role_name.' ';}?>" placeholder="...">
+    					                    <label class="col-md-3 control-label">管理员</label>
+    					                    <div class="col-md-6">
+					                            <select class="selectpicker" name="set_manager">
+                                                    <option value="0">否</option>
+                                                    <option value="1">是</option>
+                                                </select>
+                                                <small class="help-block">一个公司仅有一个管理员</small> 
     					                    </div>
     					                </div>
     					                
@@ -99,6 +117,14 @@
 					</div>
 					<script>
 					$(function(){
+						//时间
+		                $('input.date-select').datepicker({
+	                		format: "yyyy-mm-dd",
+	                        todayBtn: "linked",
+	                        autoclose: true,
+	                        todayHighlight: true
+		                });
+		                
     					//图片预览
     					$('.form-group').find('input[type="file"]').change(function(){
     						var img = '<img height=100 width=100 src="'+window.URL.createObjectURL(this.files[0])+'">';
@@ -106,13 +132,14 @@
     					}); 
     
     					//验证用户公司名称
-    					var check_company = function(obj) {
+    					var check_exists = function(obj) {
     						obj.blur(function(){
-    			                if (obj.val().trim().length != 11) {
-    			                	$.post(base_url+'Csupplier_buyer/check_company', {company_name:obj.val().trim()}, function(json){
+    			                if (obj.val().trim().length > 0) {
+        			                var type = '<?php echo $res->role_id?>';
+    			                	$.post(base_url+'Csupplier_buyer/check_exists', {company_name:obj.val().trim(), type:type}, function(json){
     			                        if(json.status) {
-    			                        	obj.val(json.res['company']);
-    			                        	$('input[name="companyid"]').val(json.res['companyid']);
+    			                        	obj.val(json.company_name);
+    			                        	$('input[name="companyid"]').val(json.companyid);
     			                        }else{
     			                        	layer.msg('公司名称不存在',{icon:8,time:1000});
         			                    }
@@ -120,7 +147,7 @@
     			                }
     			            });
     					}
-    					check_company($('input[name="company"]'));
+    					check_exists($('input[name="company"]'));
 					});
 					</script>
                 </div>

@@ -17,20 +17,17 @@ class Msupplier_buyer extends CI_Model{
 	{
 	    $this->db->select('id');
 	    $this->db->from($this->table);
-	    if (!empty($search['platform_name'])) {
-	        $this->db->where(array('platform_name'=>$search['platform_name']));
+	    if (!empty($search['type'])) {
+	        $this->db->where(array('type'=>$search['type']));
 	    }
-	    if (!empty($search['component'])) {
-	        $this->db->where(array('component'=>$search['component']));
+	    if (!empty($search['status'])) {
+	        $this->db->where(array('status'=>$search['status']));
 	    }
-	    if (!empty($search['is_sale'])) {
-	        $this->db->where(array('is_sale'=>$search['is_sale']));
+	    if (!empty($search['province_id'])) {
+	        $this->db->where(array('province_id'=>$search['province_id']));
 	    }
-	    if (!empty($search['is_check'])) {
-	        $this->db->where(array('is_check'=>$search['is_check']));
-	    }
-	    if (!empty($search['platform_grade'])) {
-	        $this->db->where(array('platform_grade'=>$search['platform_grade']));
+	    if (!empty($search['city_id'])) {
+	        $this->db->where(array('city_id'=>$search['city_id']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
@@ -40,12 +37,11 @@ class Msupplier_buyer extends CI_Model{
 	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
-	        $this->db->like('platform_code', $search['item']);
-	        $this->db->or_like('supplier_name', $search['item']);
-	        $this->db->or_like('supplier_code', $search['item']);
-	        $this->db->or_like('tech_composed', $search['item']);
-	        $this->db->or_like('style', $search['item']);
-	        $this->db->or_like('category', $search['item']);
+	        $this->db->like('company_name', $search['item']);
+	        $this->db->or_like('main_business', $search['item']);
+	        $this->db->or_like('ads_des', $search['item']);
+	        $this->db->or_like('office_tel', $search['item']);
+	        $this->db->or_like('company_des', $search['item']);
 	        $this->db->group_end();
 	    }
 	    return $this->db->count_all_results();
@@ -58,24 +54,21 @@ class Msupplier_buyer extends CI_Model{
 	 * @param array $search:查找条件
 	 * @param string $order:排序
 	 * */
-	public function grid($page, $perpage, $search, $order='platform_name desc, id desc')  
+	public function grid($page, $perpage, $search, $order='id desc')  
 	{
 	    $this->db->select('*');
 	    $this->db->from($this->table);
-	if (!empty($search['platform_name'])) {
-	        $this->db->where(array('platform_name'=>$search['platform_name']));
+	    if (!empty($search['type'])) {
+	        $this->db->where(array('type'=>$search['type']));
 	    }
-	    if (!empty($search['component'])) {
-	        $this->db->where(array('component'=>$search['component']));
+	    if (!empty($search['status'])) {
+	        $this->db->where(array('status'=>$search['status']));
 	    }
-	    if (!empty($search['is_sale'])) {
-	        $this->db->where(array('is_sale'=>$search['is_sale']));
+	    if (!empty($search['province_id'])) {
+	        $this->db->where(array('province_id'=>$search['province_id']));
 	    }
-	    if (!empty($search['is_check'])) {
-	        $this->db->where(array('is_check'=>$search['is_check']));
-	    }
-	    if (!empty($search['platform_grade'])) {
-	        $this->db->where(array('platform_grade'=>$search['platform_grade']));
+	    if (!empty($search['city_id'])) {
+	        $this->db->where(array('city_id'=>$search['city_id']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
@@ -85,12 +78,11 @@ class Msupplier_buyer extends CI_Model{
 	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
-	        $this->db->like('platform_code', $search['item']);
-	        $this->db->or_like('supplier_name', $search['item']);
-	        $this->db->or_like('supplier_code', $search['item']);
-	        $this->db->or_like('tech_composed', $search['item']);
-	        $this->db->or_like('style', $search['item']);
-	        $this->db->or_like('category', $search['item']);
+	        $this->db->like('company_name', $search['item']);
+	        $this->db->or_like('main_business', $search['item']);
+	        $this->db->or_like('ads_des', $search['item']);
+	        $this->db->or_like('office_tel', $search['item']);
+	        $this->db->or_like('company_des', $search['item']);
 	        $this->db->group_end();
 	    }
 	    $this->db->order_by($order);

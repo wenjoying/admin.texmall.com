@@ -24,6 +24,34 @@ class Cadmin_user extends TM_Controller {
 	 * */
 	public function index()
 	{  
+	    $data['moth_order'] = '[
+                         	{"xaxis": "1月", "val": 34},
+                         	{"xaxis": "2月", "val": 24},
+                         	{"xaxis": "3月", "val": 3},
+                         	{"xaxis": "4月", "val": 12},
+                         	{"xaxis": "5月", "val": 13},
+                         	{"xaxis": "6月", "val": 22},
+                         	{"xaxis": "7月", "val": 5},
+                         	{"xaxis": "8月", "val": 26},
+                         	{"xaxis": "9月", "val": 12},
+                         	{"xaxis": "10月", "val": 19},
+                         	{"xaxis": "11月", "val": 19},
+                         	{"xaxis": "12月", "val": 19},
+						]';
+	    $data['moth_amount'] = '[
+                         	{"xaxis": "1月", "val": 34},
+                         	{"xaxis": "2月", "val": 24},
+                         	{"xaxis": "3月", "val": 3},
+                         	{"xaxis": "4月", "val": 12},
+                         	{"xaxis": "5月", "val": 13},
+                         	{"xaxis": "6月", "val": 22},
+                         	{"xaxis": "7月", "val": 5},
+                         	{"xaxis": "8月", "val": 26},
+                         	{"xaxis": "9月", "val": 12},
+                         	{"xaxis": "10月", "val": 19},
+                         	{"xaxis": "11月", "val": 19},
+                         	{"xaxis": "12月", "val": 19},
+						]';
 	    $data['one_level'] = 'Texmall后台首页';
 	    $data['two_level'] = '';
 	    $this->load->view('layout/vindex', $data);
@@ -38,7 +66,7 @@ class Cadmin_user extends TM_Controller {
 	    $data['user_role_name'] = $this->_get_role($this->admin->role_id);
 	    $data['one_level'] = '后台管理员';
 	    $data['two_level'] = '个人信息';
-	    $this->load->view('admin_user/vprofile', $data);
+	    $this->load->view('admin_user/vpage', $data);
 	}
 	
 	/**
@@ -145,7 +173,7 @@ class Cadmin_user extends TM_Controller {
 	    $data['role'] = $this->_get_role();
 	    $data['one_level'] = '后台管理员';
 	    $data['two_level'] = '管理员列表';
-	    $this->load->view('admin_user/vprofile', $data);
+	    $this->load->view('admin_user/vpage', $data);
 	}
 	
 	/**

@@ -21,7 +21,7 @@ class TM_Controller extends CI_Controller{
 		
 		/**@开发模式下开启性能分析*/ 
 		if (ENVIRONMENT === 'development') {
-// 			$this->output->enable_profiler(TRUE);
+			$this->output->enable_profiler(TRUE);
 		}
 		
 		$this->admin = json_decode(base64_decode($this->input->cookie('admin')));
@@ -364,6 +364,26 @@ class TM_Controller extends CI_Controller{
 	        return FALSE;
 	    }
 	    
+	}
+	
+	/**
+	 * @从俩下载图片
+	 * @param string $img_url:图片地址
+	 * @param string $dir:图片地址
+	 * */
+	public function download_img($img_url, $dir)
+	{
+	    $day = date('Ymd');
+	    $d_path = $this->config->upload_image_path($dir.'/'.$day, TRUE);
+	    if (!is_dir($d_path)) {
+	        mkdir($d_path, DIR_WRITE_MODE, TRUE);
+	    }
+	    $img = './'.$dir.'/'.$day.'/'.daymicro().'.jpg';
+	    $creat = create_file(file_get_contents($img_url), $this->config->upload_image_path($img));
+	    if ($creat) {
+	        return $img;
+	    }
+	    return FALSE;
 	}
 	
 	/**

@@ -58,11 +58,11 @@ class Mgoods extends CI_Model{
 	 * @param array $search:查找条件
 	 * @param string $order:排序
 	 * */
-	public function grid($page, $perpage, $search, $order='platform_name desc, id desc')  
+	public function grid($page, $perpage, $search, $order='id desc,platform_name desc')  
 	{
 	    $this->db->select('*');
 	    $this->db->from($this->table);
-	if (!empty($search['platform_name'])) {
+	    if (!empty($search['platform_name'])) {
 	        $this->db->where(array('platform_name'=>$search['platform_name']));
 	    }
 	    if (!empty($search['component'])) {

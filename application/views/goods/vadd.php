@@ -38,8 +38,9 @@
     					                    <label class="col-md-3 control-label" for="demo-text-input">供应商*</label>
     					                    <div class="col-md-6">
     					                        <input type="hidden" name="supplier_id" value="<?php echo $this->input->get('supplier_id');?>">
+    					                        <input type="hidden" name="platform_grade" value="<?php echo $this->input->get('platform_grade');?>">
     					                        <input type="text" class="form-control" name="supplier_name" required="required" maxlength="100" value="<?php echo $this->input->get('supplier_name');?>" placeholder="...">
-    					                        <small class="help-block">填写供应商名称</small>
+    					                        <small class="help-block">填写已通过审核的供应商名称</small>
     					                    </div>
     					                </div>
     					                
@@ -256,13 +257,15 @@
     					var check_exists = function(obj) {
     						obj.blur(function(){
     			                if (obj.val().trim().length > 0) {
-    			                	$.post(base_url+'Csupplier_buyer/check_exists', {company_name:obj.val().trim()}, function(json){
+    			                	$.post(base_url+'Csupplier_buyer/check_exists', {company_name:obj.val().trim(), type:2, status:2}, function(json){
     			                        if(json.status) {
-    			                        	obj.val(json.res['company_name']);
-    			                        	$('input[name="supplier_id"]').val(json.res['companyid']);
+    			                        	obj.val(json.company_name);
+    			                        	$('input[name="supplier_id"]').val(json.companyid);
+    			                        	$('input[name="platform_grade"]').val(json.platform_grade);
     			                        }else{
     			                        	obj.val('');
     			                        	$('input[name="supplier_id"]').val('');
+    			                        	$('input[name="platform_grade"]').val('');
     			                        	layer.msg('公司名称不存在',{icon:8,time:1000});
         			                    }
     			                    },'json');

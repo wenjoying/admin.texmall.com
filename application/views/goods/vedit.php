@@ -38,6 +38,7 @@
     					                    <div class="col-md-6">
     					                        <input type="text" class="form-control" readonly value="<?php echo $res->supplier_name;?>">
     					                    </div>
+    					                    <small class="help-block">填写已通过审核的供应商名称</small>
     					                </div>
     					                
     					                <div class="form-group">
@@ -274,24 +275,6 @@
     						$('#multi-source').chosen({width:'100%'});
     					}
     
-    					//获取供应商名称
-    					var check_exists = function(obj) {
-    						obj.blur(function(){
-    			                if (obj.val().trim().length > 0) {
-    			                	$.post(base_url+'Csupplier_buyer/check_exists', {company_name:obj.val().trim()}, function(json){
-    			                        if(json.status) {
-    			                        	obj.val(json.res['company_name']);
-    			                        	$('input[name="supplier_id"]').val(json.res['companyid']);
-    			                        }else{
-    			                        	obj.val('');
-    			                        	$('input[name="supplier_id"]').val('');
-    			                        	layer.msg('公司名称不存在',{icon:8,time:1000});
-        			                    }
-    			                    },'json');
-    			                }
-    			            });
-    					}
-    					check_exists($('input[name="supplier_name"]'));
 					});
 					</script>
                 </div>

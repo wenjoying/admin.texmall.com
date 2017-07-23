@@ -212,7 +212,7 @@ if ( ! function_exists('create_captcha'))
 			}
 			else
 			{
-				$y = rand($img_height/2, $img_height-10);
+				$y = rand($img_height/1.3, $img_height-10);
 				imagettftext($im, $font_size, $angle, $x, $y, $text_color, $font_path, substr($word, $i, 1));
 				$x += $font_size;
 			}

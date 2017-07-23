@@ -20,7 +20,7 @@ class Chelp_center extends TM_Controller {
 	}
 	
 	/**
-	 * @分类列表
+	 * @信息列表
 	 * */
 	public function grid($pg = 1) 
 	{
@@ -40,7 +40,7 @@ class Chelp_center extends TM_Controller {
         $data['per_page']   = $config['per_page'];
         $data['cat_arr']    = $this->_get_category();
 	    $data['one_level'] = '资讯&帮助中心';
-	    $data['two_level'] = '分类';
+	    $data['two_level'] = '信息列表';
 	    $this->load->view('help_center/vgrid', $data);
 	}
 	
@@ -53,7 +53,7 @@ class Chelp_center extends TM_Controller {
 	    
 	    $data['cat_arr']    = $this->_get_category();
 	    $data['one_level'] = '资讯&帮助中心';
-	    $data['two_level'] = '分类';
+	    $data['two_level'] = '信息列表';
 	    $this->load->view('help_center/vadd', $data);
 	}
 	
@@ -94,8 +94,8 @@ class Chelp_center extends TM_Controller {
 	    }
 	    $data['res'] = $res->row();
 	    $data['cat_arr']    = $this->_get_category();
-	    $data['one_level'] = '产品中心';
-	    $data['two_level'] = '产品列表';
+	    $data['one_level'] = '资讯&帮助中心';
+	    $data['two_level'] = '信息列表';
 	    $this->load->view('help_center/vedit', $data);
 	}
 	
