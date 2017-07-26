@@ -15,7 +15,7 @@ class Cgoods_cart extends TM_Controller {
     private $table1 = 'user';
     
     function _init()
-	{
+	{ 
 		header("Content-type: text/html; Charset=utf-8");
 		$this->load->model('Mgoods_cart');
 	}
@@ -45,7 +45,29 @@ class Cgoods_cart extends TM_Controller {
 	}
 	
 	/**
-	 * @后台admin模拟
+	 * @删除购物车
+	 * */
+	public function delete($id = 0)
+	{
+	    $this->checkAction(__METHOD__);
+	
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
+	
+	    if ($res > 0) {
+	        alert_msg('操作成功', 'Cgoods_cart/grid');
+	    }else{
+	        alert_msg('操作失败');
+	    }
+	}
+	
+	
+	
+	
+	/************************************************
+	 * @以下为后台admin模拟
+	 * **********************************************/
+	
+	/**
 	 * @新增购物车
 	 * */
 	public function add()
@@ -63,7 +85,6 @@ class Cgoods_cart extends TM_Controller {
 	}
 	
 	/**
-	 * @后台admin模拟
 	 * @添加购物车
 	 * */
 	public function addPost()
@@ -76,12 +97,32 @@ class Cgoods_cart extends TM_Controller {
         if ($this->Base_model->getTableNum($this->table, array('uid'=>$user->row()->id, 'goods_id'=>$this->input->get('goods_id')))) {
             alert_msg('产品已经加入购物车了。。。');
         }
-	    $data['goods_id']      = $postData['goods_id'];
-	    $data['cover_img']     = $postData['cover_img'];
-	    $data['supplier_id']   = $postData['supplier_id'];
-	    $data['supplier_name'] = $postData['supplier_name'];
-	    $data['supplier_code'] = $postData['supplier_code'];
-	    $data['price']         = $postData['price'];
+        $goods = $this->_get_goods();
+        if ($goods == FALSE) {
+            alert_msg('产品不存在');
+        }
+        $goods_attr = array(
+            'component'     => $goods->component,
+            'width'         => $goods->width,
+            'square_weight' => $goods->square_weight,
+            'shrinkage'     => $goods->shrinkage,
+            'sanding'       => $goods->sanding,
+            'lattice'       => $goods->lattice,
+            'color'         => $goods->color,
+            'pantone_color' => $goods->pantone_color,
+            'tex_grid'      => $goods->tex_grid,
+            'yarn_density'  => $goods->yarn_density,
+            'back_size'     => $goods->back_size,
+            'thickness'     => $goods->thickness,
+            'tech_composed' => $goods->tech_composed
+        );
+	    $data['goods_id']      = $goods->id;
+	    $data['cover_img']     = $goods->cover_img;
+	    $data['supplier_id']   = $goods->supplier_id;
+	    $data['supplier_name'] = $goods->supplier_name;
+	    $data['supplier_code'] = $goods->supplier_code;
+	    $data['price']         = $goods->price;
+	    $data['goods_attr']    = json_encode($goods_attr);
 	    $data['number']        = $postData['number'];
 	    $data['uid'] = $user->row()->id;
 	    $data['username'] = $user->row()->username;
@@ -118,21 +159,7 @@ class Cgoods_cart extends TM_Controller {
 	    return $this->Base_model->getWhere('user', array('id'=>$this->input->post('uid'), 'role_id'=>1));
 	}
 	
-	/**
-	 * @删除购物车
-	 * */
-	public function delete($id = 0)
-	{
-	    $this->checkAction(__METHOD__);
-	     
-	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
-	     
-	    if ($res > 0) {
-	        alert_msg('操作成功', 'Cgoods_cart/grid');
-	    }else{
-	        alert_msg('操作失败');
-	    }
-	}
+	
 	
 }
 

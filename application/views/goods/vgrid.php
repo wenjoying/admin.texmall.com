@@ -4,11 +4,19 @@
                 <!--===================================================-->
                 <div id="page-content">
                     <div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>Lorem ipsum dolor sit amet.</p>
+		                </div>
+		            </div>
+                    <div class="panel">
 					    <div class="panel-heading">
 					        <h3 class="panel-title" id="demo-bootbox-custom-h-content">
     					        <?php echo $two_level?>
 					            <a style="margin-left:50px;" href="<?php echo base_url('Cgoods/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
-					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="ion-load-d"></i>刷新</button></a>
+					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					    </div>
 					    <div class="panel-body">
@@ -79,13 +87,15 @@
     					                    <thead>
         					                    <tr>
             					                    <th><div class="th-inner">ID</div></th>
-                                                    <th><div class="th-inner">图片</div></th>
+                                                    <th><div class="th-inner">标准图</div></th>
                                                     <th><div class="th-inner">供应商</div></th>
-                                                    <th><div class="th-inner">属性</div></th>
+                                                    <th><div class="th-inner">型号</div></th>
+                                                    <th><div class="th-inner">上传用户</div></th>
+                                                    <th><div class="th-inner">价格</div></th>
                                                     <th><div class="th-inner">上架状态</div></th>
                                                     <th><div class="th-inner">审核状态</div></th>
                                                     <th><div class="th-inner">平台等级</div></th>
-                                                    <th><div class="th-inner">指标</div></th>
+                                                    <th><div class="th-inner">销量</div></th>
                                                     <th><div class="th-inner">时间</div></th>
                                                     <th width="120px"><div class="th-inner">操作</div></th>
         					                    </tr>
@@ -94,42 +104,20 @@
         					                    <?php foreach($res as $r):?>
         					                    <tr data-checkid="<?php echo $r->id?>" data-scode="<?php echo $r->supplier_code?>">
             					                    <td><?php echo $r->id?></td>
-                                                    <td>
-                                                        <?php echo $r->platform_name.'</br>';?>
-                                                        <img style="height:80px;width:80px;" src="<?php echo $this->config->image_url.$r->cover_img?>">
-                                                    </td>
-                                                    <td>
-                                                        <?php 
-                                                        echo '编 码：'.$r->supplier_code.'</br>';
-                                                        echo '<a class="btn-link" href="'.base_url('Csupplier_buyer/page/'.$r->supplier_id).'">供应商：'.$r->supplier_name.'</a></br>';
-                                                        echo '<a class="btn-link" href="'.base_url('Cuser/page/'.$r->uid).'">上传用户：'.$r->username.'</a></br>';
-                                                        echo '价格：'.$r->price.'元/米</br>';
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php 
-                                                        echo '成分：'.$r->component.'</br>';
-                                                        echo '缩水率：'.$r->shrinkage.'</br>';
-                                                        echo '门幅：'.$r->width.'</br>';
-                                                        echo '平方克重：'.$r->square_weight.'</br>';
-                                                        echo '工艺组成：'.$r->tech_composed.'</br>';
-                                                        ?>
-                                                    </td>
+                                                    <td><?php echo $r->platform_name?></td>
+                                                    <td><a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$r->supplier_id)?>"><?php echo $r->supplier_name?></a></td>
+                                                    <td><?php echo $r->supplier_code?></td>
+                                                    <td><a class="btn-link" href="<?php echo base_url('Cuser/page/'.$r->uid)?>"><?php echo $r->username?></a></td>
+                                                    <td><?php echo $r->price?></td>
                                                     <td><?php echo $r->is_sale==1 ? '<i class="ion-checkmark"></i>' : '<i class="ion-close"></i>'?></td>
                                                     <td><?php echo $check_arr[$r->is_check]?></td>
                                                     <td><?php echo '<button class="grade btn btn-purple">'.$grade_arr[$r->platform_grade].'</button>'?></td>
-                                                    <td>
-                                                        <?php 
-                                                        echo '销量：'.$r->sum_sale.'米</br>';
-                                                        echo '评价：'.$r->sum_review.'</br>';
-                                                        echo '浏览：'.$r->pv;
-                                                        ?>
-                                                    </td>
+                                                    <td><?php echo $r->sum_sale?>米</td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
             					                        <a class="btn-link" href="<?php echo base_url('Cgoods/page/'.$r->id);?>">查看</a>|
                 					                    <a class="btn-link" href="<?php echo base_url('Cgoods/edit/'.$r->id);?>">编辑</a>|
-                					                    <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Cgoods/delete/'.$r->id);?>');">删除</a>
+                					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cgoods/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>

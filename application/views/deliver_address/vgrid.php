@@ -7,7 +7,7 @@
 					    <div class="panel-heading">
 					        <h3 class="panel-title">
     					        <?php echo $two_level?>
-					            <a style="margin-left:50px;" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="ion-load-d"></i>刷新</button></a>
+					            <a style="margin-left:50px;" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					        
 					        
@@ -52,7 +52,7 @@
                                                     <td><?php echo $r->tel?></td>
                                                     <td><?php if($r->if_default==1) echo '是'?></td>
             					                    <td>
-            					                        <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Cdeliver_address/delete/'.$r->id);?>');">删除</a>
+            					                        <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cdeliver_address/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>

@@ -394,6 +394,35 @@ function rmb_format($money = 0, $is_round = TRUE, $int_unit = '元') {
 }
 
 /**
+ * CURL 获取参数
+ * @param unknown $url:地址
+ * @param unknown $keysArr:参数
+ * @param string $mothod:获取方式
+ * @return unknown
+ */
+function fn_get_contents($url, $keysArr=array(), $mothod='get')
+{
+    $ch = curl_init() ;
+    $ssl = substr($url, 0, 8) == "https://" ? TRUE : FALSE;
+    if (!$ssl) {
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE ) ;
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST,2);
+        curl_setopt( $ch, CURLOPT_SSLVERSION, 4);
+    }
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE ) ;
+    if (strtolower($mothod) == 'post'){
+        curl_setopt( $ch, CURLOPT_POST, TRUE ) ;
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $keysArr ) ;
+    } else {
+        $url = $url . "?" . http_build_query( $keysArr ) ;
+    }
+    curl_setopt( $ch, CURLOPT_URL, $url ) ;
+    $ret = curl_exec( $ch ) ;
+    curl_close( $ch ) ;
+    return $ret;
+}
+
+/**
  * 根据经纬度获取距离
  * @param string $lnglat1：原点经纬度
  * @param string $lnglat2：目标经纬度

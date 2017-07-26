@@ -95,7 +95,7 @@ class Cgoods extends TM_Controller {
 	    $data['supplier_name'] = $postData['supplier_name'];
 	    $data['supplier_code'] = $postData['supplier_code'];
 	    $data['uid']           = $this->admin->id;
-	    $data['username']           = $this->admin->username;
+	    $data['username']      = $this->admin->username;
 	    $data['price']         = $postData['price'];
 	    $data['in_stock']      = $postData['in_stock'];
 	    $data['width']         = $postData['width'];
@@ -228,7 +228,7 @@ class Cgoods extends TM_Controller {
 	        )
 	    );
 	    $url = 'http://zhanggong.com/yituzhaotu';  //张工以图找图(图片修正，图片提取)url，返回json数据
-	    $res = json_decode($this->fn_get_contents($url, $param, 'post'));  //数据post提交
+	    $res = json_decode(fn_get_contents($url, $param, 'post'));  //数据post提交
 	    $d = json_encode(array(  //模拟返回数据
 	        'status' => TRUE,
 	        'data' => array(
@@ -338,7 +338,9 @@ class Cgoods extends TM_Controller {
 	        $this->redirect('Clogin/show_404');
 	    }
 	    $data['res'] = $res->row();
-	    $data['attr'] = array_column($this->_get_attr(), null, 'attr_en_name');
+	    $data['sale_arr']  = array('1'=>'上架', '2'=>'待上架', '3'=>'下架');
+	    $data['check_arr'] = array('1'=>'审核中', '2'=>'通过', '3'=>'不通过');
+	    $data['grade_arr'] = array('1'=>'正常', '2'=>'推荐', '3'=>'严选');
 	    $data['one_level'] = '产品中心';
         $data['two_level'] = '产品列表';
 	    $this->load->view('goods/vpage', $data);

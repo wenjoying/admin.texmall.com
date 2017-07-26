@@ -8,7 +8,7 @@
 					        <h3 class="panel-title" id="demo-bootbox-custom-h-content">
     					        <?php echo $two_level?>
 					            <a style="margin-left:50px;" href="<?php echo base_url('Csupplier_buyer/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
-					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="ion-load-d"></i>刷新</button></a>
+					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					    </div>
 					    <div class="panel-body">
@@ -87,7 +87,7 @@
                                                     <td><?php echo $status_arr[$r->status]?></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
-            					                        <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Csupplier_buyer/delete/'.$r->id);?>');">删除</a>
+            					                        <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Csupplier_buyer/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>

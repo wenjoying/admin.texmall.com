@@ -23,7 +23,7 @@ class Cadmin_user extends TM_Controller {
 	 * @后台首页
 	 * */
 	public function index()
-	{  
+	{   
 	    $data['moth_order'] = '[
                          	{"xaxis": "1月", "val": 34},
                          	{"xaxis": "2月", "val": 24},

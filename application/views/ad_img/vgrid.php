@@ -8,7 +8,7 @@
 					        <h3 class="panel-title">
     					        <?php echo $two_level?>
     					        <a style="margin-left:50px;" href="<?php echo base_url('Cad_img/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
-					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="ion-load-d"></i>刷新</button></a>
+					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					        
 					        
@@ -62,7 +62,7 @@
                                                     <td><?php echo $r->status==1 ? '<span class="label label-success">上线</span>' : '<span class="label label-danger">下线</span>'?></td>
                                                     <td>
                 					                    <a class="btn-link" href="<?php echo base_url('Cad_img/edit/'.$r->id);?>">编辑</a>|
-                					                    <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Cad_img/delete/'.$r->id);?>');">删除</a>
+                					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cad_img/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>

@@ -10,11 +10,11 @@
 					            <!-- Simple profile -->
 					            <div class="text-center pad-all bord-btm">
 					                <h4 class="text-lg text-overflow mar-no"><?php echo $res->platform_code?></h4>
-					                <p class="text-sm text-muted" style="color:red;"><?php echo $status_arr[$res->order_status]?></p>
+					                <p class="text-sm text-muted">状态：<span style="color:red;"><?php echo $status_arr[$res->order_status]?></span></p>
 					            </div>
 					            <p class="text-semibold text-main pad-all mar-no">订单资料</p>
 					            <div class="pad-hor mar-btm">
-					               <p>购买总价：<?php echo $state_arr[$res->order_state]?></p>
+					               <p>分类：<?php echo $state_arr[$res->order_state]?></p>
 					               <p>采购商：<a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$res->buyer_id)?>"><?php echo $res->buyer_name?></a></p>
 					               <p>用户：<a class="btn-link" href="<?php echo base_url('Cuser/page/'.$res->uid)?>"><?php echo $res->username?></a></p>
 					               <p>购买种类：<?php echo $res->sum_goods?></p>
@@ -54,7 +54,7 @@
 					                                </div>
 					                                <?php foreach($order_goods as $o):?>
 					                                <div class="mar-top pad-top bord-top">
-    					                                <a class="media-left" href="<?php echo base_url('Cgoods/page/'.$o->goods_id)?>"><img class="img-circle img-sm" alt="Profile Picture" src="<?php echo $this->config->image_url.$o->cover_img?>"></a>
+    					                                <a class="media-left" href="<?php echo base_url('Corder_goods/page/'.$o->id)?>"><img class="img-circle img-sm" alt="Profile Picture" src="<?php echo $this->config->image_url.$o->cover_img?>"></a>
     					                                <div class="media-body">
         					                                <p class="mar-no">型号：<a class="btn-link" href="<?php echo base_url('Cgoods/page/'.$o->goods_id)?>"><?php echo $o->supplier_code?></a></p>
         					                                <p class="mar-no">供应商：<a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$o->supplier_id)?>"><?php echo $o->supplier_name?></a></p>
@@ -62,11 +62,11 @@
         					                                <p class="mar-no"><span>订单价：<?php echo $o->order_price?>元/米</span><span style="margin-left:15px;">数量：<?php echo $o->number?>米</span></p>
         					                                <p class="mar-no">总价：<strong style="color:red;"><?php echo $o->sum_goods_price?></strong>元</p>
         					                                <ul class="list-inline mar-hor">
-                            					                <li class="tag tag-sm">PHP Programming</li>
-                            					                <li class="tag tag-sm">Marketing</li>
-                            					                <li class="tag tag-sm">Graphic Design</li>
-                            					                <li class="tag tag-sm">Sketch</li>
-                            					                <li class="tag tag-sm">Photography</li>
+        					                                    <?php foreach(json_decode($o->goods_attr, TRUE) as $attr):?>
+        					                                    <?php if(!empty($attr)):?>
+                            					                <li class="tag tag-sm"><?php echo $attr?></li>
+                            					                <?php endif;?>
+                            					                <?php endforeach;?>
                             					            </ul>
         					                                <small class="text-muted">创建时间：<?php echo date('Y-m-d H:i:s', $o->time)?></small>
         					                            </div>

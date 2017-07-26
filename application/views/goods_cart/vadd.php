@@ -38,7 +38,6 @@
     					                    <label class="col-md-3 control-label">主图</label>
     					                    <div class="col-md-6">
     					                        <input type="hidden" name="goods_id" value="<?php echo $res->id?>">
-    					                        <input type="hidden" name="cover_img" value="<?php echo $res->cover_img?>">
     					                        <div style="height: 100px;width: 100px;border:1px solid #e9e9e9;"><img height=100 width=100 src="<?php echo $this->config->image_url.$res->cover_img?>"></div>
     					                    </div>
     					                </div>
@@ -46,7 +45,7 @@
     					                    <label class="col-md-3 control-label" for="demo-text-input">供应商</label>
     					                    <div class="col-md-6">
     					                        <input type="hidden" name="supplier_id" value="<?php echo $res->supplier_id;?>">
-    					                        <input type="text" class="form-control" name="supplier_name" readonly maxlength="100" value="<?php echo $res->supplier_name;?>" placeholder="...">
+    					                        <input type="text" class="form-control"  readonly maxlength="100" value="<?php echo $res->supplier_name;?>" placeholder="...">
     					                        <small class="help-block">填写供应商名称</small>
     					                    </div>
     					                </div>
@@ -54,14 +53,14 @@
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">供应商型号</label>
     					                    <div class="col-md-6">
-    					                        <input type="text" class="form-control" name="supplier_code" readonly maxlength="20" value="<?php echo $res->supplier_code?>" placeholder="...">
+    					                        <input type="text" class="form-control" readonly maxlength="20" value="<?php echo $res->supplier_code?>" placeholder="...">
     					                    </div>
     					                </div>
     					                
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">价格</label>
     					                    <div class="col-md-6">
-    					                        <input type="text" class="form-control" name="price" readonly maxlength="10" value="<?php echo $res->price?>" placeholder="...">
+    					                        <input type="text" class="form-control" readonly maxlength="10" value="<?php echo $res->price?>" placeholder="...">
     					                        <small class="help-block">仅填数字，单位：元/米</small>
     					                    </div>
     					                </div>

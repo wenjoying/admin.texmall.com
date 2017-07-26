@@ -8,7 +8,7 @@
 					        <h3 class="panel-title" id="demo-bootbox-custom-h-content">
     					        <?php echo $two_level?>
 					            <a style="margin-left:50px;" href="<?php echo base_url('Corder/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
-					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="ion-load-d"></i>刷新</button></a>
+					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					    </div>
 					    <div class="panel-body">
@@ -59,11 +59,11 @@
             					                    <th><div class="th-inner">ID</div></th>
                                                     <th><div class="th-inner">订单号</div></th>
                                                     <th><div class="th-inner">采购商</div></th>
+                                                    <th><div class="th-inner">用户</div></th>
                                                     <th><div class="th-inner">购买种类</div></th>
-                                                    <th><div class="th-inner">订单总价</div></th>
-                                                    <th><div class="th-inner">备注</div></th>
-                                                    <th><div class="th-inner">订单分类</div></th>
-                                                    <th><div class="th-inner">订单状态</div></th>
+                                                    <th><div class="th-inner">总价</div></th>
+                                                    <th><div class="th-inner">分类</div></th>
+                                                    <th><div class="th-inner">状态</div></th>
                                                     <th><div class="th-inner">时间</div></th>
                                                     <th width="120px"><div class="th-inner">操作</div></th>
         					                    </tr>
@@ -73,21 +73,16 @@
         					                    <tr data-checkid="<?php echo $r->id?>">
             					                    <td><?php echo $r->id?></td>
                                                     <td><?php echo $r->platform_code;?></td>
-                                                    <td>
-                                                        <?php 
-                                                        echo '<a class="btn-link" href="'.base_url('Csupplier_buyer/page/'.$r->buyer_id).'">'.$r->buyer_name.'</a></br>';
-                                                        echo '<a class="btn-link" href="'.base_url('Cuser/page/'.$r->uid).'">'.$r->username.'</a>';
-                                                        ?>
-                                                    </td>
+                                                    <td><a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$r->buyer_id)?>"><?php echo $r->buyer_name?></a></td>
+                                                    <td><a class="btn-link" href="<?php echo base_url('Cuser/page/'.$r->uid)?>"><?php echo $r->username?></a></td>
                                                     <td><?php echo $r->sum_goods?></td>
                                                     <td><?php echo $r->sum_order_price?></td>
-                                                    <td><?php echo $r->note?></td>
-                                                    <td><?php echo $r->order_state?></td>
-                                                    <td><?php echo $r->order_status?></td>
+                                                    <td><?php echo $state_arr[$r->order_state]?></td>
+                                                    <td><?php echo $status_arr[$r->order_status]?></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
             					                        <a class="btn-link" href="<?php echo base_url('Corder/page/'.$r->id);?>">查看</a>|
-                					                    <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Corder/delete/'.$r->id);?>');">删除</a>
+                					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Corder/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>

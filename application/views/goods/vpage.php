@@ -12,11 +12,18 @@
 					                <h4 class="text-lg text-overflow mar-no"><?php echo $res->platform_code?></h4>
 					                <p class="text-sm text-muted" >标准图：<span style="color:red;"><?php echo $res->platform_name?></span></p>
 					            </div>
-					            
+					            <p class="text-semibold text-main pad-all mar-no">主图（标准图）</p>
+					            <div class="pad-hor mar-btm">
+					               <?php if(!empty($res->cover_img)):?>
+					               <img width=150 src="<?php echo $this->config->image_url.$res->cover_img?>">
+					               <?php endif;?>
+					            </div>
 					            <p class="text-semibold text-main pad-all mar-no">
 					               <?php if($this->admin->id==1):?>
+					               <!-- 后台测试 -->
 					               <a class="btn-link" href="<?php echo base_url('Cgoods/next/'.$res->id)?>"><button class="btn btn-sm btn-primary">下一个</button></a>
 					               <?php endif;?>
+					               
 					               <?php if($res->is_sale==1 && $res->is_check==2):?>
 					               <a class="btn-link" href="<?php echo base_url('Cgoods_cart/add?goods_id='.$res->id)?>"><button class="btn btn-sm btn-success">加入购物车</button></a>
 					               <?php endif;?>
@@ -25,9 +32,12 @@
 					            <p class="text-semibold text-main pad-all mar-no">产品详情</p>
 					            <div class="pad-hor mar-btm">
 					               <p>供应商型号：<?php echo $res->supplier_code?></p>
-					               <p>供应商商：<a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$res->supplier_id)?>"><?php echo $res->supplier_name?></a></p>
+					               <p>供应商：<a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$res->supplier_id)?>"><?php echo $res->supplier_name?></a></p>
 					               <p>上传用户：<a class="btn-link" href="<?php echo base_url('Cuser/page/'.$res->uid)?>"><?php echo $res->username?></a></p>
 					               <p>价格：<strong style="color:red;"><?php echo $res->price?></strong>元/米</p>
+					               <p>上架状态：<?php echo $sale_arr[$res->is_sale]?></p>
+					               <p>审核状态：<?php echo $check_arr[$res->is_check]?></p>
+					               <p>平台等级：<?php echo $grade_arr[$res->platform_grade]?></p>
 					               <p>库存：<?php echo $res->in_stock?>米</p>
 					               <p>成分：<?php echo $res->component?></p>
 					               <p>门幅：<?php echo $res->width?></p>
@@ -44,14 +54,13 @@
 					               <p>风格：<?php echo $res->style?></p>
 					               <p>类目：<?php echo $res->category?></p>
 					               <p>来源：<?php echo $res->source?></p>
+					               <p>总销量：<?php echo $res->sum_sale?></p>
+					               <p>总评价：<?php echo $res->sum_review?></p>
+					               <p>浏览量：<?php echo $res->pv?></p>
 					               <p>创建时间：<?php echo date('Y-m-d H:i:s', $res->time)?></p>
+					               <p>更新时间：<?php if(!empty($res->update_time)) echo date('Y-m-d H:i:s', $res->update_time)?></p>
 					            </div>
-					            <p class="text-semibold text-main pad-all mar-no">主图</p>
-					            <div class="pad-hor mar-btm">
-					               <?php if(!empty($res->cover_img)):?>
-					               <img width=150 src="<?php echo $this->config->image_url.$res->cover_img?>">
-					               <?php endif;?>
-					            </div>
+					            
 					        </div>
 					    </div>
 					    <div class="fluid">

@@ -8,7 +8,7 @@
 					        <h3 class="panel-title">
     					        <?php echo $two_level?>
 					            <a style="margin-left:50px;" href="<?php echo base_url('Cfonts/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
-					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="ion-load-d"></i>刷新</button></a>
+					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					    </div>
 					</div>
@@ -23,7 +23,7 @@
             					                    <th><div class="th-inner">ID</div></th>
                                                     <th><div class="th-inner">图片</div></th>
                                                     <th><div class="th-inner">名称</div></th>
-                                                    <th><div class="th-inner">路径</div></th>
+                                                    <th><div class="th-inner">点击下载</div></th>
                                                     <th><div class="th-inner">上架</div></th>
                                                     <th width="120px"><div class="th-inner">操作</div></th>
         					                    </tr>
@@ -36,25 +36,17 @@
                                                     <td><?php echo $r->fonts_name?></td>
                                                     <td><a class="btn-link" href="<?php echo $this->config->image_url.$r->fonts_path?>"><?php echo $r->fonts_path?></a></td>
                                                     <td>
-                                                        <a class="btn-link" href="javascript:up_status('<?php echo base_url('Cfonts/up_status/'.$r->id.'?status='.$r->status);?>');">
+                                                        <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cfonts/up_status/'.$r->id.'?status='.$r->status);?>',1);">
                                                         <?php echo $r->status==1 ? '<i class="ion-checkmark"></i>' : '<i class="ion-close"></i>'?>
                                                         </a>
                                                     </td>
             					                    <td>
-                					                    <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Cfonts/delete/'.$r->id);?>');">删除</a>
+                					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cfonts/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
-    					                <script>
-
-        					            var up_status = function(url){
-    					                	layer.confirm('是否确认修改上架状态？', function(index){
-    					                    	window.location.href = url;
-    					                    });
-    					                }
-    					                </script>
     					            </div>
     					        </div>
 					        </div>

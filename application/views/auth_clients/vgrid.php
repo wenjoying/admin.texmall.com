@@ -8,7 +8,7 @@
 					        <h3 class="panel-title">
     					        <?php echo $two_level?>
 					            <a style="margin-left:50px;" href="<?php echo base_url('Cauth2/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
-					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="ion-load-d"></i>刷新</button></a>
+					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					    </div>
 					</div>
@@ -37,7 +37,7 @@
                                                     <td><?php echo $r->client_secret?></td>
                                                     <td><?php echo $r->redirect_uri?></td>
             					                    <td>
-            					                        <a class="btn-link" href="###" onclick="layer_conf('<?php echo base_url('Cauth2/delete/'.$r->id);?>');">删除</a>
+            					                        <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cauth2/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>

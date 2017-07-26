@@ -33,7 +33,10 @@
         					                <tbody>
         					                    <?php foreach($res as $r):?>
         					                    <tr>
-        					                        <td><input type="checkbox" name="cart_id[]" value="<?php echo $r->id?>"></td>
+        					                        <td>
+        					                           <input type="checkbox" name="cart_id[]" value="<?php echo $r->id?>">
+        					                           <input type="hidden" name="uid" value="<?php echo $r->uid?>">
+        					                        </td>
             					                    <td><?php echo $r->id?></td>
             					                    <td><a class="btn-link" href="<?php echo base_url('Cuser/page/'.$r->uid)?>"><?php echo $r->username?></a></td>
                                                     <td><a class="btn-link" href="<?php echo base_url('Cgoods/page/'.$r->goods_id)?>"><?php echo $r->supplier_code?></a></td>
@@ -46,6 +49,12 @@
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
+    					                <div class="form-group">
+    					                    <label class="col-md-3 control-label" for="demo-textarea-input">留言</label>
+    					                    <div class="col-md-6">
+    					                        <textarea rows="5" class="form-control" placeholder="..." maxlength="250" name="note"></textarea>
+    					                    </div>
+    					                </div>
 					                </div>
 					                
 					                <div class="panel-footer">

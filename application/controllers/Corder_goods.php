@@ -55,7 +55,6 @@ class Corder_goods extends TM_Controller {
 	        $this->redirect('Clogin/show_404');
 	    }
 	    $data['res'] = $res->row();
-	    $data['status_arr'] = array('1'=>'审核中', '2'=>'通过', '3'=>'不通过');
 	    $data['one_level'] = '订单管理';
         $data['two_level'] = '订单产品';
 	    $this->load->view('order_goods/vpage', $data);

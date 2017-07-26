@@ -57,7 +57,7 @@ class C3d_fitting extends TM_Controller {
 	        'zoom'      => '100'   //布料缩放25%-250%
 	    );
 	    $url = 'http://zhanggong.com/3dshiyi';  //张工3d试衣url，返回json数据
-	    $res = json_decode($this->fn_get_contents($url, $param, 'post'));  //数据post提交
+	    $res = json_decode(fn_get_contents($url, $param, 'post'));  //数据post提交
 	    $d = json_encode(array(  //模拟返回数据
 	        'status' => TRUE,
 	        'data' => array(

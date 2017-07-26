@@ -49,9 +49,20 @@
 	<script>
     //根地址
     var base_url = '<?php echo base_url();?>';
-    /**@确认提示*/
-    var layer_conf = function(url){
-    	layer.confirm('删除后不能恢复，是否确认删除？', function(index){
+    //@确认提示
+    var layer_ask = function(url, keys){
+        var cont = '';
+    	switch (keys) {
+        	case 1:
+        		cont = '是否确认修改这条信息的状态？';
+        	    break;
+        	case 2:
+        		cont = '...';
+        	    break;
+        	default:
+        		cont = '删除后不能恢复，是否确认删除？';
+    	}
+    	layer.confirm(cont, function(index){
         	window.location.href = url;
         });
     }
