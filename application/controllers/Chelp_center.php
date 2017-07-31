@@ -27,7 +27,7 @@ class Chelp_center extends TM_Controller {
 	    $this->checkAction(__METHOD__);
 	    
         $this->load->library('pagination');
-        $config['per_page']   = 20;
+        $config['per_page']   = 2;
         $config['uri_segment'] = 3;
         $config['suffix']     = $this->get_page_param($this->input->get());
         $config['total_rows'] = $this->Mhelp_center->total($this->input->get());

@@ -26,7 +26,7 @@ class TM_Controller extends CI_Controller{
 		
 		$this->admin = json_decode(base64_decode($this->input->cookie('admin')));
 		if (!$this->admin) {
-		    redirect('Clogin/index');
+		    $this->redirect('Clogin/index');
 		}
 	}
 	
@@ -322,7 +322,7 @@ class TM_Controller extends CI_Controller{
 	 * @param string $method:跳转方法
 	 * @param number $http_response_code:错误码
 	 * */
-	function redirect($url='', $method='location', $http_response_code=302)
+	public function redirect($url='', $method='location', $http_response_code=302)
 	{
 	    if (!preg_match('#^https?://#i', $url)) {
 	        $url = base_url($url);
@@ -343,7 +343,7 @@ class TM_Controller extends CI_Controller{
 	 * @param string $file:文件名
 	 * @param string $dir:文件夹
 	 * */
-	function file2dir($file, $dir)
+	public function file2dir($file, $dir)
 	{
 	    $f_path = $this->config->upload_image_path($file);
 	    if (is_dir($f_path)) {

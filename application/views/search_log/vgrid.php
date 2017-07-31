@@ -19,7 +19,8 @@
     					            <select class="selectpicker" name="type">
     	                                <option value="">请选择类型</option>
                                         <option <?php if($this->input->get('type')=='1')echo 'selected="selected"'?> value="1">文字</option>
-                                        <option <?php if($this->input->get('type')=='2')echo 'selected="selected"'?> value="2">图片</option>
+                                        <option <?php if($this->input->get('type')=='2')echo 'selected="selected"'?> value="2">图片(产品)</option>
+                                        <option <?php if($this->input->get('type')=='3')echo 'selected="selected"'?> value="3">供应商店铺</option>
                                     </select>
 					            </div>
 					            
@@ -32,12 +33,11 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="用户名/搜索内容">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="用户名/搜索内容">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
 					        </form>
-					
 					    </div>
 					</div>
                     <div class="row">
@@ -73,24 +73,14 @@
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
-    					                <script>
-    					                //时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
-    					                
-    					                </script>
     					            </div>
     					        </div>
     					        <div class="pull-right pagination">
-    					        <ul class="pagination">
-    					            <li><a>每页<?php echo $per_page?>条/共<?php echo $sum?>条</a></li>
-    					            <li><a>第<?php echo empty($this->uri->segment(3)) ? 1 : $this->uri->segment(3)?>页</a></li>
-    					        </ul>
-    					        <?php echo $link;?> 
+        					        <ul class="pagination">
+        					            <li><a>每页<?php echo $per_page?>条/共<?php echo $sum?>条</a></li>
+        					            <li><a>第<?php echo empty($this->uri->segment(3)) ? 1 : $this->uri->segment(3)?>页</a></li>
+        					        </ul>
+        					        <?php echo $link;?> 
     					        </div>
 					        </div>
 				        </div>

@@ -20,9 +20,6 @@ class Mgoods extends CI_Model{
 	    if (!empty($search['platform_name'])) {
 	        $this->db->where(array('platform_name'=>$search['platform_name']));
 	    }
-	    if (!empty($search['component'])) {
-	        $this->db->where(array('component'=>$search['component']));
-	    }
 	    if (!empty($search['is_sale'])) {
 	        $this->db->where(array('is_sale'=>$search['is_sale']));
 	    }
@@ -64,9 +61,6 @@ class Mgoods extends CI_Model{
 	    $this->db->from($this->table);
 	    if (!empty($search['platform_name'])) {
 	        $this->db->where(array('platform_name'=>$search['platform_name']));
-	    }
-	    if (!empty($search['component'])) {
-	        $this->db->where(array('component'=>$search['component']));
 	    }
 	    if (!empty($search['is_sale'])) {
 	        $this->db->where(array('is_sale'=>$search['is_sale']));

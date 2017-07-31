@@ -15,10 +15,10 @@
     				                    <div class="pad-all">
     				                        <p class="text-lg text-semibold"><i class="demo-pli-data-storage icon-fw"></i>注册用户</p>
     				                        <p class="mar-no">
-    				                            <span class="pull-right text-bold">120人</span>本月
+    				                            <span class="pull-right text-bold"><?php echo $user_num['month_num']?>人</span>本月
     				                        </p>
     				                        <p class="mar-no">
-    				                            <span class="pull-right text-bold">300人</span>总计
+    				                            <span class="pull-right text-bold"><?php echo $user_num['all_num']?>人</span>总计
     				                        </p>
     				                    </div>
     				                </div>
@@ -28,12 +28,12 @@
 				                <a href="<?php echo base_url('Csupplier_buyer/grid')?>">
     				                <div class="panel panel-info panel-colorful">
     				                    <div class="pad-all">
-    				                        <p class="text-lg text-semibold"><i class="demo-pli-wallet-2 icon-fw"></i>注册公司</p>
+    				                        <p class="text-lg text-semibold"><i class="demo-pli-wallet-2 icon-fw"></i>注册企业</p>
     				                        <p class="mar-no">
-    				                            <span class="pull-right text-bold">100家</span>供应商
+    				                            <span class="pull-right text-bold"><?php echo $company_num['month_num']?>家</span>供应商
     				                        </p>
     				                        <p class="mar-no">
-    				                            <span class="pull-right text-bold">120家</span>采购商
+    				                            <span class="pull-right text-bold"><?php echo $company_num['all_num']?>家</span>采购商
     				                        </p>
     				                    </div>
     				                </div>
@@ -45,10 +45,10 @@
     				                    <div class="pad-all">
     				                        <p class="text-lg text-semibold"><i class="demo-pli-bag-coins icon-fw"></i>产品管理</p>
     				                        <p class="mar-no">
-    				                            <span class="pull-right text-bold">764</span>本月
+    				                            <span class="pull-right text-bold"><?php echo $goods_num['month_num']?></span>本月
     				                        </p>
     				                        <p class="mar-no">
-    				                            <span class="pull-right text-bold">1,332</span>总计
+    				                            <span class="pull-right text-bold"><?php echo $goods_num['all_num']?></span>总计
     				                        </p>
     				                    </div>
     				                </div>
@@ -60,10 +60,10 @@
     				                    <div class="pad-all">
     				                        <p class="text-lg text-semibold"><i class="demo-pli-check icon-fw"></i>订单管理</p>
     				                        <p class="mar-no">
-    				                            <span class="pull-right text-bold">￥1000元/34个</span>本月
+    				                            <span class="pull-right text-bold">￥<?php echo $order_num['month_money']?>元/<?php echo $order_num['month_num']?>个</span>本月
     				                        </p>
     				                        <p class="mar-no">
-    				                            <span class="pull-right text-bold">￥50000元/79个</span>总计
+    				                            <span class="pull-right text-bold">￥<?php echo $order_num['all_money']?>元/<?php echo $order_num['all_num']?>个</span>总计
     				                        </p>
     				                    </div>
     				                </div>

@@ -64,7 +64,7 @@
     					                </div>
     					                <?php else :?>
     					                <div class="form-group">
-    					                    <label class="col-md-3 control-label" for="demo-text-input">公司名称*</label>
+    					                    <label class="col-md-3 control-label" for="demo-text-input">企业名称*</label>
     					                    <div class="col-md-6">
     					                        <input type="hidden" name="companyid" value="<?php echo $this->input->get('companyid')?>">
     					                        <input type="hidden" name="role_id" value="<?php echo $this->input->get('role_id')?>">
@@ -105,7 +105,7 @@
                                                     <option value="0">否</option>
                                                     <option value="1">是</option>
                                                 </select>
-                                                <small class="help-block">一个公司仅有一个管理员</small> 
+                                                <small class="help-block">一个企业仅有一个管理员</small> 
     					                    </div>
     					                </div>
     					                
@@ -124,13 +124,6 @@
 					</div>
 					<script>
 					$(function(){
-						//时间
-		                $('input.date-select').datepicker({
-	                		format: "yyyy-mm-dd",
-	                        todayBtn: "linked",
-	                        autoclose: true,
-	                        todayHighlight: true
-		                });
 		                
     					//图片预览
     					$('.form-group').find('input[type="file"]').change(function(){

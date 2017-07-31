@@ -17,7 +17,7 @@
 					        <form class="form-inline" action="<?php echo base_url('Cdeliver_address/grid');?>" method="get">
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="地址/收件人/电话">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="地址/收件人/电话">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>

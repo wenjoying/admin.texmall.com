@@ -28,7 +28,7 @@ class Cuser extends TM_Controller {
 	    $this->checkAction(__METHOD__);
 	    
 		$this->load->library('pagination');
-		$config['per_page']   = 20;
+		$config['per_page']   = 2;
 		$config['uri_segment'] = 3;
 		$config['suffix']     = $this->get_page_param($this->input->get());
 		$config['total_rows'] = $this->Muser->total($this->input->get());
@@ -184,10 +184,8 @@ class Cuser extends TM_Controller {
 	    $user = $this->Base_model->getWhere($this->table, array('id'=>$id));
 	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    if ($res>0) {
-	        foreach ($user as $u) {
-	            $this->delete_img($u->userimg);
-	            $this->delete_img($u->qr_img);
-	        }
+            $this->delete_img($user->row()->userimg);
+            $this->delete_img($user->row()->qr_img);
 	        alert_msg('操作成功', 'Cad_img/grid');
 	    }else{
 	        alert_msg('操作失败');

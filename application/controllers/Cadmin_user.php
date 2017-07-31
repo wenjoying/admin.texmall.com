@@ -20,44 +20,6 @@ class Cadmin_user extends TM_Controller {
 	}
 	
 	/**
-	 * @后台首页
-	 * */
-	public function index()
-	{   
-	    $data['moth_order'] = '[
-                         	{"xaxis": "1月", "val": 34},
-                         	{"xaxis": "2月", "val": 24},
-                         	{"xaxis": "3月", "val": 3},
-                         	{"xaxis": "4月", "val": 12},
-                         	{"xaxis": "5月", "val": 13},
-                         	{"xaxis": "6月", "val": 22},
-                         	{"xaxis": "7月", "val": 5},
-                         	{"xaxis": "8月", "val": 26},
-                         	{"xaxis": "9月", "val": 12},
-                         	{"xaxis": "10月", "val": 19},
-                         	{"xaxis": "11月", "val": 19},
-                         	{"xaxis": "12月", "val": 19},
-						]';
-	    $data['moth_amount'] = '[
-                         	{"xaxis": "1月", "val": 34},
-                         	{"xaxis": "2月", "val": 24},
-                         	{"xaxis": "3月", "val": 3},
-                         	{"xaxis": "4月", "val": 12},
-                         	{"xaxis": "5月", "val": 13},
-                         	{"xaxis": "6月", "val": 22},
-                         	{"xaxis": "7月", "val": 5},
-                         	{"xaxis": "8月", "val": 26},
-                         	{"xaxis": "9月", "val": 12},
-                         	{"xaxis": "10月", "val": 19},
-                         	{"xaxis": "11月", "val": 19},
-                         	{"xaxis": "12月", "val": 19},
-						]';
-	    $data['one_level'] = 'Texmall后台首页';
-	    $data['two_level'] = '';
-	    $this->load->view('layout/vindex', $data);
-	}
-	
-	/**
 	 * @个人信息
 	 * */
 	public function profile()
@@ -228,13 +190,11 @@ class Cadmin_user extends TM_Controller {
 	    }
 	    $checkid = $this->input->post('checkid');
 	    $ids = $checkid ? $checkid : array($id);
-	    $user = $this->Base_model->getWherein($this->table, 'id', $ids);
-	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
+	    $user = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    
 	    if ($res > 0) {
-    	    foreach ($user as $u) {
-    	        $this->delete_img($u->userimg);
-    	    }
+	        $this->delete_img($user->row()->userimg);
 	        alert_msg('操作成功', 'Cadmin_user/grid');
 	    }else{
 	        alert_msg('操作失败');

@@ -59,7 +59,7 @@
     					                </div>
     					                <?php if(empty($res->companyid)):?>
     					                <div class="form-group">
-    					                    <label class="col-md-3 control-label" for="demo-text-input">公司名称*</label>
+    					                    <label class="col-md-3 control-label" for="demo-text-input">企业名称*</label>
     					                    <div class="col-md-6">
     					                        <input type="hidden" name="companyid" value="">
     					                        <input type="text" class="form-control" name="company" maxlength="100" required="required" value="" placeholder="...">
@@ -98,7 +98,7 @@
                                                     <option value="0">否</option>
                                                     <option value="1">是</option>
                                                 </select>
-                                                <small class="help-block">一个公司仅有一个管理员</small> 
+                                                <small class="help-block">一个企业仅有一个管理员</small> 
     					                    </div>
     					                </div>
     					                
@@ -117,13 +117,6 @@
 					</div>
 					<script>
 					$(function(){
-						//时间
-		                $('input.date-select').datepicker({
-	                		format: "yyyy-mm-dd",
-	                        todayBtn: "linked",
-	                        autoclose: true,
-	                        todayHighlight: true
-		                });
 		                
     					//图片预览
     					$('.form-group').find('input[type="file"]').change(function(){
@@ -131,7 +124,7 @@
     						$(this).siblings('div').html(img);
     					}); 
     
-    					//验证用户公司名称
+    					//验证用户企业名称
     					var check_exists = function(obj) {
     						obj.blur(function(){
     			                if (obj.val().trim().length > 0) {
@@ -141,7 +134,7 @@
     			                        	obj.val(json.company_name);
     			                        	$('input[name="companyid"]').val(json.companyid);
     			                        }else{
-    			                        	layer.msg('公司名称不存在',{icon:8,time:1000});
+    			                        	layer.msg('企业名称不存在',{icon:8,time:1000});
         			                    }
     			                    },'json');
     			                }

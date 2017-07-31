@@ -7,18 +7,19 @@
 					    <div class="panel-heading">
 					        <h3 class="panel-title" id="demo-bootbox-custom-h-content">
     					        <?php echo $two_level?>
-					            <a style="margin-left:50px;" href="<?php echo base_url('Csupplier_buyer/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
+					            <a style="margin-left:50px;" href="<?php echo base_url('Cauthenticate_personal/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
 					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					    </div>
 					    <div class="panel-body">
-					        <form class="form-inline" action="<?php echo base_url('Csupplier_buyer/grid');?>" method="get">
+					        <form class="form-inline" action="<?php echo base_url('Cauthenticate_personal/grid');?>" method="get">
 					            <div class="form-group">
-    					            <select class="selectpicker" name="status">
+    					            <select class="selectpicker" name="is_check">
     	                                <option value="">请选择状态</option>
-                                        <option <?php if($this->input->get('status')==1)echo 'selected="selected"'?> value="1">正在审核</option>
-                                        <option <?php if($this->input->get('status')==2)echo 'selected="selected"'?> value="2">审核通过</option>
-                                        <option <?php if($this->input->get('status')==3)echo 'selected="selected"'?> value="3">审核不通过</option>
+    	                                <?php foreach($status_arr as $k=>$v):?>
+                                        <option <?php if($this->input->get('is_check')==$k)echo 'selected="selected"'?> value="<?php echo $k?>"><?php echo $v?></option>
+                                        <?php endforeach;?>
+                                        
                                     </select>
 					            </div>
 					            
@@ -43,7 +44,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="用户名/电话/地址">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="真名/身份证/开户行/卡号">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -61,8 +62,10 @@
         					                    <tr>
             					                    <th><div class="th-inner">ID</div></th>
                                                     <th><div class="th-inner">申请人</div></th>
-                                                    <th><div class="th-inner">地址</div></th>
-                                                    <th><div class="th-inner">申请理由</div></th>
+                                                    <th><div class="th-inner">开户行</div></th>
+                                                    <th><div class="th-inner">开户地址</div></th>
+                                                    <th><div class="th-inner">银行卡</div></th>
+                                                    <th><div class="th-inner">打款金额</div></th>
                                                     <th><div class="th-inner">状态</div></th>
                                                     <th><div class="th-inner">时间</div></th>
                                                     <th width="120px"><div class="th-inner">操作</div></th>
@@ -70,37 +73,24 @@
     					                    </thead>
         					                <tbody>
         					                    <?php foreach($res as $r):?>
-        					                    <tr data-checkid="<?php echo $r->id?>" data-username="<?php echo $r->username?>">
+        					                    <tr data-checkid="<?php echo $r->id?>" data-username="<?php echo $r->realname?>">
             					                    <td><?php echo $r->id?></td>
-                                                    <td>
-                                                        <?php 
-                                                        echo '<a class="btn-link" href="'.base_url('Cuser/page/'.$r->uid).'">'.$r->username.'</a>';
-                                                        echo '</br>'.$r->link_phone;
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php 
-                                                        echo $r->province_name.$r->city_name.$r->district_name.'</br>';
-                                                        echo $r->ads_des;
-                                                        ?>
-                                                    </td>
-                                                    <td><?php echo $status_arr[$r->status]?></td>
+                                                    <td><a class="btn-link" href="<?php echo base_url('Cuser/page/'.$r->uid)?>"><?php echo $r->realname?></a></td>
+                                                    <td><?php echo $r->bank_name.$r->bank_branch?></td>
+                                                    <td><?php echo $r->bank_address?></td>
+                                                    <td><?php echo $r->bank_card?></td>
+                                                    <td><?php if($r->validate_money) echo $r->validate_money*0.01?></td>
+                                                    <td><span style="color:red;"><?php echo $status_arr[$r->is_check]?></span></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
-            					                        <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Csupplier_buyer/delete/'.$r->id);?>');">删除</a>
+            					                        <a class="btn-link" href="<?php echo base_url('Cauthenticate_personal/page/'.$r->id);?>">查看</a>|
+            					                        <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cauthenticate_personal/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
     					                <script>
-    					                //时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
 
     									var get_city = function(){
     										var p_select = $('select[name="province_id"]');
@@ -176,30 +166,23 @@
     									get_province();
     									get_city();
 
-
-          					            //审核
-        					            $('.table tr').on('click', '.label-info', function(){
-            					            var scode = $(this).parents('tr').data('username');
-        					            	var checkid = $(this).parents('tr').data('checkid');
-            					          	var	html =  '<div class="panel-body demo-nifty-btn">';
-            					          		html += '<a class="btn-link" href="'+base_url+'Csupplier_buyer/check_out/'+checkid+'?is_check=2"><button class="btn btn-info">通过</button></a>';
-            					          		html += '<a class="btn-link" href="'+base_url+'Csupplier_buyer/check_out/'+checkid+'?is_check=3"><button class="btn btn-danger" style="margin-left: 15px;">不通过</button></a>';
-                    					        html += '</div>',
-        					            	layer.open({
-        					            	  type: 1,
-        					            	  title: '审核 （id：' + checkid + '；申请人：' + scode + '）',
-        					            	  skin: 'layui-layer-rim', //加上边框
-        					            	  area: ['420px', '240px'], //宽高
-        					            	  content: html
-        					            	});
-            					        });
-
     					                </script>
     					            </div>
     					        </div>
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>在“<span style="color:red;">正在审核</span>”的状态下，可以点击“查看”进行审核。
+		                      </br>1.如果用户的资料信息正确，选择“已打款”后提交，会生成一个“打款金额”，请按照此金额给用户账号打款，用户收到款项后在一个月内有三次机会输入金额：1>如果两个金额相等，则系统自动审核通过；2>如果都输入错误，则系统自动审核不通过。
+		                      </br>2.如果用户的资料信息不正确，选择“审核不通过”，并填写不通过的原因后提交。
+		                    </p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

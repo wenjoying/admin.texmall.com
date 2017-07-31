@@ -40,7 +40,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="订单号/采购商/用户">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="订单号/采购商/用户">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -88,16 +88,6 @@
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
-    					                <script>
-    					                //时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
-    					                
-    					                </script>
     					            </div>
     					        </div>
 					        </div>

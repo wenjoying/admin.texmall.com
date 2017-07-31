@@ -48,15 +48,6 @@
                                     </select>
 					            </div>
 					            
-					            <div class="form-group">
-    					            <select class="selectpicker" name="component">
-    	                                <option value="">请选择成分</option>
-                                        <option <?php if($this->input->get('component')==1)echo 'selected="selected"'?> value="1">正常</option>
-                                        <option <?php if($this->input->get('component')==2)echo 'selected="selected"'?> value="2">推荐</option>
-                                        <option <?php if($this->input->get('component')==3)echo 'selected="selected"'?> value="3">严选</option>
-                                    </select>
-					            </div>
-					            
 					            <div class="form-group" style="margin-bottom: 15px;">
 					                <input type="text" class="form-control" style="margin-top: 15px;" name="platform_name" value="<?php echo $this->input->get('platform_name');?>" placeholder="平台名称">
 					            </div>
@@ -70,7 +61,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="编码/供应商/工艺组成/风格/类目">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="编码/供应商/工艺组成/风格/类目">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -87,7 +78,7 @@
     					                    <thead>
         					                    <tr>
             					                    <th><div class="th-inner">ID</div></th>
-                                                    <th><div class="th-inner">标准图</div></th>
+                                                    <th><div class="th-inner">平台名称</div></th>
                                                     <th><div class="th-inner">供应商</div></th>
                                                     <th><div class="th-inner">型号</div></th>
                                                     <th><div class="th-inner">上传用户</div></th>
@@ -110,8 +101,8 @@
                                                     <td><a class="btn-link" href="<?php echo base_url('Cuser/page/'.$r->uid)?>"><?php echo $r->username?></a></td>
                                                     <td><?php echo $r->price?></td>
                                                     <td><?php echo $r->is_sale==1 ? '<i class="ion-checkmark"></i>' : '<i class="ion-close"></i>'?></td>
-                                                    <td><?php echo $check_arr[$r->is_check]?></td>
-                                                    <td><?php echo '<button class="grade btn btn-purple">'.$grade_arr[$r->platform_grade].'</button>'?></td>
+                                                    <td style="color:red;"><?php echo $status_arr[$r->status]?></td>
+                                                    <td><?php echo $grade_arr[$r->platform_grade]?></td>
                                                     <td><?php echo $r->sum_sale?>米</td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
@@ -124,13 +115,6 @@
         					                </tbody>
     					                </table>
     					                <script>
-    					                //时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
     					                
           					            //审核
         					            $('.table tr').on('click', '.label-info', function(){
@@ -151,6 +135,13 @@
 
     					                </script>
     					            </div>
+    					        </div>
+    					        <div class="pull-right pagination">
+        					        <ul class="pagination">
+        					            <li><a>每页<?php echo $per_page?>条/共<?php echo $sum?>条</a></li>
+        					            <li><a>第<?php echo empty($this->uri->segment(3)) ? 1 : $this->uri->segment(3)?>页</a></li>
+        					        </ul>
+        					        <?php echo $link;?> 
     					        </div>
 					        </div>
 				        </div>

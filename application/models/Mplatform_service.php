@@ -18,7 +18,7 @@ class Mplatform_service extends CI_Model{
 	    $this->db->select('id');
 	    $this->db->from($this->table);
 	    if (!empty($search['status'])) {
-	        $this->db->where(array('status'=>strtotime($search['status'])));
+	        $this->db->where(array('status'=>$search['status']));
 	    }
 	    if (!empty($search['province_id'])) {
 	        $this->db->where(array('province_id'=>$search['province_id']));
@@ -54,7 +54,7 @@ class Mplatform_service extends CI_Model{
 	    $this->db->select('*');
 	    $this->db->from($this->table);
 	    if (!empty($search['status'])) {
-	        $this->db->where(array('status'=>strtotime($search['status'])));
+	        $this->db->where(array('status'=>$search['status']));
 	    }
 	    if (!empty($search['province_id'])) {
 	        $this->db->where(array('province_id'=>$search['province_id']));

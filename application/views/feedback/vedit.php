@@ -15,21 +15,21 @@
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">类型</label>
     					                    <div class="col-md-6">
-    					                        <input type="text" class="form-control"maxlength="20" readonly value="<?php echo $res->type;?>" placeholder="...">
+    					                        <input type="text" class="form-control" maxlength="20" readonly value="<?php echo $res->type;?>" placeholder="...">
     					                    </div>
     					                </div>
     					                
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">用户名</label>
     					                    <div class="col-md-6">
-    					                        <input type="text" class="form-control"maxlength="20" readonly value="<?php echo $res->username;?>" placeholder="...">
+    					                        <input type="text" class="form-control" maxlength="20" readonly value="<?php echo $res->username;?>" placeholder="...">
     					                    </div>
     					                </div>
     					                
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label" for="demo-text-input">电话</label>
     					                    <div class="col-md-6">
-    					                        <input type="text" class="form-control"maxlength="20" readonly value="<?php echo $res->mobile;?>" placeholder="...">
+    					                        <input type="text" class="form-control" maxlength="20" readonly value="<?php echo $res->mobile;?>" placeholder="...">
     					                    </div>
     					                </div>
     					                

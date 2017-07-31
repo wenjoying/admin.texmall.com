@@ -45,16 +45,6 @@
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
-    					                <script>
-    					                //时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
-    					                
-    					                </script>
     					            </div>
     					        </div>
 					        </div>

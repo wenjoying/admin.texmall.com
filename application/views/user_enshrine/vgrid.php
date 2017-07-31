@@ -24,7 +24,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="型号">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="型号">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -52,7 +52,7 @@
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
                                                     <td><?php echo $r->uid?></td>
-                                                    <td><a class="btn-link" href="<?php echo base_url('Cgoods/edit/'.$r-goods_id)?>"><?php echo $r->supplier_code?></a></td>
+                                                    <td><a class="btn-link" href="<?php echo base_url('Cgoods/edit/'.$r->goods_id)?>"><?php echo $r->supplier_code?></a></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
             					                        <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cuser_enshrine/delete/'.$r->id);?>');">删除</a>
@@ -61,23 +61,14 @@
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
-    					                <script>
-    					                //时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
-    					                </script>
     					            </div>
     					        </div>
     					        <div class="pull-right pagination">
-    					        <ul class="pagination">
-    					            <li><a>每页<?php echo $per_page?>条/共<?php echo $sum?>条</a></li>
-    					            <li><a>第<?php echo empty($this->uri->segment(3)) ? 1 : $this->uri->segment(3)?>页</a></li>
-    					        </ul>
-    					        <?php echo $link;?> 
+        					        <ul class="pagination">
+        					            <li><a>每页<?php echo $per_page?>条/共<?php echo $sum?>条</a></li>
+        					            <li><a>第<?php echo empty($this->uri->segment(3)) ? 1 : $this->uri->segment(3)?>页</a></li>
+        					        </ul>
+        					        <?php echo $link;?> 
     					        </div>
 					        </div>
 				        </div>

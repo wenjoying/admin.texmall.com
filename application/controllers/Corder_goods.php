@@ -27,7 +27,7 @@ class Corder_goods extends TM_Controller {
 	    $this->checkAction(__METHOD__);
         
         $this->load->library('pagination');
-        $config['per_page']   = 20;
+        $config['per_page']   = 2;
         $config['uri_segment'] = 3;
         $config['suffix']     = $this->get_page_param($this->input->get());
         $config['total_rows'] = $this->Morder_goods->total($this->input->get());
@@ -67,12 +67,8 @@ class Corder_goods extends TM_Controller {
 	{
 	    $this->checkAction(__METHOD__);
 	     
-	    $reviews = $this->Base_model->getWhere($this->table, array('id'=>$id))->row();
 	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    if ($res > 0) {
-	        foreach (explode('|', $reviews->imgs) as $i) {
-	            $this->delete_img($i);
-	        }
 	        alert_msg('操作成功', 'Corder_goods/grid');
 	    }else{
 	        alert_msg('操作失败');

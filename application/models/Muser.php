@@ -17,6 +17,9 @@ class Muser extends CI_Model{
 	{
 	    $this->db->select('id');
 	    $this->db->from($this->table);
+	    if (!empty($search['role_id'])) {
+	        $this->db->where(array('role_id'=>$search['role_id']));
+	    }
 	    if (!empty($search['reg_come'])) {
 	        $this->db->where(array('reg_come'=>$search['reg_come']));
 	    }
@@ -28,8 +31,10 @@ class Muser extends CI_Model{
 	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
-	        $this->db->like('username', $search['item']);
+	        $this->db->like('device_id', $search['item']);
+	        $this->db->or_like('username', $search['item']);
 	        $this->db->or_like('mobile', $search['item']);
+	        $this->db->or_like('company', $search['item']);
 	        $this->db->or_like('id_card', $search['item']);
 	        $this->db->group_end();
 	    }
@@ -47,6 +52,9 @@ class Muser extends CI_Model{
 	{
 	    $this->db->select('*');
 	    $this->db->from($this->table);
+	    if (!empty($search['role_id'])) {
+	        $this->db->where(array('role_id'=>$search['role_id']));
+	    }
 	    if (!empty($search['reg_come'])) {
 	        $this->db->where(array('reg_come'=>$search['reg_come']));
 	    }
@@ -58,8 +66,10 @@ class Muser extends CI_Model{
 	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
-	        $this->db->like('username', $search['item']);
+	        $this->db->like('device_id', $search['item']);
+	        $this->db->or_like('username', $search['item']);
 	        $this->db->or_like('mobile', $search['item']);
+	        $this->db->or_like('company', $search['item']);
 	        $this->db->or_like('id_card', $search['item']);
 	        $this->db->group_end();
 	    }

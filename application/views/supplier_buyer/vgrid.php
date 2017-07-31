@@ -23,10 +23,10 @@
 					            
 					            <div class="form-group">
     					            <select class="selectpicker" name="status">
-    	                                <option value="">请选择公司状态</option>
-                                        <option <?php if($this->input->get('status')==1)echo 'selected="selected"'?> value="1">正在审核</option>
-                                        <option <?php if($this->input->get('status')==2)echo 'selected="selected"'?> value="2">审核通过</option>
-                                        <option <?php if($this->input->get('status')==3)echo 'selected="selected"'?> value="3">审核不通过</option>
+    	                                <option value="">请选择企业状态</option>
+    	                                <?php foreach($status_arr as $k=>$v):?>
+                                        <option <?php if($this->input->get('status')==$k)echo 'selected="selected"'?> value="<?php echo $k?>"><?php echo $v?></option>
+                                        <?php endforeach;?>
                                     </select>
 					            </div>
 					            
@@ -51,7 +51,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="名称/电话/主营/地址/简介">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="名称/电话/主营/地址/简介">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -69,7 +69,7 @@
         					                    <tr>
             					                    <th><div class="th-inner">ID</div></th>
             					                    <th><div class="th-inner">类型</div></th>
-                                                    <th><div class="th-inner">公司名称</div></th>
+                                                    <th><div class="th-inner">企业名称</div></th>
                                                     <th><div class="th-inner">电话</div></th>
                                                     <th><div class="th-inner">地址</div></th>
                                                     <th><div class="th-inner">主营</div></th>
@@ -93,8 +93,10 @@
                                                         ?>
                                                     </td>
                                                     <td><?php echo $r->main_business?></td>
-                                                    <td><?php echo '<button class="grade btn btn-purple">'.$grade_arr[$r->platform_grade].'</button>'?></td>
-                                                    <td><?php echo $status_arr[$r->status]?></td>
+                                                    <td>
+                                                        <?php if($r->platform_grade):?><button class="btn btn-default grade"><?php echo $grade_arr[$r->platform_grade]?></button><?php endif;?>
+                                                    </td>
+                                                    <td style="color:red;"><?php echo $status_arr[$r->status]?></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
             					                        <a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$r->id);?>">查看</a>|
@@ -106,14 +108,6 @@
         					                </tbody>
     					                </table>
     					                <script>
-      					              //时间
-    					                $('input.date-select').datepicker({
-    					                	language: "zh-CN",
-    					            		format: "yyyy-mm-dd",
-    					                    todayBtn: "linked",
-    					                    autoclose: true,
-    					                    todayHighlight: true
-    					                });  
     					                  					                
     									var get_city = function(){
     										var p_select = $('select[name="province_id"]');
@@ -189,36 +183,18 @@
     									get_province();
     									get_city();
 
-
-          					            //审核
-        					            $('.table tr').on('click', '.label-info', function(){
-            					            var scode = $(this).parents('tr').data('company_name');
-        					            	var checkid = $(this).parents('tr').data('checkid');
-            					          	var	html =  '<div class="panel-body demo-nifty-btn">';
-            					          		html += '<a class="btn-link" href="'+base_url+'Csupplier_buyer/check_out/'+checkid+'?is_check=2"><button class="btn btn-info">通过</button></a>';
-            					          		html += '<a class="btn-link" href="'+base_url+'Csupplier_buyer/check_out/'+checkid+'?is_check=3"><button class="btn btn-danger" style="margin-left: 15px;">不通过</button></a>';
-                    					        html += '</div>',
-        					            	layer.open({
-        					            	  type: 1,
-        					            	  title: '审核 （id：' + checkid + '；公司名称：' + scode + '）',
-        					            	  skin: 'layui-layer-rim', //加上边框
-        					            	  area: ['420px', '240px'], //宽高
-        					            	  content: html
-        					            	});
-            					        });
-
             					        //平台等级
         					            $('.table tr').on('click', '.grade', function(){
             					            var scode = $(this).parents('tr').data('company_name');
         					            	var checkid = $(this).parents('tr').data('checkid');
             					          	var	html =  '<div class="panel-body demo-nifty-btn">';
-            					          		html += '<a class="btn-link" href="'+base_url+'Csupplier_buyer/up_grade/'+checkid+'?grade=1"><button class="btn btn-info">正常</button></a>';
+            					          		html += '<a class="btn-link" href="'+base_url+'Csupplier_buyer/up_grade/'+checkid+'?grade=1"><button class="btn btn-info">一般</button></a>';
             					          		html += '<a class="btn-link" href="'+base_url+'Csupplier_buyer/up_grade/'+checkid+'?grade=2"><button class="btn btn-info" style="margin-left: 15px;">推荐</button></a>';
             					          		html += '<a class="btn-link" href="'+base_url+'Csupplier_buyer/up_grade/'+checkid+'?grade=3"><button class="btn btn-info" style="margin-left: 15px;">严选</button></a>';
                     					        html += '</div>',
         					            	layer.open({
         					            	  type: 1,
-        					            	  title: '平台等级 （id：' + checkid + '；公司名称：' + scode + '）',
+        					            	  title: '平台等级 （id：' + checkid + '；企业名称：' + scode + '）',
         					            	  skin: 'layui-layer-rim', //加上边框
         					            	  area: ['420px', '240px'], //宽高
         					            	  content: html
@@ -228,9 +204,24 @@
     					                </script>
     					            </div>
     					        </div>
+    					        <div class="pull-right pagination">
+        					        <ul class="pagination">
+        					            <li><a>每页<?php echo $per_page?>条/共<?php echo $sum?>条</a></li>
+        					            <li><a>第<?php echo empty($this->uri->segment(3)) ? 1 : $this->uri->segment(3)?>页</a></li>
+        					        </ul>
+        					        <?php echo $link;?> 
+    					        </div>
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>使用说明</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

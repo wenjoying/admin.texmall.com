@@ -43,4 +43,14 @@
     <!-- END OF CONTAINER -->
 
 </body>
+<script>
+//时间
+$('input.date-select').datepicker({
+	language:  'zh-CN',
+	format: "yyyy-mm-dd",
+    todayBtn: "linked",
+    autoclose: true,
+    todayHighlight: true
+});
+</script>
 </html>

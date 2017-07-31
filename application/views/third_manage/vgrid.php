@@ -34,7 +34,7 @@
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
                                                     <td><?php echo $r->name?></td>
-                                                    <td><a target="_blank" href="<?php echo $r->third_url?>"><?php echo $r->third_url?></a></td>
+                                                    <td><a target="_blank" class="btn-link" href="<?php echo $r->third_url?>"><?php echo $r->third_url?></a></td>
                                                     <td><?php echo $r->username?></td>
                                                     <td><?php echo $this->admin->id==1?$r->password:'****'?></td>
                                                     <td><?php echo $r->note?></td>

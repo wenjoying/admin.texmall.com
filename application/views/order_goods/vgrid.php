@@ -21,7 +21,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="订单号/供应商/型号/用户名">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="订单号/供应商/型号/用户名">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -63,23 +63,12 @@
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
                 					                    <a class="btn-link" href="<?php echo base_url('Corder_goods/page/'.$r->id)?>">查看</a>|
-                					                    <a class="btn-link" href="###">编辑</a>|
                 					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Corder_goods/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
-    					                <script>
-    					                //时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
-
-    					                </script>
     					            </div>
     					        </div>
 					        </div>

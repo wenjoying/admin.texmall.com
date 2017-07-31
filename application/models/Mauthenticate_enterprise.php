@@ -18,10 +18,10 @@ class Mauthenticate_enterprise extends CI_Model{
 	    $this->db->select('id');
 	    $this->db->from($this->table);
 	    if (!empty($search['enterprise_nature'])) {
-	        $this->db->where(array('enterprise_nature'=>strtotime($search['enterprise_nature'])));
+	        $this->db->where(array('enterprise_nature'=>$search['enterprise_nature']));
 	    }
 	    if (!empty($search['is_check'])) {
-	        $this->db->where(array('is_check'=>strtotime($search['is_check'])));
+	        $this->db->where(array('is_check'=>$search['is_check']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
@@ -55,10 +55,10 @@ class Mauthenticate_enterprise extends CI_Model{
 	    $this->db->select('*');
 	    $this->db->from($this->table);
 	    if (!empty($search['enterprise_nature'])) {
-	        $this->db->where(array('enterprise_nature'=>strtotime($search['enterprise_nature'])));
+	        $this->db->where(array('enterprise_nature'=>$search['enterprise_nature']));
 	    }
 	    if (!empty($search['is_check'])) {
-	        $this->db->where(array('is_check'=>strtotime($search['is_check'])));
+	        $this->db->where(array('is_check'=>$search['is_check']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));

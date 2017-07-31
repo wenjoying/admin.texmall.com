@@ -15,19 +15,15 @@
 					                <div class="panel-body">
     					                <input type="hidden" name="id" value="<?php echo $res->id?>">
     					                <div class="form-group pad-ver">
-    					                    <label class="col-md-3 control-label">公司类型*</label>
+    					                    <label class="col-md-3 control-label">企业类型*</label>
     					                    <div class="col-md-6">
-    					                        <div class="radio">
-    					                            <select class="selectpicker" required="required" name="type">
-                                                        <option <?php if($res->type==1) echo 'selected="selected"'?> value="1">采购商</option>
-                                                        <option <?php if($res->type==2) echo 'selected="selected"'?> value="2">供应商</option>
-                                                    </select>
-    					                        </div>
+    					                       <input type="hidden" name="type" value="<?php echo $res->type?>">
+    					                       <input type="text" class="form-control" readonly value="<?php echo $res->type==1 ? '采购商' : '供应商'?>" placeholder="...">
     					                    </div>
     					                </div>
     					                
     					                <div class="form-group">
-    					                    <label class="col-md-3 control-label" for="demo-text-input">公司名称*</label>
+    					                    <label class="col-md-3 control-label" for="demo-text-input">企业名称*</label>
     					                    <div class="col-md-6">
     					                        <input type="text" class="form-control" name="company_name" required="required" maxlength="100" value="<?php echo $res->company_name?>" placeholder="...">
     					                        <small class="help-block">不能重复</small>
@@ -80,31 +76,30 @@
     					                <div class="form-group pad-ver">
     					                    <label class="col-md-3 control-label">审核状态*</label>
     					                    <div class="col-md-6">
-    					                        <div class="radio">
-    					                            <select class="selectpicker" required="required" name="status">
-                    	                                <option value="">请选择</option>
-                                                        <option <?php if($res->status==1)echo 'selected="selected"'?> value="1">正在审核</option>
-                                                        <option <?php if($res->status==2)echo 'selected="selected"'?> value="2">审核通过</option>
-                                                        <option <?php if($res->status==3)echo 'selected="selected"'?> value="3">审核不通过</option>
-                                                    </select>
-    					                        </div>
+					                            <select class="selectpicker" required="required" name="status">
+                	                                <option value="">请选择</option>
+                                                    <option <?php if($res->status==1)echo 'selected="selected"'?> value="1">正在审核</option>
+                                                    <option <?php if($res->status==2)echo 'selected="selected"'?> value="2">审核通过</option>
+                                                    <option <?php if($res->status==3)echo 'selected="selected"'?> value="3">审核不通过</option>
+                                                </select>
+                                                <small class="help-block">如果“审核不通过”，则供应商下所有产品均会下架</small>
     					                    </div>
     					                </div>
     					                
+    					                <?php if ($res->type==2) :?>
     					                <div class="form-group pad-ver">
     					                    <label class="col-md-3 control-label">等级*</label>
     					                    <div class="col-md-6">
-    					                        <div class="radio">
-    					                            <select class="selectpicker" required="required" name="platform_grade">
-                    	                                <option value="">请选择</option>
-                                                        <option <?php if($res->platform_grade==1)echo 'selected="selected"'?> value="1">正常</option>
-                                                        <option <?php if($res->platform_grade==2)echo 'selected="selected"'?> value="2">推荐</option>
-                                                        <option <?php if($res->platform_grade==3)echo 'selected="selected"'?> value="3">严选</option>
-                                                    </select>
-    					                        </div>
-    					                        <small class="help-block">此公司下的所有产品为选择的等级</small>
+					                            <select class="selectpicker" name="platform_grade">
+                	                                <option value="">请选择</option>
+                                                    <option <?php if($res->platform_grade==1)echo 'selected="selected"'?> value="1">正常</option>
+                                                    <option <?php if($res->platform_grade==2)echo 'selected="selected"'?> value="2">推荐</option>
+                                                    <option <?php if($res->platform_grade==3)echo 'selected="selected"'?> value="3">严选</option>
+                                                </select>
+    					                        <small class="help-block">此企业下的所有产品为选择的等级</small>
     					                    </div>
     					                </div>
+    					                <?php endif;?>
     					
 					                </div>
 					                
@@ -166,7 +161,7 @@
     			                        if(json.status) {
         			                        if(json.companyid != $('input[name="id"]').val()){
         			                        	obj.val('');
-        			                        	layer.msg('公司名称已存在',{icon:8,time:1000});
+        			                        	layer.msg('企业名称已存在',{icon:8,time:1000});
             			                    }
         			                    }
     			                    },'json');

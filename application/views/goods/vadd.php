@@ -207,14 +207,12 @@
     					                <div class="form-group pad-ver">
     					                    <label class="col-md-3 control-label">上架状态*</label>
     					                    <div class="col-md-6">
-    					                        <div class="radio">
-    					                            <select class="selectpicker" required="required" name="is_sale">
-                    	                                <option value="">请选择</option>
-                                                        <option value="1">上架</option>
-                                                        <option value="2">待售</option>
-                                                        <option value="3">下架</option>
-                                                    </select>
-    					                        </div>
+					                            <select class="selectpicker" required="required" name="is_sale">
+                	                                <option value="">请选择</option>
+                                                    <option value="1">上架</option>
+                                                    <option value="2">待售</option>
+                                                    <option value="3">下架</option>
+                                                </select>
     					                    </div>
     					                </div>
     					
@@ -266,7 +264,7 @@
     			                        	obj.val('');
     			                        	$('input[name="supplier_id"]').val('');
     			                        	$('input[name="platform_grade"]').val('');
-    			                        	layer.msg('公司名称不存在',{icon:8,time:1000});
+    			                        	layer.msg('企业名称不存在',{icon:8,time:1000});
         			                    }
     			                    },'json');
     			                }

@@ -320,4 +320,16 @@ class Base_model extends CI_Model{
 	    return $this->db->get($table);
 	}
 	
+	/**
+	 * @param string $table:数据表
+	 * @param string $field:表字段
+	 * @return 分组数据
+	 */
+	public function getSum($table, $field, $where=array())
+	{
+	    $this->db->select_sum($field);
+	    if (!empty($where)) $this->db->where($where);
+	    return $this->db->get($table);
+	}
+	
 }

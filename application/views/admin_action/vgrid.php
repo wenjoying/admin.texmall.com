@@ -18,7 +18,7 @@
 					        <form class="form-inline" action="<?php echo base_url('Cadmin_action/grid');?>" method="get">
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="权限/简介">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="权限/简介">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>

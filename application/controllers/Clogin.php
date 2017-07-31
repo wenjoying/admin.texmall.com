@@ -24,7 +24,7 @@ class Clogin extends CI_Controller {
 	{  
 		$admin = json_decode(base64_decode($this->input->cookie('admin')));
 		if ($admin) {  
-			header("Location:".base_url('Cadmin_user/index'), TRUE, 302);
+			header("Location:".base_url('Chome/index'), TRUE, 302);
 		}else{
 		    if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']!=base_url('Clogin/login_out')) {
 		        $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
@@ -34,7 +34,7 @@ class Clogin extends CI_Controller {
 		            $data['backurl'] = $_SERVER['HTTP_REFERER'];
 		        }
 		    } else {
-		        $data['backurl'] = base_url('Cadmin_user/index');
+		        $data['backurl'] = base_url('Chome/index');
 		    }
 		    $data['code'] = ZD_md5(date('Ymd'));
 			$this->load->view('layout/vlogin', $data); 

@@ -139,14 +139,10 @@ class Cad_img extends TM_Controller {
 	{
 	    $this->checkAction(__METHOD__);
 	    
-	    $checkid = $this->input->post('checkid');
-	    $ids = $checkid ? $checkid : array($id);
-	    $ad_img = $this->Base_model->getWherein($this->table, 'id', $ids);
-	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
+	    $ad_img = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    if ($res>0) {
-	        foreach ($ad_img as $a) {
-	            $this->delete_img($a->ad_img);
-	        }
+            $this->delete_img($ad_img->row()->ad_img);
 	        alert_msg('操作成功', 'Cad_img/grid');
 	    }else{
 	        alert_msg('操作失败');

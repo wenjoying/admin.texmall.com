@@ -26,7 +26,7 @@ class Cdeliver_address extends TM_Controller {
 	    $this->checkAction(__METHOD__);
 	
 	    $this->load->library('pagination');
-	    $config['per_page']   = 20;
+	    $config['per_page']   = 2;
 	    $config['uri_segment'] = 3;
 	    $config['suffix']     = $this->get_page_param($this->input->get());
 	    $config['total_rows'] = $this->Mdeliver_address->total($this->input->get());
@@ -49,13 +49,7 @@ class Cdeliver_address extends TM_Controller {
 	{
 	    $this->checkAction(__METHOD__);
 	     
-	    if ($id == 1) {
-	        alert_msg('禁止删除!');
-	    }
-	    $checkid = $this->input->post('checkid');
-	    $ids = $checkid ? $checkid : array($id);
-	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
-	     
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    if ($res > 0) {
 	        alert_msg('操作成功', 'Cgoods/grid');
 	    }else{

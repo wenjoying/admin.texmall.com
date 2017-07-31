@@ -30,7 +30,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="型号/用户名/评价">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="型号/用户名/评价">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -85,13 +85,6 @@
         					                </tbody>
     					                </table>
     					                <script>
-    					                //时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
     					                
           					            //审核
         					            $('.table tr').on('click', '.label-info', function(){

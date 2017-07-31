@@ -89,9 +89,7 @@ class Cfonts extends TM_Controller {
 	{
 	    $this->checkAction(__METHOD__);
 	
-	    $checkid = $this->input->post('checkid');
-	    $ids = $checkid ? $checkid : array($id);
-	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    if ($res>0) {
 	        alert_msg('操作成功', 'Cfonts/grid');
 	    }else{

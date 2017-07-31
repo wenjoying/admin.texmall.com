@@ -17,14 +17,8 @@ class Mauthenticate_personal extends CI_Model{
 	{
 	    $this->db->select('id');
 	    $this->db->from($this->table);
-	    if (!empty($search['status'])) {
-	        $this->db->where(array('status'=>strtotime($search['status'])));
-	    }
-	    if (!empty($search['province_id'])) {
-	        $this->db->where(array('province_id'=>$search['province_id']));
-	    }
-	    if (!empty($search['city_id'])) {
-	        $this->db->where(array('city_id'=>$search['city_id']));
+	    if (!empty($search['is_check'])) {
+	        $this->db->where(array('is_check'=>$search['is_check']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
@@ -32,11 +26,16 @@ class Mauthenticate_personal extends CI_Model{
 	    if (!empty($search['end_time'])) {
 	        $this->db->where(array('time <'=>strtotime($search['end_time'])));
 	    }
+	    if (!empty($search['bank_address'])) {
+	        $this->db->like(array('bank_address'=>$search['bank_address']));
+	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
-	        $this->db->like('username ', $search['item']);
-	        $this->db->or_like('link_phone', $search['item']);
-	        $this->db->or_like('ads_des', $search['item']);
+	        $this->db->like('realname ', $search['item']);
+	        $this->db->or_like('id_card', $search['item']);
+	        $this->db->or_like('bank_name', $search['item']);
+	        $this->db->or_like('bank_branch', $search['item']);
+	        $this->db->or_like('bank_card', $search['item']);
 	        $this->db->group_end();
 	    }
 	    return $this->db->count_all_results();
@@ -53,14 +52,8 @@ class Mauthenticate_personal extends CI_Model{
 	{
 	    $this->db->select('*');
 	    $this->db->from($this->table);
-	    if (!empty($search['status'])) {
-	        $this->db->where(array('status'=>strtotime($search['status'])));
-	    }
-	    if (!empty($search['province_id'])) {
-	        $this->db->where(array('province_id'=>$search['province_id']));
-	    }
-	    if (!empty($search['city_id'])) {
-	        $this->db->where(array('city_id'=>$search['city_id']));
+	    if (!empty($search['is_check'])) {
+	        $this->db->where(array('is_check'=>$search['is_check']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
@@ -68,11 +61,16 @@ class Mauthenticate_personal extends CI_Model{
 	    if (!empty($search['end_time'])) {
 	        $this->db->where(array('time <'=>strtotime($search['end_time'])));
 	    }
+	    if (!empty($search['bank_address'])) {
+	        $this->db->like(array('bank_address'=>$search['bank_address']));
+	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
-	        $this->db->like('username ', $search['item']);
-	        $this->db->or_like('link_phone', $search['item']);
-	        $this->db->or_like('ads_des', $search['item']);
+	        $this->db->like('realname ', $search['item']);
+	        $this->db->or_like('id_card', $search['item']);
+	        $this->db->or_like('bank_name', $search['item']);
+	        $this->db->or_like('bank_branch', $search['item']);
+	        $this->db->or_like('bank_card', $search['item']);
 	        $this->db->group_end();
 	    }
 	    $this->db->order_by($order);

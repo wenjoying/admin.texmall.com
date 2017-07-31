@@ -11,6 +11,7 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Cuser_mail_list extends TM_Controller {
+    private $table = 'user_mail_list';
     
     function _init()
 	{
@@ -26,7 +27,7 @@ class Cuser_mail_list extends TM_Controller {
 	    $this->checkAction(__METHOD__);
         
         $this->load->library('pagination');
-        $config['per_page']   = 20;
+        $config['per_page']   = 2;
         $config['uri_segment'] = 3;
         $config['suffix']     = $this->get_page_param($this->input->get());
         $config['total_rows'] = $this->Muser_mail_list->total($this->input->get());
@@ -40,6 +41,21 @@ class Cuser_mail_list extends TM_Controller {
         $data['one_level'] = '用户管理';
         $data['two_level'] = '通讯录';
         $this->load->view('user_mail_list/vgrid', $data);
+	}
+	
+	/**
+	 * @删除
+	 * */
+	public function delete($id = 0)
+	{
+	    $this->checkAction(__METHOD__);
+	     
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
+	    if ($res>0) {
+	        alert_msg('操作成功', 'Cad_img/grid');
+	    }else{
+	        alert_msg('操作失败');
+	    }
 	}
 	
 }

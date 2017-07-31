@@ -29,7 +29,7 @@ class Cgoods extends TM_Controller {
 	    $this->checkAction(__METHOD__);
         
         $this->load->library('pagination');
-        $config['per_page']   = 20;
+        $config['per_page']   = 2;
         $config['uri_segment'] = 3;
         $config['suffix']     = $this->get_page_param($this->input->get());
         $config['total_rows'] = $this->Mgoods->total($this->input->get());
@@ -40,12 +40,8 @@ class Cgoods extends TM_Controller {
         $data['res']        = $this->Mgoods->grid($pg-1, $config['per_page'], $this->input->get())->result();
         $data['sum']        = $config['total_rows'];
         $data['per_page']   = $config['per_page'];
-        $data['check_arr'] = array(
-            '1'=>'<span class="label label-table label-info">审核中</span>',
-            '2'=>'<span class="label label-table label-success">通过</span>',
-            '3'=>'<span class="label label-table label-danger">不通过</span>'
-        );
-        $data['grade_arr'] = array('1'=>'正常', '2'=>'推荐', '3'=>'严选');
+        $data['status_arr'] = get_status();
+        $data['grade_arr'] = array('1'=>'一般', '2'=>'推荐', '3'=>'严选');
         $data['one_level'] = '产品中心';
         $data['two_level'] = '产品列表';
         $this->load->view('goods/vgrid', $data);
@@ -110,7 +106,7 @@ class Cgoods extends TM_Controller {
 	    $data['source']        = implode(',', $postData['source']);
 	    $data['des']           = $postData['des'];
 	    $data['is_sale']       = $postData['is_sale'];
-	    $data['is_check']      = 1;
+	    $data['status']      = 1;
 	    $data['platform_grade'] = $postData['platform_grade'];
 	    $data['sum_sale']      = 0;
 	    $data['sum_review']    = 0;
@@ -166,30 +162,10 @@ class Cgoods extends TM_Controller {
 	    $data['source']        = implode(',', $postData['source']);
 	    $data['des']           = $postData['des'];
 	    $data['is_sale']       = $postData['is_sale'];
-	    $data['is_check']      = 1;
+	    $data['status']      = 1;
 	    $data['update_time']   = time();
 	     
 	    $res = $this->Base_model->update($this->table, array('id'=>$postData['id']), $data);
-	    if ($res>0) {
-	        alert_msg('操作成功', 'Cgoods/grid');
-	    }else{
-	        alert_msg('操作失败');
-	    }
-	}
-	
-	/**
-	 * @审核
-	 * */
-	public function check_out($id = 0)
-	{
-	    $this->checkAction(__METHOD__);
-	     
-	    $goods = $this->Base_model->getWhere($this->table, array('id'=>$id));
-	    if ($goods->num_rows() == 0) {
-	        $this->redirect('Clogin/show_404');
-	    }
-	    $is_check = $this->input->get('is_check')==2 ? 2 : 3;
-	    $res = $this->Base_model->update($this->table, array('id'=>$id), array('is_check'=>$is_check));
 	    if ($res>0) {
 	        alert_msg('操作成功', 'Cgoods/grid');
 	    }else{
@@ -339,11 +315,27 @@ class Cgoods extends TM_Controller {
 	    }
 	    $data['res'] = $res->row();
 	    $data['sale_arr']  = array('1'=>'上架', '2'=>'待上架', '3'=>'下架');
-	    $data['check_arr'] = array('1'=>'审核中', '2'=>'通过', '3'=>'不通过');
-	    $data['grade_arr'] = array('1'=>'正常', '2'=>'推荐', '3'=>'严选');
+	    $data['status_arr'] = get_status();
+	    $data['grade_arr'] = array('1'=>'一般', '2'=>'推荐', '3'=>'严选');
 	    $data['one_level'] = '产品中心';
         $data['two_level'] = '产品列表';
 	    $this->load->view('goods/vpage', $data);
+	}
+	
+	/**
+	 * @提交审核
+	 * */
+	public function up_status()
+	{
+	    $this->checkAction(__METHOD__);
+	
+	    $postData = $this->input->post();
+	    $res = $this->Base_model->update($this->table, array('id'=>$postData['id']), array('status'=>$postData['status']));
+	    if ($res>0) {
+	        alert_msg('操作成功', 'Cgoods/grid');
+	    }else{
+	        alert_msg('操作失败');
+	    }
 	}
 	
 	/**
@@ -365,14 +357,12 @@ class Cgoods extends TM_Controller {
 	{    
 	    $this->checkAction(__METHOD__);
 	    
-	    $checkid = $this->input->post('checkid');
-	    $ids = $checkid ? $checkid : array($id);
-	    $goods = $this->Base_model->getWherein($this->table, 'id', $ids);
-	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
+	    $goods = $this->Base_model->getWhere($this->table, array('id'=>$id));
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    
 	    if ($res > 0) {
-    	    foreach ($goods as $u) {
-    	        $this->delete_img($u->original_img);
+    	    foreach (explode('|', $goods->row()->original_img) as $img) {
+    	        $this->delete_img($img);
     	    }
 	        alert_msg('操作成功', 'Cgoods/grid');
 	    }else{

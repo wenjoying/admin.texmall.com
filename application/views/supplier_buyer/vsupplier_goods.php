@@ -13,7 +13,7 @@
     <div class="col-sm-12" style="margin-top:15px;">
         <div class="panel">
             <div class="panel-heading">
-                <h3 class="panel-title">公司订单</h3>
+                <h3 class="panel-title">企业订单</h3>
             </div>
 
             <div id="page-content">

@@ -32,6 +32,7 @@ class Muser_mail_list extends CI_Model{
 	        $this->db->or_like('full_name', $search['item']);
 	        $this->db->or_like('telphone', $search['item']);
 	        $this->db->or_like('position', $search['item']);
+	        $this->db->or_like('e_mail', $search['item']);
 	        $this->db->or_like('address', $search['item']);
 	        $this->db->group_end();
 	    }
@@ -64,6 +65,7 @@ class Muser_mail_list extends CI_Model{
 	        $this->db->or_like('full_name', $search['item']);
 	        $this->db->or_like('telphone', $search['item']);
 	        $this->db->or_like('position', $search['item']);
+	        $this->db->or_like('e_mail', $search['item']);
 	        $this->db->or_like('address', $search['item']);
 	        $this->db->group_end();
 	    }

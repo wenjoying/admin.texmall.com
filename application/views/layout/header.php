@@ -57,7 +57,10 @@
         		cont = '是否确认修改这条信息的状态？';
         	    break;
         	case 2:
-        		cont = '...';
+        		cont = '操作后不能回复，请确认是否 <b>审核通过？</b>';
+        	    break;
+        	case 3:
+        		cont = '操作后不能回复，请确认是否 <b>审核不通过？</b>';
         	    break;
         	default:
         		cont = '删除后不能恢复，是否确认删除？';
@@ -257,14 +260,14 @@
 						                </ul>
 						            </li>
 						            
-						            <li class="<?php if($one_level=='公司管理') echo 'active-sub'?>">
+						            <li class="<?php if($one_level=='企业管理') echo 'active-sub'?>">
 						                <a href="#">
 						                    <i class="ion-grid"></i>
-						                    <span class="menu-title"><strong>公司管理</strong></span>
+						                    <span class="menu-title"><strong>企业管理</strong></span>
 											<i class="arrow"></i>
 						                </a>
-						                <ul class="collapse <?php if($one_level=='公司管理') echo 'in'?>">
-						                    <li class="<?php if($two_level=='公司列表') echo 'active-link';?>"><a href="<?php echo base_url('Csupplier_buyer/grid');?>"><i class="ion-navicon"></i>公司列表</a></li>
+						                <ul class="collapse <?php if($one_level=='企业管理') echo 'in'?>">
+						                    <li class="<?php if($two_level=='企业列表') echo 'active-link';?>"><a href="<?php echo base_url('Csupplier_buyer/grid');?>"><i class="ion-navicon"></i>企业列表</a></li>
                                         </ul>
 						            </li>
 						            
@@ -316,7 +319,7 @@
 						                </a>
 						                <ul class="collapse <?php if($one_level=='认证审核') echo 'in'?>">
 						                    <li class="<?php if($two_level=='个人认证') echo 'active-link';?>"><a href="<?php echo base_url('Cauthenticate_personal/grid');?>"><i class="ion-eye"></i>个人认证</a></li>
-                                            <li class="<?php if($two_level=='公司认证') echo 'active-link';?>"><a href="<?php echo base_url('Cauthenticate_enterprise/grid');?>"><i class="ion-eye"></i>公司认证</a></li>
+                                            <li class="<?php if($two_level=='企业认证') echo 'active-link';?>"><a href="<?php echo base_url('Cauthenticate_enterprise/grid');?>"><i class="ion-eye"></i>企业认证</a></li>
                                             <li class="<?php if($two_level=='平台服务商') echo 'active-link';?>"><a href="<?php echo base_url('Cplatform_service/grid');?>"><i class="ion-person-add"></i>平台服务商</a></li>
                                         </ul>
 						            </li>

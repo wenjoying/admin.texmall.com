@@ -31,6 +31,22 @@ function getJson($index=0, $data=null)
 }
 
 /**
+ * @获取一般状态
+ * */
+function get_status($index = 0)
+{
+    $arr = array(
+        '1' => '正在审核',
+        '2' => '审核通过',
+        '3' => '审核不通过',
+    );
+    if ($index === 0) {
+        return $arr;
+    }
+    return isset($arr[$index]) ? $arr[$index] : FALSE;
+}
+
+/**
  * @注册来源
  * */
 function get_reg_come($index = 0)
@@ -95,6 +111,19 @@ function get_order_status()
     );
 }
 
-
+/**
+ * @认证审核状态
+ * */
+function get_auth_status()
+{
+    return array(
+        '1' => '正在审核',
+        '2' => '已打款',
+        '3' => '审核通过',
+        '4' => '一次错误',
+        '5' => '二次错误',
+        '6' => '审核不通过'
+    );
+}
 
 

@@ -24,7 +24,7 @@
                                     </select>
 					            </div>
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="名称/简介">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="名称/简介">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -46,7 +46,7 @@
                                                     <th><div class="th-inner">简介</div></th>
                                                     <th><div class="th-inner">跳转地址</div></th>
                                                     <th><div class="th-inner">排序</div></th>
-                                                    <th><div class="th-inner">状态</div></th>
+                                                    <th><div class="th-inner">上架状态</div></th>
                                                     <th width="120px"><div class="th-inner">操作</div></th>
         					                    </tr>
     					                    </thead>
@@ -59,7 +59,7 @@
                                                     <td><?php echo $r->ad_info?></td>
                                                     <td><?php echo $r->ad_url?></td>
                                                     <td><?php echo $r->reorder?></td>
-                                                    <td><?php echo $r->status==1 ? '<span class="label label-success">上线</span>' : '<span class="label label-danger">下线</span>'?></td>
+                                                    <td><?php echo $r->status==1 ? '<span class="label label-success">上架</span>' : '<span class="label label-danger">下架</span>'?></td>
                                                     <td>
                 					                    <a class="btn-link" href="<?php echo base_url('Cad_img/edit/'.$r->id);?>">编辑</a>|
                 					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cad_img/delete/'.$r->id);?>');">删除</a>

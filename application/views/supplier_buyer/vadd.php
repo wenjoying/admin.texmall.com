@@ -14,7 +14,7 @@
 					            <form class="form-horizontal" action="<?php echo base_url('Csupplier_buyer/addPost');?>" method="post" enctype="multipart/form-data">
 					                <div class="panel-body">
     					                <div class="form-group pad-ver">
-    					                    <label class="col-md-3 control-label">公司类型*</label>
+    					                    <label class="col-md-3 control-label">企业类型*</label>
     					                    <div class="col-md-6">
     					                        <div class="radio">
     					                            <select class="selectpicker" required="required" name="type">
@@ -26,7 +26,7 @@
     					                </div>
     					                
     					                <div class="form-group">
-    					                    <label class="col-md-3 control-label" for="demo-text-input">公司名称*</label>
+    					                    <label class="col-md-3 control-label" for="demo-text-input">企业名称*</label>
     					                    <div class="col-md-6">
     					                        <input type="text" class="form-control" name="company_name" required="required" maxlength="100" value="" placeholder="...">
     					                        <small class="help-block">不能重复</small>
@@ -94,14 +94,14 @@
     					                    <label class="col-md-3 control-label">等级*</label>
     					                    <div class="col-md-6">
     					                        <div class="radio">
-    					                            <select class="selectpicker" required="required" name="platform_grade">
+    					                            <select class="selectpicker" name="platform_grade">
                     	                                <option value="">请选择</option>
-                                                        <option value="1">正常</option>
+                                                        <option value="1">一般</option>
                                                         <option value="2">推荐</option>
                                                         <option value="3">严选</option>
                                                     </select>
     					                        </div>
-    					                        <small class="help-block">此公司下的所有产品为选择的等级</small>
+    					                        <small class="help-block">采购商不用选择；供应商必选，企业下的所有产品为选择的等级</small>
     					                    </div>
     					                </div>
     					
@@ -156,7 +156,7 @@
     			                	$.post(base_url+'Csupplier_buyer/check_exists', {company_name:obj.val().trim()}, function(json){
     			                        if(json.status) {
     			                        	obj.val('');
-    			                        	layer.msg('公司名称已存在',{icon:8,time:1000});
+    			                        	layer.msg('企业名称已存在',{icon:8,time:1000});
         			                    }
     			                    },'json');
     			                }

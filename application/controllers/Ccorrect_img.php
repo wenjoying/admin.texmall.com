@@ -28,7 +28,7 @@ class Ccorrect_img extends TM_Controller {
 	    $this->checkAction(__METHOD__);
 	     
 	    $this->load->library('pagination');
-		$config['per_page']   = 20;
+		$config['per_page']   = 2;
 		$config['uri_segment'] = 3;
 		$config['suffix']     = $this->get_page_param($this->input->get());
 		$config['total_rows'] = $this->Mcorrect_img->total($this->input->get());
@@ -99,15 +99,10 @@ class Ccorrect_img extends TM_Controller {
 	{    
 	    $this->checkAction(__METHOD__);
 	    
-	    $checkid = $this->input->post('checkid');
-	    $ids = $checkid ? $checkid : array($id); 
-	    $user = $this->Base_model->getWherein($this->table, 'id', $ids);
-	    $res = $this->Base_model->deleteWherein($this->table, 'id', $ids);
-	    
+	    $correct = $this->Base_model->getWherein($this->table, array('id'=>$id));
+	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
 	    if ($res > 0) {
-    	    foreach ($user as $u) {
-    	        $this->delete_img($u->correct_img);
-    	    }
+	        $this->delete_img($correct->row()->correct_img);
 	        alert_msg('操作成功', 'Ccorrect_img/grid');
 	    }else{
 	        alert_msg('操作失败');

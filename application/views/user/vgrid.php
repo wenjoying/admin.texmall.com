@@ -17,6 +17,14 @@
 					
 					        <form class="form-inline" action="<?php echo base_url('Cuser/grid');?>" method="get">
 					            <div class="form-group">
+    					            <select class="selectpicker" name="role_id">
+    	                                <option value="">请选择角色</option>
+                                        <option <?php if(1==$this->input->get('role_id'))echo 'selected="selected"'?> value="1">采购商用户</option>
+                                        <option <?php if(2==$this->input->get('role_id'))echo 'selected="selected"'?> value="2">供应商用户</option>
+                                    </select>
+					            </div>
+					            
+					            <div class="form-group">
     					            <select class="selectpicker" name="reg_come">
     	                                <option value="">请选择注册来源</option>
     	                                <?php foreach ($reg_come=get_reg_come() as $k=>$g) {?>
@@ -34,7 +42,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" value="<?php echo $this->input->get('item');?>" placeholder="用户名/手机号/身份证号">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="设备唯一号/用户名/手机号/企业/身份证号">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -51,10 +59,11 @@
     					                    <thead>
         					                    <tr>
             					                    <th><div class="th-inner">ID</div></th>
+            					                    <th><div class="th-inner">设备唯一号</div></th>
                                                     <th><div class="th-inner">用户名</div></th>
-                                                    <th><div class="th-inner">电话</div></th>
+                                                    <th><div class="th-inner">手机号</div></th>
                                                     <th><div class="th-inner">角色</div></th>
-                                                    <th><div class="th-inner">公司</div></th>
+                                                    <th><div class="th-inner">企业</div></th>
                                                     <th><div class="th-inner">身份证</div></th>
                                                     <th><div class="th-inner">来源</div></th>
                                                     <th><div class="th-inner">注册时间</div></th>
@@ -65,6 +74,7 @@
         					                    <?php foreach($res as $r):?>
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
+            					                    <td><?php echo $r->device_id?></td>
                                                     <td><?php echo $r->username?></td>
                                                     <td><?php echo $r->mobile?></td>
                                                     <td><?php echo $r->role_id==1?'采购商用户':($r->role_id==2?'供应商用户':'平台服务商')?></td>
@@ -85,21 +95,26 @@
         					                    <?php endforeach;?>
         					                </tbody>
     					                </table>
-    					                <script>
-      					              	//时间
-    					                $('input.date-select').datepicker({
-					                		format: "yyyy-mm-dd",
-					                        todayBtn: "linked",
-					                        autoclose: true,
-					                        todayHighlight: true
-    					                });
-    					                
-    					                </script>
     					            </div>
+    					        </div>
+    					        <div class="pull-right pagination">
+        					        <ul class="pagination">
+        					            <li><a>每页<?php echo $per_page?>条/共<?php echo $sum?>条</a></li>
+        					            <li><a>第<?php echo empty($this->uri->segment(3)) ? 1 : $this->uri->segment(3)?>页</a></li>
+        					        </ul>
+        					        <?php echo $link;?> 
     					        </div>
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>用户列表中，有所有的用户。可以按条件筛选用户；可以查看用户详情；可以对某用户进行编辑；也可以删除某个用户；这些操作都要求后台管理员拥有相应的权限。</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->
