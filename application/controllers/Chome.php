@@ -97,8 +97,8 @@ class Chome extends TM_Controller {
 	{
 	    $ret['month_num'] = $this->Base_model->getTableNum('order', array('time >'=>strtotime(date('Y-m'))));
 	    $ret['all_num'] = $this->Base_model->getTableNum('order');
-	    $ret['month_money'] = $this->Base_model->getSum('order', 'sum_order_price', array('order_state'=>2))->row()->sum_order_price;
-	    $ret['all_money'] = $this->Base_model->getSum('order', 'sum_order_price', array('order_state'=>2))->row()->sum_order_price;
+	    $ret['month_money'] = $this->Base_model->getSum('order', 'sum_order_price', array('order_state'=>2));
+	    $ret['all_money'] = $this->Base_model->getSum('order', 'sum_order_price', array('order_state'=>2));
 	    return $ret;
 	}
 	

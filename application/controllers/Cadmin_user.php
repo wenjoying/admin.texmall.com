@@ -36,7 +36,7 @@ class Cadmin_user extends TM_Controller {
 	 * */
 	public function editPost()
 	{ 
-	    $this->validate('edit');
+	    $this->_validate('edit');
 	    
 	    $postData = $this->input->post();
 	    $data['username'] = trim($postData['username']);
@@ -81,7 +81,7 @@ class Cadmin_user extends TM_Controller {
 	 * @验证
 	 * @param number $type:insert为新增
 	 * */
-	public function validate($type = 'insert')
+	private function _validate($type = 'insert')
 	{
 	    if (is_empty($this->input->post('username'))) {
 	        alert_msg('请填写用户名');
@@ -156,7 +156,7 @@ class Cadmin_user extends TM_Controller {
 	 * */
 	public function addPost()  
 	{
-	    $this->validate();
+	    $this->_validate();
 	    $postData = $this->input->post();
 	    $data['username'] = trim($postData['username']);
 	    $data['mobile']   = trim($postData['mobile']);

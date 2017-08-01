@@ -367,7 +367,7 @@ class TM_Controller extends CI_Controller{
 	}
 	
 	/**
-	 * @从俩下载图片
+	 * @从网上下载图片
 	 * @param string $img_url:图片地址
 	 * @param string $dir:图片地址
 	 * */

@@ -62,7 +62,7 @@ class Chelp_center extends TM_Controller {
 	 * */
 	public function addPost()
 	{
-	    $this->validate();
+	    $this->_validate();
 	    $postData = $this->input->post();
 	    $data['category_id'] = $postData['category_id'];
 	    $data['title']       = $postData['title'];
@@ -104,7 +104,7 @@ class Chelp_center extends TM_Controller {
 	 * */
 	public function editPost()
 	{
-	    $this->validate();
+	    $this->_validate();
 	    $postData = $this->input->post();
 	    $data['category_id'] = $postData['category_id'];
 	    $data['title']       = $postData['title'];
@@ -125,7 +125,7 @@ class Chelp_center extends TM_Controller {
 	/**
 	 * @验证
 	 * */
-	public function validate()
+	private function _validate()
 	{
 	    if (is_empty($this->input->post('category_id'))) {
 	        alert_msg('请选择分类');

@@ -48,7 +48,7 @@ class Cthird_manage extends TM_Controller {
      * */
     public function addPost()
     {
-        $this->validate();
+        $this->_validate();
         
         $postData = $this->input->post(); 
         $data['name'] = $postData['name'];
@@ -67,7 +67,7 @@ class Cthird_manage extends TM_Controller {
     /**
      * @验证
      * */
-    public function validate()
+    private function _validate()
     {
         if ($this->Base_model->getTableNum($this->table, array('name'=>$this->input->post('name'))) > 0) {
             alert_msg('名称已存在');

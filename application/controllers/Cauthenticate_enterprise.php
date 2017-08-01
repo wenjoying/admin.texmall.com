@@ -85,7 +85,7 @@ class Cauthenticate_enterprise extends TM_Controller {
 	 * */
 	public function up_status()
 	{
-	    $this->validate();
+	    $this->_validate();
 	    $postData = $this->input->post();
 	    $data['is_check'] = $postData['is_check'];
 	    $data['reject_des'] = $postData['is_check']==2 ? '后台审核通过，准备打款' : $postData['reject_des'];
@@ -103,7 +103,7 @@ class Cauthenticate_enterprise extends TM_Controller {
 	/**
 	 * @验证
 	 * */
-	public function validate()
+	private function _validate()
 	{
 	    if ($this->input->post('is_check')==6 && is_empty($this->input->post('reject_des'))) {
 	        alert_msg('请填写审核不通过原因');

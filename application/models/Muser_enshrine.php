@@ -17,6 +17,9 @@ class Muser_enshrine extends CI_Model{
 	{
 	    $this->db->select('id');
 	    $this->db->from($this->table);
+	    if (!empty($search['uid'])) {
+	        $this->db->where(array('uid'=>$search['uid']));
+	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
 	    }

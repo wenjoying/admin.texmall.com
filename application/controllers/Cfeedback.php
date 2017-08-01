@@ -66,7 +66,7 @@ class Cfeedback extends TM_Controller {
 	 * */
 	public function editPost()
 	{
-	    $this->validate();
+	    $this->_validate();
 	    $postData = $this->input->post();
 	    $data['reply'] = $postData['reply'];
 	    $data['reply_time']  = time();
@@ -82,7 +82,7 @@ class Cfeedback extends TM_Controller {
 	/**
 	 * @验证
 	 * */
-	public function validate()
+	private function _validate()
 	{
 	    if (is_empty($this->input->post('reply'))) {
 	        alert_msg('请填写回复内容');

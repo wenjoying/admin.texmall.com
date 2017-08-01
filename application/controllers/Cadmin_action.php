@@ -61,7 +61,7 @@ class Cadmin_action extends TM_Controller {
      * */
     public function addPost()
     {
-        $this->validate();
+        $this->_validate();
         
         $postData = $this->input->post();
         $data['pid']    = $postData['pid'];
@@ -78,7 +78,7 @@ class Cadmin_action extends TM_Controller {
     /**
      * @验证
      * */
-    public function validate()
+    private function _validate()
     {
         $num = $this->Base_model->getTableNum($this->table, array('action'=>$this->input->post('action')));
         if ($num > 0) {

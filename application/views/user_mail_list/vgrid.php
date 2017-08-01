@@ -24,6 +24,10 @@
 					            </div>
 					            
 					            <div class="form-group">
+					                <input type="number" class="form-control" name="uid" value="<?php echo $this->input->get('uid');?>" placeholder="用户id">
+					            </div>
+					            
+					            <div class="form-group">
 					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="企业/姓名/电话/职位/邮箱/地址">
 					            </div>
 					            
@@ -73,9 +77,24 @@
     					                </table>
     					            </div>
     					        </div>
+    					        <div class="pull-right pagination">
+        					        <ul class="pagination">
+        					            <li><a>每页<?php echo $per_page?>条/共<?php echo $sum?>条</a></li>
+        					            <li><a>第<?php echo empty($this->uri->segment(3)) ? 1 : $this->uri->segment(3)?>页</a></li>
+        					        </ul>
+        					        <?php echo $link;?> 
+    					        </div>
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>所有用户添加的通讯录，可以按用户id搜索。</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

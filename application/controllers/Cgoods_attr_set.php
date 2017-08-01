@@ -61,7 +61,7 @@ class Cgoods_attr_set extends TM_Controller {
 	 * */
 	public function addPost()
 	{
-	    $this->validate();
+	    $this->_validate();
 	    $postData = $this->input->post();
 	    $data['attr_en_name'] = $postData['attr_en_name'];
 	    $data['attr_name'] = $postData['attr_name'];
@@ -80,7 +80,7 @@ class Cgoods_attr_set extends TM_Controller {
 	/**
 	 * @验证
 	 * */
-	public function validate($type = 'insert')
+	private function _validate($type = 'insert')
 	{
 	    if (is_empty($this->input->post('attr_en_name'))) {
 	        alert_msg('请填写英文名称');
@@ -132,7 +132,7 @@ class Cgoods_attr_set extends TM_Controller {
 	 * */
 	public function editPost()
 	{
-	    $this->validate('edit');
+	    $this->_validate('edit');
 	    $postData = $this->input->post();
 	    $data['attr_val'] = toEnComma($postData['attr_val']);
 	    $data['is_multi'] = $postData['is_multi'];

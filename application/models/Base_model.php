@@ -311,7 +311,7 @@ class Base_model extends CI_Model{
 	/**
 	 * @param string $table:数据表
 	 * @param string $field:表字段
-	 * @return 分组数据
+	 * @return 字段结果
 	 */
 	public function getFieldRes($table, $field, $where=array())
 	{
@@ -323,13 +323,25 @@ class Base_model extends CI_Model{
 	/**
 	 * @param string $table:数据表
 	 * @param string $field:表字段
-	 * @return 分组数据
+	 * @return 字段求和
 	 */
 	public function getSum($table, $field, $where=array())
 	{
 	    $this->db->select_sum($field);
 	    if (!empty($where)) $this->db->where($where);
-	    return $this->db->get($table);
+	    return $this->db->get($table)->row()->$field;
+	}
+	
+	/**
+	 * @param string $table:数据表
+	 * @param string $field:表字段
+	 * @return 字段求最大值
+	 */
+	public function getMax($table, $field, $where=array())
+	{
+	    $this->db->select_max($field);
+	    if (!empty($where)) $this->db->where($where);
+	    return $this->db->get($table)->row()->$field;
 	}
 	
 }

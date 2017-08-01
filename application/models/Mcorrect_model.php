@@ -1,14 +1,14 @@
 <?php
 /**
- * Muser_log.php
+ * Mcorrect_model.php
  * ==============================================
  * Copy right 2017 http://www.texmall.com
  * ==============================================
  * @author: zoudong
  * @date: 2017年6月13日
  */
-class Muser_log extends CI_Model{
-	private $table = 'user_log';        
+class Mcorrect_model extends CI_Model{
+	private $table = 'correct_model';        
 	
 	/**
 	 * @获取总条数
@@ -18,10 +18,7 @@ class Muser_log extends CI_Model{
 	    $this->db->select('id');
 	    $this->db->from($this->table);
 	    if (!empty($search['type'])) {
-	        $this->db->where(array('type'=>strtotime($search['type'])));
-	    }
-	    if (!empty($search['uid'])) {
-	        $this->db->where(array('uid'=>strtotime($search['uid'])));
+	        $this->db->where(array('type'=>$search['type']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
@@ -30,7 +27,10 @@ class Muser_log extends CI_Model{
 	        $this->db->where(array('time <'=>strtotime($search['end_time'])));
 	    }
 	    if (!empty($search['item'])) {
-	        $this->db->like('log ', $search['item']);
+	        $this->db->group_start();
+	        $this->db->like('img_name', $search['item']);
+	        $this->db->or_like('des', $search['item']);
+	        $this->db->group_end();
 	    }
 	    return $this->db->count_all_results();
 	}
@@ -47,10 +47,7 @@ class Muser_log extends CI_Model{
 	    $this->db->select('*');
 	    $this->db->from($this->table);
 	    if (!empty($search['type'])) {
-	        $this->db->where(array('type'=>strtotime($search['type'])));
-	    }
-	    if (!empty($search['uid'])) {
-	        $this->db->where(array('uid'=>strtotime($search['uid'])));
+	        $this->db->where(array('type'=>$search['type']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
@@ -59,7 +56,10 @@ class Muser_log extends CI_Model{
 	        $this->db->where(array('time <'=>strtotime($search['end_time'])));
 	    }
 	    if (!empty($search['item'])) {
-	        $this->db->like('log ', $search['item']);
+	        $this->db->group_start();
+	        $this->db->like('img_name', $search['item']);
+	        $this->db->or_like('des', $search['item']);
+	        $this->db->group_end();
 	    }
 	    $this->db->order_by($order);
 	    if ($perpage) $this->db->limit($perpage, $perpage*$page);
@@ -67,7 +67,9 @@ class Muser_log extends CI_Model{
 	}
 	
 	
+	
+	
 }
 
-/** End of file Muser_log.php */
-/** Location: ./application/models/Muser_log.php */
+/** End of file Mcorrect_model.php */
+/** Location: ./application/models/Mcorrect_model.php */

@@ -7,7 +7,7 @@
 					    <div class="panel-heading">
 					        <h3 class="panel-title">
     					        <?php echo $two_level?>
-					            <a style="margin-left:50px;" href="<?php echo base_url('Ccorrect_img/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
+					            <a style="margin-left:50px;" href="<?php echo base_url('Ccorrect_tex/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
 					            <a  href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					        
@@ -15,14 +15,7 @@
 					    </div>
 					    <div class="panel-body">
 					
-					        <form class="form-inline" action="<?php echo base_url('Ccorrect_img/grid');?>" method="get">
-					            <div class="form-group">
-    					            <select class="selectpicker" name="type">
-    	                                <option value="">请选择类型</option>
-                                        <option <?php if($this->input->get('type')=='model')echo 'selected="selected"'?> value="model">模特</option>
-                                        <option <?php if($this->input->get('type')=='tex')echo 'selected="selected"'?> value="tex">布料</option>
-                                    </select>
-					            </div>
+					        <form class="form-inline" action="<?php echo base_url('Ccorrect_tex/grid');?>" method="get">
 					            
 					            <div class="form-group">
 					                <input type="text" class="form-control date-select" name="sta_time" value="<?php echo $this->input->get('sta_time');?>" placeholder="开始时间">
@@ -51,7 +44,7 @@
         					                    <tr>
             					                    <th><div class="th-inner">ID</div></th>
                                                     <th><div class="th-inner">图片</div></th>
-                                                    <th><div class="th-inner">类型</div></th>
+                                                    <th><div class="th-inner">一花多色(对应ID)</div></th>
                                                     <th><div class="th-inner">名称</div></th>
                                                     <th><div class="th-inner">简介</div></th>
                                                     <th><div class="th-inner">时间</div></th>
@@ -63,12 +56,12 @@
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
                                                     <td><a target="_blank" href="<?php echo $this->config->image_url.$r->correct_img?>"><img style="height:80px;width:80px;" src="<?php echo $this->config->image_url.$r->correct_img?>"></a></td>
-                                                    <td><?php echo $r->type?></td>
+                                                    <td><?php echo $r->tex_colors?></td>
                                                     <td><?php echo $r->img_name?></td>
                                                     <td><?php echo $r->des?></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
             					                    <td>
-                					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Ccorrect_img/delete/'.$r->id);?>');">删除</a>
+                					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Ccorrect_tex/delete/'.$r->id);?>');">删除</a>
                                                     </td>
         					                    </tr>
         					                    <?php endforeach;?>
@@ -86,6 +79,14 @@
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>一花多色相同，代表这些布料是同一花型不同的花色。</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

@@ -24,6 +24,10 @@
 					            </div>
 					            
 					            <div class="form-group">
+					                <input type="number" class="form-control" name="uid" value="<?php echo $this->input->get('uid');?>" placeholder="用户id">
+					            </div>
+					            
+					            <div class="form-group">
 					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="型号">
 					            </div>
 					            
@@ -73,6 +77,14 @@
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>所有用户的收藏，可以按用户id搜索。</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

@@ -18,7 +18,6 @@ class Cgoods extends TM_Controller {
 	{
 		header("Content-type: text/html; Charset=utf-8");
 		$this->load->model('Mgoods');
-		$this->load->model('Mcorrect_img');
 	}
 	
 	/**
@@ -65,11 +64,10 @@ class Cgoods extends TM_Controller {
 	 * */
 	public function addPost()
 	{
-	    $this->validate();
+	    $this->_validate();
 	    $postData = $this->input->post();
 	    $img = $this->deal_img('goods', FALSE);
 	    if (isset($img['upload']['original_img'])) {
-	        
 	        $contrast = $this->_get_contrast(array($img['upload']['original_img']));
 	        if ($contrast == FALSE) {
 	            alert_msg('以图找图失败');
@@ -145,7 +143,7 @@ class Cgoods extends TM_Controller {
 	 * */
 	public function editPost()
 	{
-	    $this->validate('edit');
+	    $this->_validate('edit');
 	    $postData = $this->input->post();
 	    $data['supplier_code'] = $postData['supplier_code'];
 	    $data['price']         = $postData['price'];
@@ -174,141 +172,12 @@ class Cgoods extends TM_Controller {
 	}
 	
 	/**
-	 * @获取属性信息
-	 * */
-	private function _get_attr()
-	{
-	    $attr = $this->Base_model->getWhere('goods_attr_set', array('is_show'=>1))->result();
-	    return array_column($attr, null, 'attr_en_name');
-	}
-	
-	/**
-	 * @获取以图找图结果
-	 * @$original:需要和标准图片对比的图片数组
-	 * */
-	private function _get_contrast($original)
-	{
-	    $res = $this->Base_model->getWhere('correct_img', array('type'=>'tex'), 'img_name desc')->result();
-	    $param = array('or_arr'=>$original, 'img_arr'=>array_column($res, 'correct_img', 'img_name'));
-	    $param = array(
-	        'token'  => 'texmall2017-token', //请求令牌，令牌一致则可以请求接口
-	        'or_arr' => array( //上传图片的保存路径
-	            './goods/20170721/110218_4001.jpg', 
-	            './goods/20170721/110218_5002.jpg', 
-	            './goods/20170721/110218_3956.jpg'
-	        ),
-	        'img_arr' => array(    //标准图库的路径
-	            'A0001'=>'./correct_img/20170721/092208_6075.jpg',
-	            'A0002'=>'./correct_img/20170721/092424_8172.jpg',
-	            'A0003'=>'./correct_img/20170721/092650_4129.jpg',
-	        )
-	    );
-	    $url = 'http://zhanggong.com/yituzhaotu';  //张工以图找图(图片修正，图片提取)url，返回json数据
-	    $res = json_decode(fn_get_contents($url, $param, 'post'));  //数据post提交
-	    $d = json_encode(array(  //模拟返回数据
-	        'status' => TRUE,
-	        'data' => array(
-	            'img_name' => 'A0001', //如果标准图库有，标准图库名称
-	            'cover_img_url' => 'http://zhanggong.com/images/qwdadret2131.jpg', //如果标准图库没有，张工修正好的硬币图片
-	            'original' => './goods/20170721/110218_3956.jpg|./goods/20170721/110218_4001.jpg|./goods/20170721/110218_5002.jpg', //硬币图排在第一
-	            'lattice' => '0.5',    //格型
-	            'color' => '黑,红,黄',    //颜色
-	            'pantone_color' => 'c341', //潘通色号
-	            'tex_grid' => '1', //格子：1其他2千鸟格3朝阳格
-	            'yarn_density' => '234',   //纱支密度
-	            'back_size' => '2332', //花回尺寸
-	        )
-	    ));
-	    $res = json_decode($d); 
-	    
-	    if ($res->status == FALSE) {//执行对比提取失败
-	        return FALSE;
-	    }
-	    if (empty($res->data->img_name)) {//标准库没有找到结果
-	        $new = $this->download_img($res->data->cover_img_url, 'correct_img');
-	        if (empty($new)) {//下载到服务器失败
-	            return FALSE;
-	        }
-	        $img['correct_img'] = $new;
-	        $img['type']      = 'tex';
-	        $img['img_name']  = $this->Mcorrect_img->create_name();
-	        $img['des']       = '布料';
-	        $img['time']      = time();
-	        if (!$this->Base_model->insert('correct_img', $img)) {//插入失败
-	            return FALSE;
-	        }
-	        $ret['platform_name']  = $img['img_name'];
-	        $ret['cover_img']      = $new;
-	    } else{
-	        $ret['platform_name'] = $res->data->img_name;
-	        $ret['cover_img'] = $param['img_arr'][$ret['platform_name']];
-	    }
-	    $ret['original']   = $res->data->original;
-	    $ret['lattice']    = $res->data->lattice;
-	    $ret['color']      = $res->data->color;
-	    $ret['tex_grid']   = $res->data->tex_grid;
-	    $ret['yarn_density'] = $res->data->yarn_density;
-	    $ret['back_size']  = $res->data->back_size;
-	    return $ret;
-	}
-	
-	/**
-	 * @验证
-	 * @param number $type:insert为新增
-	 * */
-	public function validate($type = 'insert')
-	{
-	    if ($type == 'insert') {
-	        if (empty($_FILES)) {
-	            alert_msg('请上传图片');
-	        }
-	         
-	        if (is_empty($this->input->post('supplier_id')) || is_empty($this->input->post('supplier_name'))) {
-	            alert_msg('请填写供应商');
-	        }
-	    }
-	    
-	    if (is_empty($this->input->post('supplier_code'))) {
-	        alert_msg('请填写供应商型号');
-	    }
-	    
-	    if (is_empty($this->input->post('price'))) {
-	        alert_msg('请填写价格');
-	    }
-	    
-	    if (is_empty($this->input->post('in_stock'))) {
-	        alert_msg('请填写库存');
-	    }
-	    
-	    if (is_empty($this->input->post('width'))) {
-	        alert_msg('请填写门幅');
-	    }
-	    
-	    if (is_empty($this->input->post('square_weight'))) {
-	        alert_msg('请填写平方克重');
-	    }
-	    
-	    if (is_empty($this->input->post('shrinkage'))) {
-	        alert_msg('请填写缩水率');
-	    }
-	    
-	    if (is_empty($this->input->post('component'))) {
-	        alert_msg('请选择成分');
-	    }
-	    
-	    if (is_empty($this->input->post('is_sale'))) {
-	        alert_msg('请选择是否上架');
-	    }
-	    
-	}
-	
-	/**
 	 * @详情页
 	 * */
 	public function page($id = 0)
 	{
 	    $this->checkAction(__METHOD__);
-	    
+	     
 	    $res = $this->Base_model->getWhere($this->table, array('id'=>$id));
 	    if ($res->num_rows() == 0) {
 	        $this->redirect('Clogin/show_404');
@@ -318,7 +187,7 @@ class Cgoods extends TM_Controller {
 	    $data['status_arr'] = get_status();
 	    $data['grade_arr'] = array('1'=>'一般', '2'=>'推荐', '3'=>'严选');
 	    $data['one_level'] = '产品中心';
-        $data['two_level'] = '产品列表';
+	    $data['two_level'] = '产品列表';
 	    $this->load->view('goods/vpage', $data);
 	}
 	
@@ -354,29 +223,181 @@ class Cgoods extends TM_Controller {
 	 * @删除产品
 	 * */
 	public function delete($id = 0)
-	{    
+	{
 	    $this->checkAction(__METHOD__);
-	    
+	     
 	    $goods = $this->Base_model->getWhere($this->table, array('id'=>$id));
 	    $res = $this->Base_model->delete($this->table, array('id'=>$id));
-	    
+	     
 	    if ($res > 0) {
-    	    foreach (explode('|', $goods->row()->original_img) as $img) {
-    	        $this->delete_img($img);
-    	    }
+	        foreach (explode('|', $goods->row()->original_img) as $img) {
+	            $this->delete_img($img);
+	        }
 	        alert_msg('操作成功', 'Cgoods/grid');
 	    }else{
 	        alert_msg('操作失败');
 	    }
 	}
 	
-    /**
-     * @获取供应商产品
-     * */
-	public function supplier_goods($supplier_id = 0)
+	/**
+	 * @获取属性信息
+	 * */
+	private function _get_attr()
 	{
-	    $data[] = '';
-	    $this->load->view('goods/vsupplier_goods', $data);
+	    $attr = $this->Base_model->getWhere('goods_attr_set', array('is_show'=>1))->result();
+	    return array_column($attr, null, 'attr_en_name');
+	}
+	
+	/**
+	 * @获取以图找图结果
+	 * @$or_arr:需要和标准图片对比的图片数组
+	 * */
+	 function get_contrast($or_arr=array())
+	{
+	    $res = $this->Base_model->getFieldRes('correct_tex', 'correct_img, tex_colors, img_name')->result_array();
+// 	    $param = array('or_arr'=>$or_arr, 'img_arr'=>$res);
+	    $param = array(
+	        'token'  => 'texmall2017-token', //请求令牌，令牌一致则可以请求接口
+	        'or_arr' => array( //上传图片的保存路径，与img_arr中所有的correct_img做对比
+	            './goods/20170721/110218_4001.jpg', 
+	            './goods/20170721/110218_5002.jpg', 
+	            './goods/20170721/110218_3956.jpg'
+	        ),
+	        'img_arr' => array(//标准图片
+                  0 => array(
+                      'correct_img' => './correct_img/20170721/100923_4250.jpg',    //标准图
+                      'tex_colors' => '1',  //一花多色
+                      'img_name' => 'A0001' //标准图名称
+                  ),
+                  1 => array (
+                      'correct_img' => './correct_img/20170721/093904_1893.jpg',
+                      'tex_colors' => '1',
+                      'img_name' => 'A0002'
+                  ),
+                  2 => array (
+                      'correct_img' => './correct_img/20170721/093923_8345.jpg',
+                      'tex_colors' => '3',
+                      'img_name' => 'A0003'
+                  )
+            )
+	    );
+	    $url = 'http://zhanggong.com/yituzhaotu';  //张工以图找图(图片修正，图片提取)url，返回json数据
+// 	    $res = json_decode(fn_get_contents($url, $param, 'post'));  //数据post提交
+	    $d = json_encode(array(  //模拟返回数据
+	        'status' => TRUE,
+	        'data' => array(
+	            'img_name'      => 'A0001', //如果标准图库有，标准图库名称，与cover_img_url两者选其一
+	            'tex_colors'    => '1', //一花多色，如果img_name不存在的时候，而花色存在则为此花色的tex_colors；不存在则为空
+	            'cover_img_url' => 'http://zhanggong.com/images/qwdadret2131.jpg', //如果标准图库没有，张工修正好的硬币图片
+	            'original'      => './goods/20170721/110218_3956.jpg|./goods/20170721/110218_4001.jpg|./goods/20170721/110218_5002.jpg', //硬币图排在第一
+	            'lattice'       => '0.5',    //格型
+	            'color'         => '黑,红,黄',    //颜色
+	            'pantone_color' => 'c341', //潘通色号
+	            'tex_grid'      => '1', //格子：1其他2千鸟格3朝阳格
+	            'yarn_density'  => '234',   //纱支密度
+	            'back_size'     => '2332', //花回尺寸
+	        )
+	    ));
+	    $res = json_decode($d); 
+	    
+	    if ($res->status == FALSE) {//执行对比提取失败
+	        return FALSE;
+	    }
+	    if (empty($res->data->img_name)) {//标准库没有找到结果
+	        $new = $this->download_img($res->data->cover_img_url, 'correct_img');
+	        if (!empty($new)) {//下载到服务器失败
+	            $img['correct_img'] = $new;
+	            $img['tex_colors']  = $res->data->tex_colors;
+	            $img['img_name']  = $this->_create_name();
+	            $img['des']       = '用户上传产品生产标准布料';
+	            $img['time']      = time();
+	            $tex_id = $this->Base_model->insert('correct_tex', $img);
+	            if ($tex_id) {//插入失败
+	                if (empty($img['tex_colors'])) {//如果一花多色为空，则为自己id
+	                    $this->Base_model->update('correct_tex', array('id'=>$tex_id), array('tex_colors'=>$tex_id));
+	                }
+	                $ret['platform_name']  = $img['img_name'];
+	                $ret['cover_img']      = $new;
+	            }
+	            return FALSE;
+	        }
+	        return FALSE;
+	    } else{
+	        $ret['platform_name'] = $res->data->img_name;
+	        $ret['cover_img'] = $param['img_arr'][$ret['platform_name']];
+	    }
+	    $ret['original']   = $res->data->original;
+	    $ret['lattice']    = $res->data->lattice;
+	    $ret['color']      = $res->data->color;
+	    $ret['tex_grid']   = $res->data->tex_grid;
+	    $ret['yarn_density'] = $res->data->yarn_density;
+	    $ret['back_size']  = $res->data->back_size;
+	    return $ret;
+	}
+	
+	/**
+	 * @验证
+	 * @param number $type:insert为新增
+	 * */
+	private function _validate($type = 'insert')
+	{
+	    if ($type == 'insert') {
+	        if (empty($_FILES)) {
+	            alert_msg('请上传图片');
+	        }
+	
+	        if (is_empty($this->input->post('supplier_id')) || is_empty($this->input->post('supplier_name'))) {
+	            alert_msg('请填写供应商');
+	        }
+	    }
+	     
+	    if (is_empty($this->input->post('supplier_code'))) {
+	        alert_msg('请填写供应商型号');
+	    }
+	     
+	    if (is_empty($this->input->post('price'))) {
+	        alert_msg('请填写价格');
+	    }
+	     
+	    if (is_empty($this->input->post('in_stock'))) {
+	        alert_msg('请填写库存');
+	    }
+	     
+	    if (is_empty($this->input->post('width'))) {
+	        alert_msg('请填写门幅');
+	    }
+	     
+	    if (is_empty($this->input->post('square_weight'))) {
+	        alert_msg('请填写平方克重');
+	    }
+	     
+	    if (is_empty($this->input->post('shrinkage'))) {
+	        alert_msg('请填写缩水率');
+	    }
+	     
+	    if (is_empty($this->input->post('component'))) {
+	        alert_msg('请选择成分');
+	    }
+	     
+	    if (is_empty($this->input->post('is_sale'))) {
+	        alert_msg('请选择是否上架');
+	    }
+	     
+	}
+	
+	/**
+	 * @生成标准图名字
+	 * */
+	private function _create_name()
+	{
+	    $name = $this->Base_model->getMax($this->table, 'img_name');
+	    if ($name == NULL) {
+	        return 'A0001';
+	    } else {
+	        $k = $name{0};
+	        $n = (int)mb_substr($name, 1, 4) +1;
+	        return $k.(string)sprintf('%04d', $n); //return chr(ord($k)+1).'0001';
+	    }
 	}
 	
 

@@ -219,7 +219,7 @@
 		                    <h3 class="panel-title">使用说明</h3>
 		                </div>
 		                <div class="panel-body">
-		                    <p>使用说明</p>
+		                    <p>平台等级仅对于供应商。“正在审核”的状态下可以在点击 “查看” 时审核。</p>
 		                </div>
 		            </div>
                 </div>

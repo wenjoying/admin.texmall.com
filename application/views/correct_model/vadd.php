@@ -9,7 +9,7 @@
 					            <div class="panel-heading">
 					                <h3 class="panel-title"><?php echo $two_level.'- 添加'?></h3>
 					            </div>
-					            <form class="form-horizontal" action="<?php echo base_url('Ccorrect_img/addPost');?>" method="post" enctype="multipart/form-data">
+					            <form class="form-horizontal" action="<?php echo base_url('Ccorrect_model/addPost');?>" method="post" enctype="multipart/form-data">
 					                <div class="panel-body">
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label">图片*</label>
@@ -24,8 +24,9 @@
     					                    <div class="col-md-6">
 					                            <select class="selectpicker" name="type" required="required">
                 	                                <option value="">请选择类型</option>
-                                                    <option value="model">模特</option>
-                                                    <option value="tex">布料</option>
+                	                                <?php foreach($category as $v):?>
+                                                    <option value="<?php echo $v?>"><?php echo $v?></option>
+                                                    <?php endforeach;?>
                                                 </select>
     					                    </div>
     					                </div>

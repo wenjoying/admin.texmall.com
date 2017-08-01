@@ -20,6 +20,9 @@ class Msearch_log extends CI_Model{
 	    if (!empty($search['type'])) {
 	        $this->db->where(array('type'=>strtotime($search['type'])));
 	    }
+	    if (!empty($search['uid'])) {
+	        $this->db->where(array('uid'=>strtotime($search['uid'])));
+	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
 	    }
@@ -48,6 +51,9 @@ class Msearch_log extends CI_Model{
 	    $this->db->from($this->table);
 	    if (!empty($search['type'])) {
 	        $this->db->where(array('type'=>strtotime($search['type'])));
+	    }
+	    if (!empty($search['uid'])) {
+	        $this->db->where(array('uid'=>strtotime($search['uid'])));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));

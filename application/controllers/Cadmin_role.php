@@ -50,7 +50,7 @@ class Cadmin_role extends TM_Controller {
      * */
     public function addPost()
     {
-        $this->validate();
+        $this->_validate();
         
         $postData = $this->input->post();
         $data['role_name']   = trim($postData['role_name']);
@@ -68,7 +68,7 @@ class Cadmin_role extends TM_Controller {
     /**
      * @验证
      * */
-    public function validate($type = 'insert')
+    private function _validate($type = 'insert')
     {
         if ($type == 'insert') {
             if ($this->Base_model->getTableNum($this->table, array('role_name'=>$this->input->post['role_name'])) > 0) {
@@ -108,7 +108,7 @@ class Cadmin_role extends TM_Controller {
      * */
     public function editPost()
     {
-        $this->validate(0);
+        $this->_validate(0);
         
         $postData = $this->input->post();
         if ($postData['id'] == 1) {

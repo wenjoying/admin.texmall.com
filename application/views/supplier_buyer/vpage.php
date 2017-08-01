@@ -85,7 +85,6 @@
 			                    </div>
 			                    <div class="list-group bg-trans">
 			                        <?php foreach ($workers as $w) :?>
-			                        <?php if ($res->id != $w->id) :?>
 			                        <a class="list-group-item" href="###" class="list-group-item">
 			                            <div class="media-left pos-rel">
 			                                <img class="img-circle img-xs" src="<?php echo $this->config->image_url.$w->userimg?>" alt="Profile Picture">
@@ -95,7 +94,6 @@
 			                                <small class="text-muted"><?php echo $w->mobile?></small>
 			                            </div>
 			                        </a>
-			                        <?php endif;?>
 			                        <?php endforeach;?>
 			                    </div>
 			                </div>
