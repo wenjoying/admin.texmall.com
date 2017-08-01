@@ -156,7 +156,7 @@ class Corder extends TM_Controller {
 	    $data['order_state']   = 1;
 	    $data['order_status']  = 2;
 	    $data['buyer_id']      = $user->row()->companyid;
-	    $data['buyer_name']    = $user->row()->company;
+	    $data['buyer_name']    = $user->row()->company_name;
 	    $data['uid']           = $user->row()->id;
 	    $data['username']      = $user->row()->username;
 	    $data['sum_goods']     = count($this->input->post('cart_id'));

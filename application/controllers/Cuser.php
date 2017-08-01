@@ -70,12 +70,12 @@ class Cuser extends TM_Controller {
 	    if (isset($img['upload']['userimg'])) {
 	        $data['userimg'] = $img['upload']['userimg'];
 	    }
-	    if (!is_empty($postData['companyid']) && !is_empty($postData['company'])) {
-	        $data['companyid'] = $postData['companyid'];
-	        $data['company']   = $postData['company'];
+	    if (!is_empty($postData['companyid']) && !is_empty($postData['company_name'])) {
+	        $data['companyid']    = $postData['companyid'];
+	        $data['company_name'] = $postData['company_name'];
 	    } else {
 	        $data['companyid'] = '';
-	        $data['company']   = '';
+	        $data['company_name']   = '';
 	    }
 	    $data['role_id']   = $postData['role_id'];
 	    $data['username']  = $postData['username'];
@@ -132,9 +132,9 @@ class Cuser extends TM_Controller {
 	    if (isset($img['upload']['userimg'])) {
 	        $data['userimg'] = $img['upload']['userimg'];
 	    }
-	    if (isset($postData['companyid']) && isset($postData['company'])) {
-	        $data['companyid'] = $postData['companyid'];
-	        $data['company']   = $postData['company'];
+	    if (isset($postData['companyid']) && isset($postData['company_name'])) {
+	        $data['companyid']     = $postData['companyid'];
+	        $data['company_name']  = $postData['company_name'];
 	    }
 	    $data['username']  = $postData['username'];
 	    $data['password']  = ZD_md5($postData['password']);

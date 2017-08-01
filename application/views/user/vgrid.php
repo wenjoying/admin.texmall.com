@@ -79,8 +79,8 @@
                                                     <td><?php echo $r->mobile?></td>
                                                     <td><?php echo $r->role_id==1?'采购商用户':($r->role_id==2?'供应商用户':'平台服务商')?></td>
                                                     <td>
-                                                        <?php if(!empty($r->company)):?>
-                                                        <a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$r->companyid)?>"><?php echo $r->company?></a>
+                                                        <?php if(!empty($r->company_name)):?>
+                                                        <a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$r->companyid)?>"><?php echo $r->company_name?></a>
                                                         <?php endif;?>
                                                     </td>
                                                     <td><?php echo $r->id_card?></td>

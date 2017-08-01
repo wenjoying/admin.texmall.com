@@ -261,7 +261,7 @@ class Csupplier_buyer extends TM_Controller {
 	 * */
 	private function _cancel_user($companyid)
 	{
-	    $this->Base_model->update('user', array('companyid'=>$companyid), array('companyid'=>'', 'company'=>''));
+	    $this->Base_model->update('user', array('companyid'=>$companyid), array('companyid'=>'', 'company_name'=>''));
 	}
 	
 	/**

@@ -81,7 +81,7 @@
                             <div class="panel">
 			                    <div class="panel-heading">
 			                        <h3 class="panel-title">企业员工(<?php echo count($workers)?>)</h3>
-			                        <a style="float: right;margin: -40px 10px;" href="<?php echo base_url('Cuser/add?companyid='.$res->id.'&company='.$res->company_name.'&role_id='.$res->type)?>" class="btn btn-sm btn-primary">添加员工</a>
+			                        <a style="float: right;margin: -40px 10px;" href="<?php echo base_url('Cuser/add?companyid='.$res->id.'&company_name='.$res->company_name.'&role_id='.$res->type)?>" class="btn btn-sm btn-primary">添加员工</a>
 			                    </div>
 			                    <div class="list-group bg-trans">
 			                        <?php foreach ($workers as $w) :?>

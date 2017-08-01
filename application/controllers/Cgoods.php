@@ -110,7 +110,7 @@ class Cgoods extends TM_Controller {
 	    $data['platform_grade'] = $postData['platform_grade'];
 	    $data['sum_sale']      = 0;
 	    $data['sum_review']    = 0;
-	    $data['pv']            = 0;
+	    $data['enshrine_num']  = 0;
 	    $data['time']          = time();
 	    $data['update_time']   = '';
 	    

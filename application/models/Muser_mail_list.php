@@ -28,7 +28,7 @@ class Muser_mail_list extends CI_Model{
 	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
-	        $this->db->like('company', $search['item']);
+	        $this->db->like('company_name', $search['item']);
 	        $this->db->or_like('full_name', $search['item']);
 	        $this->db->or_like('telphone', $search['item']);
 	        $this->db->or_like('position', $search['item']);
@@ -61,7 +61,7 @@ class Muser_mail_list extends CI_Model{
 	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
-	        $this->db->like('company', $search['item']);
+	        $this->db->like('company_name', $search['item']);
 	        $this->db->or_like('full_name', $search['item']);
 	        $this->db->or_like('telphone', $search['item']);
 	        $this->db->or_like('position', $search['item']);

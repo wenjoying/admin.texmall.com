@@ -23,7 +23,7 @@
 					               <p>性别：<?php echo $sex_arr[$res->sex]?></p>
 					               <p>生日：<?php echo $res->birthday?></p>
 					               <p>身份：<?php echo $res->role_id==1?'采购商用户':($res->role_id==2?'供应商用户':'平台服务商')?></p>
-					               <p>企业：<a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$res->companyid)?>"><?php echo $res->company?></a></p>
+					               <p>企业：<a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$res->companyid)?>"><?php echo $res->company_name?></a></p>
 					               <p>职务：<?php echo $res->positions?></p>
 					            </div>
 					            <div class="panel-heading">
@@ -118,7 +118,7 @@
 			                    <div class="list-group">
 			                        <?php foreach($mail_list as $m):?>
 			                        <a class="list-group-item" href="###">
-			                            <h4 class="list-group-item-heading"><?php echo $m->company.' '.$m->position?></h4>
+			                            <h4 class="list-group-item-heading"><?php echo $m->company_name.' '.$m->position?></h4>
 			                            <p class="list-group-item-text"><?php echo $m->full_name.' '.$m->telphone?></p>
 			                            <p class="list-group-item-text"><?php echo $m->e_mail?></p>
 			                            <p class="list-group-item-text"><?php echo $m->address?></p>

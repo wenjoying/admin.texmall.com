@@ -68,7 +68,7 @@
     					                    <div class="col-md-6">
     					                        <input type="hidden" name="companyid" value="<?php echo $this->input->get('companyid')?>">
     					                        <input type="hidden" name="role_id" value="<?php echo $this->input->get('role_id')?>">
-    					                        <input type="text" class="form-control" readonly name="company" maxlength="100" value="<?php echo $this->input->get('company')?>" placeholder="...">
+    					                        <input type="text" class="form-control" readonly name="company_name" maxlength="100" value="<?php echo $this->input->get('company_name')?>" placeholder="...">
     					                    </div>
     					                </div>
     					                <?php endif;?>

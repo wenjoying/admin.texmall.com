@@ -234,9 +234,9 @@
     					                </div>
     					                
     					                <div class="form-group">
-    					                    <label class="col-md-3 control-label" for="demo-text-input">浏览</label>
+    					                    <label class="col-md-3 control-label" for="demo-text-input">收藏</label>
     					                    <div class="col-md-6">
-    					                        <input type="text" class="form-control" readonly value="<?php echo $res->pv;?>">
+    					                        <input type="text" class="form-control" readonly value="<?php echo $res->enshrine_num;?>">
     					                    </div>
     					                </div>
     					

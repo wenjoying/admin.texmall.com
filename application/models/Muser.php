@@ -34,7 +34,7 @@ class Muser extends CI_Model{
 	        $this->db->like('device_id', $search['item']);
 	        $this->db->or_like('username', $search['item']);
 	        $this->db->or_like('mobile', $search['item']);
-	        $this->db->or_like('company', $search['item']);
+	        $this->db->or_like('company_name', $search['item']);
 	        $this->db->or_like('id_card', $search['item']);
 	        $this->db->group_end();
 	    }
@@ -69,7 +69,7 @@ class Muser extends CI_Model{
 	        $this->db->like('device_id', $search['item']);
 	        $this->db->or_like('username', $search['item']);
 	        $this->db->or_like('mobile', $search['item']);
-	        $this->db->or_like('company', $search['item']);
+	        $this->db->or_like('company_name', $search['item']);
 	        $this->db->or_like('id_card', $search['item']);
 	        $this->db->group_end();
 	    }

@@ -76,7 +76,7 @@
 					               <p>来源：<?php echo $res->source?></p>
 					               <p>总销量：<?php echo $res->sum_sale?></p>
 					               <p>总评价：<?php echo $res->sum_review?></p>
-					               <p>浏览量：<?php echo $res->pv?></p>
+					               <p>收藏量：<?php echo $res->enshrine_num?></p>
 					               <p>创建时间：<?php echo date('Y-m-d H:i:s', $res->time)?></p>
 					               <p>更新时间：<?php if(!empty($res->update_time)) echo date('Y-m-d H:i:s', $res->update_time)?></p>
 					               

@@ -62,7 +62,7 @@
     					                    <label class="col-md-3 control-label" for="demo-text-input">企业名称*</label>
     					                    <div class="col-md-6">
     					                        <input type="hidden" name="companyid" value="">
-    					                        <input type="text" class="form-control" name="company" maxlength="100" required="required" value="" placeholder="...">
+    					                        <input type="text" class="form-control" name="company_name" maxlength="100" required="required" value="" placeholder="...">
     					                    </div>
     					                </div>
     					                <?php endif;?>
@@ -140,7 +140,7 @@
     			                }
     			            });
     					}
-    					check_exists($('input[name="company"]'));
+    					check_exists($('input[name="company_name"]'));
 					});
 					</script>
                 </div>

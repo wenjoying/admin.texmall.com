@@ -57,7 +57,7 @@
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
             					                    <td><?php echo $r->uid?></td>
-                                                    <td><?php echo $r->company?></td>
+                                                    <td><?php echo $r->company_name?></td>
                                                     <td><?php echo $r->full_name?></td>
                                                     <td><?php echo $r->telphone?></td>
                                                     <td><?php echo $r->position?></td>
