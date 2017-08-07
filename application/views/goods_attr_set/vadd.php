@@ -49,7 +49,7 @@
     					                <div class="form-group pad-ver">
     					                    <label class="col-md-3 control-label">是否显示*</label>
     					                    <div class="col-md-6">
-					                            <select class="selectpicker" name="is_show" required="required">
+					                            <select class="selectpicker" name="status" required="required">
                 	                                <option value="">请选择</option>
                                                     <option value="1">显示</option>
                                                     <option value="2">隐藏</option>

@@ -55,6 +55,7 @@ class Corder_goods extends TM_Controller {
 	        $this->redirect('Clogin/show_404');
 	    }
 	    $data['res'] = $res->row();
+	    $data['reviews'] = $this->_get_order_reviews($res->row()->order_id, $res->row()->goods_id);
 	    $data['one_level'] = '订单管理';
         $data['two_level'] = '订单产品';
 	    $this->load->view('order_goods/vpage', $data);
@@ -73,6 +74,14 @@ class Corder_goods extends TM_Controller {
 	    }else{
 	        alert_msg('操作失败');
 	    }
+	}
+	
+	/**
+	 * @获取订单评价
+	 * */
+	private function _get_order_reviews($order_id=0, $goods_id=0)
+	{
+	    return $this->Base_model->getWhere('order_reviews', array('order_id'=>$order_id, 'goods_id'=>$goods_id))->result();
 	}
 	
 }

@@ -61,6 +61,25 @@
                         <div class="col-sm-6">
                             <div class="panel">
                                 <div class="panel-heading">
+                                    <h3 class="panel-title">订单物流</h3>
+                                </div>
+                                <div class="pad-hor mar-btm">
+                                    <?php if($order_deliver!==FALSE):?>
+                                    <p>快递名称：<?php echo $order_deliver['deliver']->deliver_name?></p>
+                                    <p>快递状态：<?php echo $deliver_status[$order_deliver['deliver']->status]?></p>
+                                    <p>创建时间：<?php echo date('Y-m-d H:i:s', $order_deliver['deliver']->update_time)?></p>
+                                    <p>
+                                    <?php foreach($order_deliver['deliver_gps'] as $g){
+                                        echo date('Y-m-d H:i:s', $g->time).'-'.$g->username.'-'.$g->gps.'</br>';
+                                    }?>
+                                    </p>
+                                    <?php endif;?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="panel">
+                                <div class="panel-heading">
                                     <h3 class="panel-title">订单评价</h3>
                                 </div>
                                 <?php foreach ($order_reviews as $reviews):?>
@@ -83,6 +102,7 @@
 	                            <?php endforeach;?>
                             </div>
                         </div>
+                        
                     </div>
 					
                 </div>

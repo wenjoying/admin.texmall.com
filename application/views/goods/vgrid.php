@@ -4,14 +4,6 @@
                 <!--===================================================-->
                 <div id="page-content">
                     <div class="panel">
-		                <div class="panel-heading">
-		                    <h3 class="panel-title">使用说明</h3>
-		                </div>
-		                <div class="panel-body">
-		                    <p>Lorem ipsum dolor sit amet.</p>
-		                </div>
-		            </div>
-                    <div class="panel">
 					    <div class="panel-heading">
 					        <h3 class="panel-title" id="demo-bootbox-custom-h-content">
     					        <?php echo $two_level?>
@@ -61,7 +53,7 @@
 					            </div>
 					            
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="编码/供应商/工艺组成/风格/类目">
+					                <input type="text" class="form-control" name="item" style="width:350px;" value="<?php echo $this->input->get('item');?>" placeholder="编码/供应商/用户名/工艺组成/风格/类目">
 					            </div>
 					            
 					            <button class="btn btn-primary" type="submit">搜索</button>
@@ -146,6 +138,16 @@
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>1.“<b>正在审核</b>”状态下可以点菜“<b>查看</b>”进行审核</p>
+		                    <p>2.当审核不通过的时候，产品上架状态也会变为“<b>下架</b>”，前台产品列表页不会显示</p>
+		                    <p>3.编辑提交后，审核状态会变为“<b>正在审核</b>”</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

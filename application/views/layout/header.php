@@ -280,9 +280,8 @@
 						                <ul class="collapse <?php if($one_level=='产品中心') echo 'in'?>">
 						                    <li class="<?php if($two_level=='产品列表') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods/grid');?>"><i class="ion-navicon"></i>产品列表</a></li>
                                             <li class="<?php if($two_level=='标准布料') echo 'active-link';?>"><a href="<?php echo base_url('Ccorrect_tex/grid');?>"><i class="ion-image"></i>标准布料</a></li>
-                                            <li class="<?php if($two_level=='模特图片') echo 'active-link';?>"><a href="<?php echo base_url('Ccorrect_model/grid');?>"><i class="ion-image"></i>模特图片</a></li>
                                             <li class="<?php if($two_level=='产品属性') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_attr_set/grid');?>"><i class="ion-pull-request"></i>产品属性</a></li>
-                                            <li class="<?php if($two_level=='特价&推荐') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_attr_set/grid');?>"><i class="ion-pull-request"></i>特价&推荐</a></li>
+                                            <li class="<?php if($two_level=='特价&推荐') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_recom/grid');?>"><i class="ion-pull-request"></i>特价&推荐</a></li>
                                         </ul>
 						            </li>
 						            
@@ -310,6 +309,20 @@
 						                    <li class="<?php if($two_level=='询价列表') echo 'active-link';?>"><a href="<?php echo base_url('Cenquiry/grid');?>"><i class="ion-navicon"></i>询价列表</a></li>
 						                    <li class="<?php if($two_level=='报价列表') echo 'active-link';?>"><a href="<?php echo base_url('Cenquiry_respond/grid');?>"><i class="ion-navicon"></i>报价列表</a></li>
 						                </ul>
+						            </li>
+						            
+						             <li class="<?php if($one_level=='图片管理') echo 'active-sub'?>">
+						                <a href="#">
+						                    <i class="ion-navicon-round"></i>
+						                    <span class="menu-title"><strong>图片管理</strong></span>
+											<i class="arrow"></i>
+						                </a>
+						                <ul class="collapse <?php if($one_level=='图片管理') echo 'in'?>">
+						                    <li class="<?php if($two_level=='图片库') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods/grid');?>"><i class="ion-navicon"></i>图片库</a></li>
+                                            <li class="<?php if($two_level=='模特图片') echo 'active-link';?>"><a href="<?php echo base_url('Ccorrect_model/grid');?>"><i class="ion-image"></i>模特图片</a></li>
+                                            <li class="<?php if($two_level=='3D试衣') echo 'active-link';?>"><a href="<?php echo base_url('Ccorrect_model/grid');?>"><i class="ion-image"></i>3D试衣</a></li>
+                                            <li class="<?php if($two_level=='图片使用') echo 'active-link';?>"><a href="<?php echo base_url('Cgoods_attr_set/grid');?>"><i class="ion-pull-request"></i>图片使用</a></li>
+                                        </ul>
 						            </li>
 						            
 						            <li class="<?php if($one_level=='认证审核') echo 'active-sub'?>">

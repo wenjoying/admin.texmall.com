@@ -24,7 +24,9 @@ class Csetting extends TM_Controller {
 	{
 	    $tables = $this->db->list_tables();
 	    
-	    foreach ($tables as $table) {
+// 	    foreach ($tables as $table) {
+	    $table='tm_order_deliver_gps';
+	        
 	        $tab = '';
 	        $sql = "SELECT COLUMN_COMMENT AS `mark` FROM information_schema.COLUMNS WHERE TABLE_NAME='".$table."'";
 	        $data = $this->db->query($sql)->result();
@@ -41,7 +43,7 @@ class Csetting extends TM_Controller {
 	        $tab .= '</br>'.$table;
 	        echo $tab;
 	        echo '</br></br></br>';
-	    }
+// 	    }
 	}
 	
 	/**

@@ -4,7 +4,7 @@ KindEditor.ready(function(K) {
 			    height:'400px',
                 cssPath : '../../../assets/kindeditor/plugins/code/prettify.css',
                 uploadJson : '../../../Keditor/upload', //控制器
-                fileManagerJson : '../../../Keditor/manage', //控制器
+//                fileManagerJson : '../../../Keditor/manage', //控制器
                 allowFileManager : true,
                  afterCreate : function() {
                      var self = this;

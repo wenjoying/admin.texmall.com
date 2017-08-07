@@ -22,7 +22,7 @@
     					                <div class="form-group pad-ver">
     					                    <label class="col-md-3 control-label">类型*</label>
     					                    <div class="col-md-6">
-					                            <select class="selectpicker" name="type" required="required">
+					                            <select class="selectpicker" name="category" required="required">
                 	                                <option value="">请选择类型</option>
                 	                                <?php foreach($category as $v):?>
                                                     <option value="<?php echo $v?>"><?php echo $v?></option>

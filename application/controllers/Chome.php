@@ -22,6 +22,11 @@ class Chome extends TM_Controller {
 	 * */
 	public function index()
 	{
+// 	    require_once APPPATH.'libraries/AliyunOss/oss.php';
+// 	    // 简单上传变量的内容到oss文件
+// 	    $result = $ossClient->putObject($bucket, date('Ymd')."/e.txt", "hi, oss.this is test.txt");
+// 	    vard($result['info']['url']);
+	    
 	    $data['user_num'] = $this->_get_user_num();
 	    $data['company_num'] = $this->_get_company_num();
 	    $data['goods_num'] = $this->_get_goods_num();

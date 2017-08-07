@@ -60,6 +60,8 @@ class Corder extends TM_Controller {
 	    $data['res'] = $res->row();
 	    $data['order_goods'] = $this->_get_order_goods($res->row()->id);
 	    $data['order_reviews'] = $this->_get_order_reviews($res->row()->id); 
+	    $data['order_deliver'] = $this->_get_order_deliver($res->row()->id);
+	    $data['deliver_status'] = array(1=>'已揽收', 2=>'在途中', 3=>'疑难', 4=>'已签收', 5=>'退签', 6=>'同城派送中', 7=>'退回', 8=>'转单');
 	    $data['state_arr']  = get_oreder_state();
         $data['status_arr'] = get_order_status();
         $data['one_level'] = '订单管理';
@@ -81,6 +83,19 @@ class Corder extends TM_Controller {
 	private function _get_order_reviews($order_id = 0)
 	{
 	    return $this->Base_model->getWhere('order_reviews', array('order_id'=>$order_id))->result();
+	}
+	
+	/**
+	 * @获取订单物流
+	 * */
+	private function _get_order_deliver($order_id = 0)
+	{
+	    $deliver = $this->Base_model->getWhere('order_deliver', array('order_id'=>$order_id));
+	    if ($deliver->num_rows() > 0) {
+	        $data['deliver'] = $deliver->row();
+	        $data['deliver_gps'] = $this->Base_model->getWhere('order_deliver_gps', array('order_id'=>$order_id))->result();
+	    }
+	    return FALSE;
 	}
 	
 	/**

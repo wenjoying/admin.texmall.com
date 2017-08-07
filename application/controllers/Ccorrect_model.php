@@ -71,6 +71,7 @@ class Ccorrect_model extends TM_Controller {
 	public function addPost()
 	{
 	    $this->_validate();
+	    
 	    $postData = $this->input->post();
 	    $img = $this->deal_img('correct_img', FALSE);
 	    if (isset($img['upload']['correct_img'])) {
@@ -78,7 +79,7 @@ class Ccorrect_model extends TM_Controller {
 	    } else {
 	        alert_msg('上传失败');
 	    }
-	    $data['type']      = $postData['type'];
+	    $data['category']  = $postData['category'];
 	    $data['img_name']  = $this->_create_name();
 	    $data['des']       = $postData['des'];
 	    $data['time']      = time();
@@ -113,7 +114,7 @@ class Ccorrect_model extends TM_Controller {
 	 * */
 	private function _validate()
 	{
-	    if (is_empty($this->input->post('type'))) {
+	    if (is_empty($this->input->post('category'))) {
 	        alert_msg('请选择类型');
 	    }
 	}
@@ -123,7 +124,7 @@ class Ccorrect_model extends TM_Controller {
 	 * */
 	private function _get_category()
 	{
-	    $category = $this->Base_model->getWhere('goods_attr_set', array('attr_en_name'=>'category', 'is_show'=>1));
+	    $category = $this->Base_model->getWhere('goods_attr_set', array('attr_en_name'=>'category', 'status'=>1));
 	    if ($category->num_rows() > 0) {
 	        return explode(',', $category->row()->attr_val);
 	    }

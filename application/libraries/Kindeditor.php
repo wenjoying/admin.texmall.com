@@ -18,10 +18,73 @@ class Kindeditor {
     private $max_size;
 
     public function __construct() {
-        $this->save_path = dirname(FCPATH) . '/img.texmall.com/kindeditor/';
-        $this->save_url = 'http://img.texmall.com/kindeditor/';
+//         $this->save_path = dirname(FCPATH) . '/img.texmall.com/kindeditor/';
+//         $this->save_url = 'http://img.texmall.com/kindeditor/';
+        $this->save_path = dirname(FCPATH).'/admin.texmall.com/assets/kindeditor/images/';
+        $this->save_url = 'http://zoudong.oss-cn-shanghai.aliyuncs.com/';
         $this->ext_arr = array('gif', 'jpg', 'jpeg', 'png', 'bmp');
         $this->max_size = 1000000;
+    }
+    
+    /**
+     * @上传图片到阿里云oss
+     * */
+    public function oss_upload($file)
+    {
+        if (empty($file) === FALSE) {
+            $file_name = $file['imgFile']['name']; //原文件名
+            $tmp_name = $file['imgFile']['tmp_name']; //服务器上临时文件名
+            $file_size = $file['imgFile']['size']; //文件大小
+            
+            if (!$file_name) {//检查文件名
+                $this->alert("请选择文件。");
+            }
+            
+            if (@is_dir($this->save_path) === false) {//检查目录
+                $this->alert("上传目录不存在。");
+            }
+            
+            if (@is_writable($this->save_path) === false) {//检查目录写权限
+                $this->alert("上传目录没有写权限。");
+            }
+            
+            if (@is_uploaded_file($tmp_name) === false) {//检查是否已上传
+                $this->alert("临时文件可能不是上传文件。");
+            }
+            
+            if ($file_size > $this->max_size) {//检查文件大小
+                $this->alert("上传文件大小超过限制。");
+            }
+            
+            $temp_arr = explode(".", $file_name);
+            $file_ext = array_pop($temp_arr);
+            $file_ext = trim($file_ext);
+            $file_ext = strtolower($file_ext);//获得文件扩展名
+            
+            if (in_array($file_ext, $this->ext_arr) === false) {//检查扩展名
+                $this->alert("上传文件扩展名是不允许的扩展名。");
+            }
+            
+            $new_file_name = daymicro(). '.' . $file_ext; //新文件名
+            
+            $file_path = $this->save_path . $new_file_name;
+            if (move_uploaded_file($tmp_name, $file_path) === false) {//移动文件到服务器
+                $this->alert("上传文件失败。");
+            }
+            
+            $oss_name = 'dir/'.date('Ymd').'/'.$new_file_name; //图片oss地址
+            require_once 'AliyunOss/oss.php';
+            $result = $ossClient->uploadFile($bucket, $oss_name, $file_path); //上传到阿里云oss
+            $doesExist = $ossClient->doesObjectExist($bucket, $oss_name); //判断图片是否存在
+            @unlink($file_path); //删除服务器图片
+            if ($doesExist) {//存在则返回图片oss地址
+                header('Content-type: text/html; charset=UTF-8');
+                echo json_encode(array('error'=>0, 'url'=>$this->save_url.$oss_name));
+                exit;
+            } else {
+                $this->alert("上传文件到oss失败。");
+            }
+        }
     }
 
     public function upload($file) {
@@ -81,7 +144,7 @@ class Kindeditor {
             exit;
         }
     }
-
+    
     public function alert($msg) {
         header('Content-type: text/html; charset=UTF-8');
         echo json_encode(array('error' => 1, 'message' => $msg));

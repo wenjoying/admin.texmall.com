@@ -49,12 +49,12 @@
     					                </div>
     					
     					                <div class="form-group pad-ver">
-    					                    <label class="col-md-3 control-label">是否显示*</label>
+    					                    <label class="col-md-3 control-label">是否上架*</label>
     					                    <div class="col-md-6">
-					                            <select class="selectpicker" name="is_show" required="required">
+					                            <select class="selectpicker" name="status" required="required">
                 	                                <option value="">请选择</option>
-                                                    <option <?php if($res->is_show==1) echo 'selected="selected"'?> value="1">显示</option>
-                                                    <option <?php if($res->is_show==2) echo 'selected="selected"'?> value="2">隐藏</option>
+                                                    <option <?php if($res->status==1) echo 'selected="selected"'?> value="1">上架</option>
+                                                    <option <?php if($res->status==2) echo 'selected="selected"'?> value="2">下架</option>
                                                 </select>
     					                    </div>
     					                </div>

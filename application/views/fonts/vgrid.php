@@ -32,7 +32,7 @@
         					                    <?php foreach($res as $r):?>
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
-                                                    <td><img height=100 src="<?php echo $this->config->image_url.$r->fonts_img?>"></td>
+                                                    <td><img height=30 width=30 src="<?php echo $this->config->image_url.$r->fonts_img?>"></td>
                                                     <td><?php echo $r->fonts_name?></td>
                                                     <td><a class="btn-link" href="<?php echo $this->config->image_url.$r->fonts_path?>"><?php echo $r->fonts_path?></a></td>
                                                     <td>
@@ -52,6 +52,14 @@
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>1.字体库</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

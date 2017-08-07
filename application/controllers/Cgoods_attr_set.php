@@ -67,7 +67,7 @@ class Cgoods_attr_set extends TM_Controller {
 	    $data['attr_name'] = $postData['attr_name'];
 	    $data['attr_val'] = toEnComma($postData['attr_val']);
 	    $data['is_multi'] = $postData['is_multi'];
-	    $data['is_show'] = $postData['is_show'];
+	    $data['status'] = $postData['status'];
 	     
 	    $res = $this->Base_model->insert($this->table, $data);
 	    if ($res>0) {
@@ -105,7 +105,7 @@ class Cgoods_attr_set extends TM_Controller {
 	        alert_msg('请选择是否多选');
 	    }
 	    
-	    if (is_empty($this->input->post('is_show'))) {
+	    if (is_empty($this->input->post('status'))) {
 	        alert_msg('请选择是否显示');
 	    }
 	}
@@ -133,10 +133,11 @@ class Cgoods_attr_set extends TM_Controller {
 	public function editPost()
 	{
 	    $this->_validate('edit');
+	    
 	    $postData = $this->input->post();
 	    $data['attr_val'] = toEnComma($postData['attr_val']);
 	    $data['is_multi'] = $postData['is_multi'];
-	    $data['is_show'] = $postData['is_show'];
+	    $data['status'] = $postData['status'];
 	    
 	    $res = $this->Base_model->update($this->table, array('id'=>$postData['id']), $data);
 	    if ($res>0) {

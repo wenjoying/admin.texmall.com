@@ -20,8 +20,8 @@ class Mgoods_attr_set extends CI_Model{
 	    if (!empty($search['is_multi'])) {
 	        $this->db->where(array('is_multi'=>$search['is_multi']));
 	    }
-	    if (!empty($search['is_show'])) {
-	        $this->db->where(array('is_show'=>$search['is_show']));
+	    if (!empty($search['status'])) {
+	        $this->db->where(array('status'=>$search['status']));
 	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();
@@ -47,8 +47,8 @@ class Mgoods_attr_set extends CI_Model{
 	    if (!empty($search['is_multi'])) {
 	        $this->db->where(array('is_multi'=>$search['is_multi']));
 	    }
-	    if (!empty($search['is_show'])) {
-	        $this->db->where(array('is_show'=>$search['is_show']));
+	    if (!empty($search['status'])) {
+	        $this->db->where(array('status'=>$search['status']));
 	    }
 	    if (!empty($search['item'])) {
 	        $this->db->group_start();

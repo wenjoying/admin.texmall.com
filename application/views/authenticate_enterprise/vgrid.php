@@ -7,8 +7,7 @@
 					    <div class="panel-heading">
 					        <h3 class="panel-title" id="demo-bootbox-custom-h-content">
     					        <?php echo $two_level?>
-					            <a style="margin-left:50px;" href="<?php echo base_url('Cauthenticate_enterprise/add');?>"><button class="btn btn-success"><i class="ion-plus-round"></i>添加</button></a>
-					            <a class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
+					            <a style="margin-left:50px;" class="btn-link" href="javascript:;" onClick="window.location.reload();"><button class="btn btn-default"><i class="demo-psi-repeat-2 icon-fw"></i>刷新</button></a>
 					        </h3>
 					    </div>
 					    <div class="panel-body">
@@ -181,10 +180,12 @@
 		                    <h3 class="panel-title">使用说明</h3>
 		                </div>
 		                <div class="panel-body">
-		                    <p>在“<span style="color:red;">正在审核</span>”的状态下，可以点击“查看”进行审核。
-		                      </br>1.如果用户的资料信息正确，选择“已打款”后提交，会生成一个“打款金额”，请按照此金额给用户账号打款，用户收到款项后在一个月内有三次机会输入金额：1>如果两个金额相等，则系统自动审核通过；2>如果都输入错误，则系统自动审核不通过。
-		                      </br>2.如果用户的资料信息不正确，选择“审核不通过”，并填写不通过的原因后提交。
-		                    </p>
+		                    <p>1.“正在审核”的状态下，可以点击“查看”进行审核。</p>
+		                    <p>2.如果用户的资料信息正确，选择“已打款”后提交，会生成一个“打款金额”，请按照此金额给用户账号打款</p>
+		                    <p>3.用户收到款项后在一个月内有三次机会输入金额</p>
+		                    <p>4.如果两个金额相等，则系统自动审核通过</p>
+		                    <p>5.如果都输入错误，则系统自动审核不通过。</p>
+		                    <p>6.如果用户的资料信息不正确，选择“审核不通过”，并填写不通过的原因后提交。</p>
 		                </div>
 		            </div>
                 </div>

@@ -55,7 +55,7 @@
         					                    <?php foreach($res as $r):?>
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
-                                                    <td><a target="_blank" href="<?php echo $this->config->image_url.$r->correct_img?>"><img style="height:80px;width:80px;" src="<?php echo $this->config->image_url.$r->correct_img?>"></a></td>
+                                                    <td><a target="_blank" href="<?php echo $this->config->image_url.$r->correct_img?>"><img style="height:30px;width:30px;" src="<?php echo $this->config->image_url.$r->correct_img?>"></a></td>
                                                     <td><?php echo $r->tex_colors?></td>
                                                     <td><?php echo $r->img_name?></td>
                                                     <td><?php echo $r->des?></td>
@@ -84,7 +84,8 @@
 		                    <h3 class="panel-title">使用说明</h3>
 		                </div>
 		                <div class="panel-body">
-		                    <p>一花多色相同，代表这些布料是同一花型不同的花色。</p>
+		                    <p>1.一花多色相同，代表这些布料是同一花型不同的花色，一般对应的是第一个花型的ID。</p>
+		                    <p>2.每次添加标准图，程序都会进行一花多色的判断</p>
 		                </div>
 		            </div>
                 </div>

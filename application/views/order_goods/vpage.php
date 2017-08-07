@@ -46,8 +46,23 @@
                                 <div class="panel-heading">
 			                        <h3 class="panel-title">订单产品评价</h3>
 				                </div>
-				                
-				                
+				                <div class="pad-hor mar-btm">
+				                   <?php foreach($reviews as $v):?>
+                                   <p>用户：<?php echo $v->username?></p>
+                                   <p>评价时间：<?php echo date('Y-m-d H:i:s', $v->des)?></p>
+                                   <p>评价：<?php echo $v->des?></p>
+                                   <p>描述：<?php echo $v->des_core?>分</p>
+                                   <p>服务：<?php echo $v->ser_core?>分</p>
+                                   <p>物流：<?php echo $v->del_core?>分</p>
+                                   <p>
+                                   <?php foreach(explode('|', $v->imgs) as $img):?>
+                                   <?php if(!empty($img)):?>
+                                   <a target="_blank" href="<?php echo $this->config->image_url.$img?>"><img height=150 width=100 src="<?php echo $this->config->image_url.$img?>"></a>
+                                   <?php endif;?>
+                                   <?php endforeach;?>
+                                   </p>
+                                   <?php endforeach;?>
+				                </div>
 			                </div>
 		                </div>
                     </div>

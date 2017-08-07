@@ -17,8 +17,8 @@ class Mcorrect_model extends CI_Model{
 	{
 	    $this->db->select('id');
 	    $this->db->from($this->table);
-	    if (!empty($search['type'])) {
-	        $this->db->where(array('type'=>$search['type']));
+	    if (!empty($search['category'])) {
+	        $this->db->where(array('category'=>$search['category']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));
@@ -46,8 +46,8 @@ class Mcorrect_model extends CI_Model{
 	{
 	    $this->db->select('*');
 	    $this->db->from($this->table);
-	    if (!empty($search['type'])) {
-	        $this->db->where(array('type'=>$search['type']));
+	    if (!empty($search['category'])) {
+	        $this->db->where(array('category'=>$search['category']));
 	    }
 	    if (!empty($search['sta_time'])) {
 	        $this->db->where(array('time >'=>strtotime($search['sta_time'])));

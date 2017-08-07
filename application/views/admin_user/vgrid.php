@@ -32,7 +32,7 @@
         					                    <?php foreach($res as $r):?>
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
-                                                    <td><img style="height:80px;width:80px;" src="<?php echo $this->config->image_url.$r->userimg?>"></td>
+                                                    <td><img style="height:30px;width:30px;" src="<?php echo $this->config->image_url.$r->userimg?>"></td>
                                                     <td><?php echo $r->username?></td>
                                                     <td><?php echo $r->mobile?></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->reg_time);?></td>
@@ -50,6 +50,14 @@
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>1.</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

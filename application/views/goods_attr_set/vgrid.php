@@ -25,10 +25,10 @@
 					            </div>
 					            
 					            <div class="form-group">
-    					            <select class="selectpicker" name="is_show">
-    	                                <option value="">请选择是否多选</option>
-                                        <option <?php if($this->input->get('is_show')==1)echo 'selected="selected"'?> value="1">显示</option>
-                                        <option <?php if($this->input->get('is_show')==2)echo 'selected="selected"'?> value="2">隐藏</option>
+    					            <select class="selectpicker" name="status">
+    	                                <option value="">请选择是否上架</option>
+                                        <option <?php if($this->input->get('status')==1)echo 'selected="selected"'?> value="1">上架</option>
+                                        <option <?php if($this->input->get('status')==2)echo 'selected="selected"'?> value="2">下架</option>
                                     </select>
 					            </div>
 					            
@@ -54,7 +54,7 @@
                                                     <th><div class="th-inner">名称</div></th>
                                                     <th><div class="th-inner">属性值</div></th>
                                                     <th><div class="th-inner">多选</div></th>
-                                                    <th><div class="th-inner">显示</div></th>
+                                                    <th><div class="th-inner">上架</div></th>
                                                     <th width="120px"><div class="th-inner">操作</div></th>
         					                    </tr>
     					                    </thead>
@@ -65,8 +65,8 @@
                                                     <td><?php echo $r->attr_en_name?></td>
                                                     <td><?php echo $r->attr_name?></td>
                                                     <td><?php echo $r->attr_val?></td>
-                                                    <td><?php echo $r->is_multi==1 ? '<span class="label label-table label-success">多选</span>' : '<span class="label label-table label-info">单选</span>';?></td>
-                                                    <td><?php echo $r->is_show==1 ? '<span class="label label-table label-success">显示</span>' : '<span class="label label-table label-danger"> Refunded</span>'?></td>
+                                                    <td><?php if($r->is_multi==1) echo '是'?></td>
+                                                    <td><?php echo $r->status==1 ? '<i class="ion-checkmark"></i>' : '<i class="ion-close"></i>'?></td>
             					                    <td>
                 					                    <a class="btn-link" href="<?php echo base_url('Cgoods_attr_set/edit/'.$r->id);?>">编辑</a>|
                 					                    <a class="btn-link" href="###" onclick="layer_ask('<?php echo base_url('Cgoods_attr_set/delete/'.$r->id);?>');">删除</a>
@@ -87,6 +87,14 @@
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>1.可以点击“编辑”进行编辑</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

@@ -28,7 +28,7 @@ class Keditor extends CI_Controller{
      * */
     public function upload(){
         if (!empty ($_FILES)){
-            $this->kindeditor->upload($_FILES);
+            $this->kindeditor->oss_upload($_FILES);
         }
     }
 
@@ -39,6 +39,7 @@ class Keditor extends CI_Controller{
         $path = isset($_GET['path']) ? $_GET['path'] : '';
         $this->kindeditor->manage($path);
     }
+    
 
 
 }

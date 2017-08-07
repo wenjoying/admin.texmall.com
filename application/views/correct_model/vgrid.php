@@ -17,10 +17,10 @@
 					
 					        <form class="form-inline" action="<?php echo base_url('Ccorrect_model/grid');?>" method="get">
 					            <div class="form-group">
-    					            <select class="selectpicker" name="type">
+    					            <select class="selectpicker" name="category">
     	                                <option value="">请选择类型</option>
     	                                <?php foreach($category as $v):?>
-                                        <option <?php if($this->input->get('type')==$v)echo 'selected="selected"'?> value="<?php echo $v?>"><?php echo $v?></option>
+                                        <option <?php if($this->input->get('category')==$v)echo 'selected="selected"'?> value="<?php echo $v?>"><?php echo $v?></option>
                                         <?php endforeach;?>
                                     </select>
 					            </div>
@@ -64,7 +64,7 @@
         					                    <tr>
             					                    <td><?php echo $r->id?></td>
                                                     <td><a target="_blank" href="<?php echo $this->config->image_url.$r->correct_img?>"><img style="height:80px;width:80px;" src="<?php echo $this->config->image_url.$r->correct_img?>"></a></td>
-                                                    <td><?php echo $r->type?></td>
+                                                    <td><?php echo $r->category?></td>
                                                     <td><?php echo $r->img_name?></td>
                                                     <td><?php echo $r->des?></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time);?></td>
@@ -87,6 +87,14 @@
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>1.在添加模特前需要添加产品属性中的类目category。</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

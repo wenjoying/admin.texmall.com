@@ -244,7 +244,7 @@ class Cgoods extends TM_Controller {
 	 * */
 	private function _get_attr()
 	{
-	    $attr = $this->Base_model->getWhere('goods_attr_set', array('is_show'=>1))->result();
+	    $attr = $this->Base_model->getWhere('goods_attr_set', array('status'=>1))->result();
 	    return array_column($attr, null, 'attr_en_name');
 	}
 	
@@ -252,7 +252,7 @@ class Cgoods extends TM_Controller {
 	 * @获取以图找图结果
 	 * @$or_arr:需要和标准图片对比的图片数组
 	 * */
-	 function get_contrast($or_arr=array())
+	private function _get_contrast($or_arr=array())
 	{
 	    $res = $this->Base_model->getFieldRes('correct_tex', 'correct_img, tex_colors, img_name')->result_array();
 // 	    $param = array('or_arr'=>$or_arr, 'img_arr'=>$res);

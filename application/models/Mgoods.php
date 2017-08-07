@@ -40,6 +40,7 @@ class Mgoods extends CI_Model{
 	        $this->db->like('platform_code', $search['item']);
 	        $this->db->or_like('supplier_name', $search['item']);
 	        $this->db->or_like('supplier_code', $search['item']);
+	        $this->db->or_like('username', $search['item']);
 	        $this->db->or_like('tech_composed', $search['item']);
 	        $this->db->or_like('style', $search['item']);
 	        $this->db->or_like('category', $search['item']);
@@ -82,6 +83,7 @@ class Mgoods extends CI_Model{
 	        $this->db->like('platform_code', $search['item']);
 	        $this->db->or_like('supplier_name', $search['item']);
 	        $this->db->or_like('supplier_code', $search['item']);
+	        $this->db->or_like('username', $search['item']);
 	        $this->db->or_like('tech_composed', $search['item']);
 	        $this->db->or_like('style', $search['item']);
 	        $this->db->or_like('category', $search['item']);

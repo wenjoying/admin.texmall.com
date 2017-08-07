@@ -1,9 +1,10 @@
 <?php
 class TM_Config extends CI_Config 
 {
-    public $main_base_url   =  'http://texmall.com/';
-    public $image_url       =  'http://img.texmall.com/';
-    public $html5_url       =  'http://html5.texmall.com/';
+    public $main_base_url   = 'http://texmall.com/';
+//     public $image_url       = 'http://img.texmall.com/';
+    public $image_url       = 'http://zoudong.oss-cn-shanghai.aliyuncs.com/';
+    public $html5_url       = 'http://html5.texmall.com/';
     public $default_img     = array(
         'userimg' => './userimg/profile-pic.jpg',   //默认头像
     );

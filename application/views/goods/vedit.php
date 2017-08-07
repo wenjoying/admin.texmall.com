@@ -19,6 +19,7 @@
 					            <form class="form-horizontal" action="<?php echo base_url('Cgoods/editPost');?>" method="post" enctype="multipart/form-data">
 					                <div class="panel-body">
 					                    <input type="hidden" name="id" value="<?php echo $res->id?>">
+					                    <input type="hidden" name="status" value="<?php echo $res->status?>">
     					                <div class="form-group">
     					                    <label class="col-md-3 control-label">主图</label>
     					                    <div class="col-md-6">
@@ -208,14 +209,13 @@
     					                <div class="form-group pad-ver">
     					                    <label class="col-md-3 control-label">上架状态*</label>
     					                    <div class="col-md-6">
-    					                        <div class="radio">
-    					                            <select class="selectpicker" required="required" name="is_sale">
-                    	                                <option value="">请选择</option>
-                                                        <option <?php if($res->is_sale==1)echo 'selected="selected"'?> value="1">上架</option>
-                                                        <option <?php if($res->is_sale==2)echo 'selected="selected"'?> value="2">待售</option>
-                                                        <option <?php if($res->is_sale==3)echo 'selected="selected"'?> value="3">下架</option>
-                                                    </select>
-    					                        </div>
+					                            <select class="selectpicker" required="required" name="is_sale">
+                	                                <option value="">请选择</option>
+                                                    <option <?php if($res->is_sale==1)echo 'selected="selected"'?> value="1">上架</option>
+                                                    <option <?php if($res->is_sale==2)echo 'selected="selected"'?> value="2">待售</option>
+                                                    <option <?php if($res->is_sale==3)echo 'selected="selected"'?> value="3">下架</option>
+                                                </select>
+                                                <small class="help-block">审核不通过的情况下，状态只能为“下架”</small>
     					                    </div>
     					                </div>
     					                
@@ -242,6 +242,11 @@
     					
 					                </div>
 					                
+					                <?php if($res->status==3):?>
+    					            <div class="alert alert-danger">
+    				                   <strong>注意！</strong>此产品已审核不通过，不能修改。
+    				                </div>
+    					            <?php else :?>
 					                <div class="panel-footer">
 					                    <div class="row">
 					                        <div class="col-sm-9 col-sm-offset-3">
@@ -249,6 +254,7 @@
 					                        </div>
 					                    </div>
 					                </div>
+					                <?php endif;?>
 					            </form>
 					        </div>
 					    </div>

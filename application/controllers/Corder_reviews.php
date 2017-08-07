@@ -38,11 +38,7 @@ class Corder_reviews extends TM_Controller {
         $data['res']        = $this->Morder_reviews->grid($pg-1, $config['per_page'], $this->input->get())->result();
         $data['sum']        = $config['total_rows'];
         $data['per_page']   = $config['per_page'];
-        $data['status_arr'] = array(
-            '1'=>'<span class="label label-table label-info">审核中</span>',
-            '2'=>'<span class="label label-table label-success">通过</span>',
-            '3'=>'<span class="label label-table label-danger">不通过</span>'
-        );
+        $data['status_arr'] = get_status();
         $data['one_level'] = '订单管理';
         $data['two_level'] = '订单评价';
         $this->load->view('order_reviews/vgrid', $data);
@@ -60,7 +56,7 @@ class Corder_reviews extends TM_Controller {
 	        $this->redirect('Clogin/show_404');
 	    }
 	    $data['res'] = $res->row();
-	    $data['status_arr'] = array('1'=>'审核中', '2'=>'通过', '3'=>'不通过');
+	    $data['status_arr'] = get_status();
 	    $data['one_level'] = '订单管理';
         $data['two_level'] = '订单评价';
 	    $this->load->view('order_reviews/vpage', $data);

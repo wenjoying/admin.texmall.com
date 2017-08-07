@@ -42,9 +42,8 @@
         					                    <tr>
             					                    <th><div class="th-inner">ID</div></th>
                                                     <th><div class="th-inner">用户</div></th>
-                                                    <th><div class="th-inner">产品</div></th>
+                                                    <th><div class="th-inner">型号</div></th>
                                                     <th><div class="th-inner">供应商</div></th>
-                                                    <th><div class="th-inner">编码</div></th>
                                                     <th><div class="th-inner">价格</div></th>
                                                     <th><div class="th-inner">数量</div></th>
                                                     <th><div class="th-inner">时间</div></th>
@@ -58,7 +57,6 @@
             					                    <td><a class="btn-link" href="<?php echo base_url('Cuser/page/'.$r->uid)?>"><?php echo $r->username?></a></td>
                                                     <td><a class="btn-link" href="<?php echo base_url('Cgoods/page/'.$r->goods_id)?>"><?php echo $r->supplier_code?></a></td>
                                                     <td><a class="btn-link" href="<?php echo base_url('Csupplier_buyer/page/'.$r->supplier_id)?>"><?php echo $r->supplier_name?></a></td>
-                                                    <td><?php echo $r->supplier_code?></td>
                                                     <td><?php echo $r->price?></td>
                                                     <td><?php echo $r->number?></td>
                                                     <td><?php echo date('Y-m-d H:i:s', $r->time)?></td>
@@ -81,6 +79,14 @@
 					        </div>
 				        </div>
 					</div>
+					<div class="panel">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">使用说明</h3>
+		                </div>
+		                <div class="panel-body">
+		                    <p>1.包含所有购物车</p>
+		                </div>
+		            </div>
                 </div>
                 <!--===================================================-->
                 <!--End page content-->
